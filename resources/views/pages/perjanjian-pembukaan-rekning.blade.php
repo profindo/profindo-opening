@@ -266,12 +266,6 @@
 
                                         <ol type="a">
                                             <li class="sub-rekening text-custom-2 text-justify text-start">
-                                                Perusahaan berhak dalam hal apapun dan tanpa alasan apapun menolak dan/
-                                                atau
-                                                membatalkan
-                                                permohonan pembukaan rekening oleh Calon Nasabah.
-                                            </li>
-                                            <li class="sub-rekening text-custom-2 text-justify text-start">
                                                 Dibukanya Sub Rekening Efek di LPP dan/atau pemberian data-data dan
                                                 informasi milik Nasabah
                                                 kepada LPP;
