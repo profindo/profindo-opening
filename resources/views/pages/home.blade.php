@@ -83,7 +83,7 @@
             <a href="/">
                 <p>
                     <i class="icon ion-ios-water"></i>
-                    <span>Home</span>
+                    <span class="pt-3">Home</span>
                 </p>
             </a>
         </div>
@@ -91,23 +91,21 @@
             <a href="/surat-pernyataan-kuasa">
                 <p>
                     <i class="icon ion-ios-apps"></i>
-                    <span>Surat Pernyataan Kuasa</span>
+                    <span class="mt-3">Pernyataan Kuasa</span>
                 </p>
             </a>
         </div>
         <div class="item">
             <a href="/perjanjian-pembukaan-rekening">
                 <p>
-                    <i class="icon ion-ios-analytics"></i>
-                    <span>Perjanjian Pembukaan Rekening</span>
+                    <span>Pembukaan Rekening</span>
                 </p>
             </a>
         </div>
         <div class="item">
             <a href="/pernyataan-nasabah-rdn-bca">
                 <p>
-                    <i class="icon ion-ios-search"></i>
-                    <span>Pernyataan Nasabar RDN BCA</span>
+                    <span>Nasabar RDN BCA</span>
                 </p>
             </a>
         </div>
