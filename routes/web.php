@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
+
+Route::get('/surat-pernyataan-kuasa', function () {
+    return view('pages.surat-pernyataan');
+});
+
+Route::get('/perjanjian-pembukaan-rekening', fn () => view('pages.perjanjian-pembukaan-rekning'));
+
+Route::get('/pernyataan-nasabah-rdn-bca', fn () => view('pages.pernyataan-nasabah-rdn-bca'));

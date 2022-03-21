@@ -1,0 +1,75 @@
+.img-logo {
+    height: 3em;
+}
+
+.paraghraph-text {
+    margin-top: -20px;
+}
+
+ol,
+ul {
+    font-size: 0.685em;
+}
+
+.title-letter {
+    margin-top: -20px;
+    margin-bottom: -2px;
+}
+
+.paraghraph-letter {
+    font-size: 0.685em;
+}
+
+.paraghraph-letter-2 {
+    font-size: 1em;
+    margin-left: -2.1875em;
+    margin-top: 0.9375em;
+}
+
+.paraghraph-letter-3 {
+    font-size: 14px;
+    margin-left: -4.5em;
+    margin-top: -1.875em;
+    margin-bottom: 3.125em;
+}
+
+.ol-custom {
+    counter-reset: item;
+}
+
+.li-custom {
+    display: block;
+}
+
+.li-custom:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+}
+
+.text-custom {
+    font-size: 13.96px;
+    margin-left: -3.4375em;
+    margin-top: -3.125em;
+}
+
+.text-custom-2 {
+    font-size: 13.96px;
+    margin-left: -3.4375em;
+}
+
+.sub-rekening {
+    margin-left: 2px;
+}
+
+.syarat-pengumpulan {
+    margin-left: 2px;
+}
+
+.hal-hal-kuasa {
+    margin-top: -20px;
+    margin-left: 2px;
+}
+
+.hal-hal-kuasa-2 {
+    margin-left: 2px;
+}
