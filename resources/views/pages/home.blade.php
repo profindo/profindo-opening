@@ -59,15 +59,15 @@
         <footer class="appFooter">
             <div class="heading">Copyright © Profindo Sekuritas Indonesia. All Rights Reserved.</div>
             <!-- facebook -->
-            <a href="#" class="btn btn-facebook btn-icon me-1">
+            <a href="https://m.facebook.com/profindosekuritasindonesia/" class="btn btn-facebook btn-icon me-1">
                 <i class="icon ion-logo-facebook"></i>
             </a>
             <!-- twitter -->
-            <a href="#" class="btn btn-twitter btn-icon me-1">
+            <a href="https://mobile.twitter.com/proclickrg" class="btn btn-twitter btn-icon me-1">
                 <i class="icon ion-logo-twitter"></i>
             </a>
             <!-- instagram -->
-            <a href="#" class="btn btn-instagram btn-icon me-1">
+            <a href="https://instagram.com/profindosekuritas" class="btn btn-instagram btn-icon me-1">
                 <i class="icon ion-logo-instagram"></i>
             </a>
         </footer>
@@ -110,6 +110,13 @@
             </a>
         </div>
         <div class="item">
+            <a href="/ketentuan-tabungan">
+                <p>
+                    <span>Ketentuan-ketentuan TAPRES</span>
+                </p>
+            </a>
+        </div>
+        <div class="item">
             <a href="#appSidebar" class="icon" data-bs-toggle="offcanvas">
                 <p>
                     <i class="icon ion-ios-menu"></i>
@@ -142,6 +149,12 @@
                             <a href="/perjanjian-pembukaan-rekening">
                                 <i class="icon ion-ios-apps"></i>
                                 PERJANJIAN PEMBUKAAN REKENING
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/perjanjian-pembukaan-rekening">
+                                <i class="icon ion-ios-analytics"></i>
+                                KETENTUAN-KETENTUAN TAPRES
                             </a>
                         </li>
                     </ul>

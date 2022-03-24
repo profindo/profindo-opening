@@ -1,0 +1,91 @@
+.img-logo {
+    height: 3em;
+}
+
+.paraghraph-text {
+    margin-top: -20px;
+    font-size: 14px;
+}
+
+ol,
+ul {
+    font-size: 14px;
+}
+
+.title-letter {
+    margin-top: -20px;
+    margin-bottom: -2px;
+}
+
+.paraghraph-letter {
+    font-size: 0.685em;
+}
+
+.paraghraph-letter-2 {
+    font-size: 1em;
+    margin-left: -2.1875em;
+    margin-top: 0.9375em;
+}
+
+.paraghraph-letter-3 {
+    font-size: 14px;
+    margin-left: -4.5em;
+    margin-top: -1.875em;
+    margin-bottom: 3.125em;
+}
+
+.ol-custom {
+    counter-reset: item;
+}
+
+.li-custom {
+    display: block;
+}
+
+.li-custom:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+}
+
+
+/* submenu */
+
+.ol-submenu {
+    /* counter-reset: list; */
+    margin-top: -15px;
+    counter-reset: item
+}
+
+.ol-submenu>.li-submenu {
+    display: block;
+    counter-increment: item;
+    margin-top: -20px;
+}
+
+.ol-submenu>.li-submenu:before {
+    content: counter(item, lower-alpha) ") ";
+}
+
+.p-submenu {
+    margin-left: 8px;
+}
+
+.submenu-15 {
+    margin-left: 35px;
+    margin-top: -10px;
+}
+
+
+/* Numbering Increment  */
+
+.abc-list {
+    list-style: none;
+}
+
+.abc-list>li>span.counter {
+    position: absolute;
+}
+
+.li-strip {
+    margin-left: -30px;
+}

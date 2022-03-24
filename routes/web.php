@@ -24,3 +24,5 @@ Route::get('/surat-pernyataan-kuasa', function () {
 Route::get('/perjanjian-pembukaan-rekening', fn () => view('pages.perjanjian-pembukaan-rekning'));
 
 Route::get('/pernyataan-nasabah-rdn-bca', fn () => view('pages.pernyataan-nasabah-rdn-bca'));
+
+Route::get('/ketentuan-tabungan', fn () => view('pages.ketentuan-tabungan'));
