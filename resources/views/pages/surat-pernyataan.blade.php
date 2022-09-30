@@ -221,6 +221,13 @@
                                     atau atas perintah pengadilan.
                                 </p>
                             </li>
+                            <li>
+                                <p class="text-start text-justify paraghraph-text">
+                                    Untuk membuka rekening efek dan dana di Perusahaan dengan maksud pembelian, penjualan, 
+                                    penukaran, penyerahan ataupun maksud dilakukannya perbuatan-perbuatan hukum lain 
+                                    seumumnya atas, atau sehubungan dengan setiap segala jenis efek
+                                </p>
+                            </li>
                         </ul>
                         <p class="paraghraph-letter text-start text-justify">
                             Dengan ini Pemberi Kuasa menyatakan bertanggung jawab atas segala kerugian dan/ atau
