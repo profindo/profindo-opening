@@ -178,18 +178,19 @@
                                     sepakat akan mengusahakan, untuk dalam jangka waktu 30 (tiga puluh) hari sejak
                                     diterimanya pemberitahuan dari salah satu pihak lainnya atas terjadinya perselisihan
                                     tersebut, menyelesaikan terlebih dahulu sengketa dimaksud dengan cara musyawarah di
-                                    antara saya/kami dengan PT. Profindo Sekuritas Indonesia.
+                                    antara saya/kami dengan PT. Profindo Sekuritas Indonesia.Dalam hal perselisihan yang 
+                                    timbul tidak dapat diselesaikan secara musyawarah. Saya/Kami dan PT. Profindo 
+                                    Sekuritas Indonesia sepakat untuk menyelesaikan perselishan tersebut melalui Badan 
+                                    Arbitrase Pasar Modal Indonesia (BAPMI) sesuai dengan peraturan perundang-undangan 
+                                    yang berlaku. 
                                 </p>
                             </li>
                             <li>
                                 <p class="text-start text-justify paraghraph-text">
-                                    Dalam hal perselisihan yang timbul tidak dapat diselesaikan secara musyawarah.
-                                    Saya/Kami dan PT. Profindo Sekuritas Indonesia sepakat untuk menyelesaikan
-                                    perselishan tersebut melalui Badan Arbitrase Pasar Modal Indonesia (BAPMI) sesuai
-                                    dengan peraturan perundang-undangan yang berlaku. Saya/kami dengan ini memberikan
-                                    kuasa penuh dengan Hak Substitusi kepada : PT. Profindo Sekuritas Indonesia
-                                    berdomisili di Gedung Permata Kuningan lantai 19, Jl. Kuningan Mulia Kav. 9C, Guntur
-                                    Setiabudi-Jakarta Selatan 12980 (Selanjutnya disebut "Penerima Kuasa").
+                                    Saya/kami dengan ini memberikan kuasa penuh dengan Hak Substitusi kepada :
+                                    PT. Profindo Sekuritas Indonesia berdomisili di Gedung Permata Kuningan lantai 19, 
+                                    Jl. Kuningan Mulia Kav. 9C, Guntur Setiabudi-Jakarta Selatan 12980 
+                                    (Selanjutnya disebut "Penerima Kuasa").
                                 </p>
                             </li>
                         </ol>
