@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OpeningAccount;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,15 +15,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.home');
+    return view('home');
 });
 
-Route::get('/surat-pernyataan-kuasa', function () {
-    return view('pages.surat-pernyataan');
+Route::get('/app', function () {
+    return view('layout.app');
 });
 
-Route::get('/perjanjian-pembukaan-rekening', fn () => view('pages.perjanjian-pembukaan-rekning'));
+Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () { 
+    Route::get('ketentuan-tabungan', fn () => view('surat.ketentuan-tabungan'));
+    Route::get('pernyataan-nasabah-rdn-bca', fn () => view('surat.pernyataan-nasabah-rdn-bca'));
+    Route::get('perjanjian-pembukaan-rekening', fn () => view('surat.perjanjian-pembukaan-rekning'));
+    Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
+});
 
-Route::get('/pernyataan-nasabah-rdn-bca', fn () => view('pages.pernyataan-nasabah-rdn-bca'));
+Route::controller(OpeningAccount::class)->group(function () {
+    Route::get('/register', fn () => 'register');
+});
 
-Route::get('/ketentuan-tabungan', fn () => view('pages.ketentuan-tabungan'));
+

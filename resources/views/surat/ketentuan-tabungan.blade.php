@@ -12,7 +12,7 @@
     <meta name="keywords" content="opening, opening account, profindo, sekuritas, profindo sekuritas indonesia" />
     <link rel="icon" type="image/png" href="{{ asset('img/logo-png.png') }}" sizes="32x32">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/logo-png.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/ketentuan-tabungan.css') }}">
+    <link rel="stylesheet" href="{{ asset('csssurat/ketentuan-tabungan.css') }}">
 </head>
 
 <body>
