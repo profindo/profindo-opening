@@ -17,8 +17,7 @@
     <!-- App Capsule -->
     <div id="appCapsule">
         <div class="appContent">
-            {{--  --}}
-            @include('opening.preparations')
+            {!! $content !!}
         </div>
     </div>
     <!-- * appCapsule -->
@@ -31,16 +30,10 @@
     @include('layout.sidebar')
     <!-- * Sidebar Menu -->
 
-
-    <!-- ///////////// Js Files ////////////////////  -->
-    <!-- Bootstrap-->
-    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
-    <!-- Splide -->
-    <script src="assets/js/plugins/splide/splide.min.js"></script>
-    <!-- Main Js File -->
-    <script src="assets/js/app.js"></script>
-
-
+    <!-- Components -->
+    {{--@foreach ($content->components as $component)
+        {!! $component !!}
+    @endforeach --}}
 </body>
 
 </html>

@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class OpeningAccount extends Controller
+class OpeningAccountController extends Controller
 {
-    public function index(Request $req) {
-        return view('opening.preparations');
+    public static function index() {
+        return view('opening.start', ['components', [view('opening.components.confirmation_modal'),]]);
     }
 
     public function userVerification(Request $req) {
-        return;
+        #if($req->input());
     }
 
     public function __construct()

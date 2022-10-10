@@ -29,5 +29,14 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'bca' => [
+        'id' => env('BCA_CLIENT_ID'),
+        'key' => env('BCA_API_KEY'),
+        'api_secret' => base64_decode(env('BCA_API_SECRET')),
+        'client_secret' => base64_decode(env('BCA_CLIENT_SECRET')),
+        'url' => [
+            'oauth_token'     => env('BCA_OAUTH_URL'),
+            'validate_account' => env('BCA_VALIDATE_ACCOUNT_URL'),
+        ],
+    ],
 ];
