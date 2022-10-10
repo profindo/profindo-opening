@@ -135,53 +135,54 @@
 </div>
 
 <script>
-    function registerUser() {
-
-        var form = $('#openingAccountForm');
-        var rdn_service;
-        switch (form[0].elements["tipeRDN"].value) {
-            case "BBCA":
-                rdn_service = '/bca'
-                break;
-
-            case "CIMB":
-                rdn_service = '/cimb'
-                break;
-
-            case "BSIM":
-                rdb_service = '/sinarmas'
-                break;
-        
-            default:
-                break;
-        }
-        $.ajax({
-            type: 'POST',
-            url: rdn_service.concat('/validate'),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Content-Type': 'application/json',
-            },
-            data: form.serialize(),
-            success : function(response){
-                console.log(response)
-            },
-            error : function(response){
-                console.log(response)
-            }
-        });
-    }
-
     $(document).ready(function() {
         $('#carouselForm').on('slid.bs.carousel', function () {
             var currentSlide = $('div.active').index();
             nextButton = $('#nextBtn');
             if(currentSlide >= 2) {
-                nextButton.attr('onclick', 'registerUser()');
+                nextButton.attr('type', 'submit');
+                nextButton.attr('form', 'openingAccountForm');
+                nextButton.removeAttr('href');
             }
             else{
-                nextButton.removeAttr('onclick');
+                nextButton.removeAttr('type');
+                nextButton.removeAttr('form');
+                nextButton.attr('href', '#carouselForm');
             }
+        });
+
+        $("#openingAccountForm").submit(function (event) {
+            event.preventDefault();
+            var form = $('#openingAccountForm');
+            var rdn_service;
+            switch (form[0].elements["tipeRDN"].value) {
+                case "BBCA":
+                    rdn_service = '/bca'
+                    break;
+
+                case "CIMB":
+                    rdn_service = '/cimb'
+                    break;
+
+                case "BSIM":
+                    rdb_service = '/sinarmas'
+                    break;            
+            }
+            $.ajax({
+                type: 'POST',
+                url: rdn_service.concat('/validate'),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                },
+                data: form.serialize(),
+                success : function(response){
+                    console.log(response)
+                },
+                error : function(response){
+                    console.log(response)
+                }
+            });
         });
     });
 </script>
