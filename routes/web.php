@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\BCAController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OpeningAccount;
-use App\Http\Controllers\SinarmasController;
+use App\Http\Controllers\OpeningAccountController;
+use App\Http\Controllers\Opening\BCAController;
+use App\Http\Controllers\Opening\SinarmasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/phpinfo', fn () => view('phpinfo'));
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () { 
@@ -26,14 +28,14 @@ Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () {
     Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
 });
 
-Route::controller(OpeningAccount::class)->group(function () {
+Route::controller(OpeningAccountController::class)->group(function () {
     Route::get('/register', fn () => 'register');
 });
 
 Route::group(['prefix'=>'bca', 'middleware'=>['web']], function () {
-    Route::post('/validate', [BCAController::class, 'validateAccount']);
+    Route::post('/validate', [BCAController::class, 'validateUser']);
 });
 
 Route::group(['prefix'=>'sinarmas', 'middleware'=>['web']], function() {
-    Route::post('/validate', [SinarmasController::class, 'validateAccount']);
+    Route::post('/validate', [SinarmasController::class, 'validateUser']);
 });

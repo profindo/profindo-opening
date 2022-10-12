@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Opening;
 
+use App\Http\Controllers\OpeningAccountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class SinarmasController extends Controller
+class SinarmasController extends OpeningAccountController
 {
     public function __construct()
     {

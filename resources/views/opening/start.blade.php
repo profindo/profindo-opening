@@ -77,8 +77,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="custBankName">Nama pemilik rekening (Pribadi)</label>
-                                    <input class="form-control form-control-sm" id="custBankName" type="text"
-                                        placeholder="e.g John Doe">
+                                    <input class="form-control form-control-sm" id="custBankName" type="text" name="custBankName" placeholder="e.g John Doe">
                                 </div>
                                 <div class="form-group">
                                     <label for="custBankNo">Nomor rekening (Pribadi)</label>
@@ -88,38 +87,35 @@
                                 <hr>
                                 <div class="form-group">
                                     <label for="custName">Nama sesuai identitas KTP</label>
-                                    <input class="form-control form-control-sm" id="custName" type="text"
-                                        placeholder="e.g John Doe">
+                                    <input class="form-control form-control-sm" id="custName" name="custName" type="text" placeholder="e.g John Doe">
                                 </div>
                                 <div class="form-group">
                                     <label for="custEmail">Email</label>
-                                    <input class="form-control form-control-sm" id="custEmail" type="text"
-                                        placeholder="e.g john@example.com">
+                                    <input class="form-control form-control-sm" id="custEmail" type="text" name="custEmail" placeholder="e.g john@example.com">
                                 </div>
                                 <div class="form-group">
-                                    <label for="custEmail">No Telepon</label>
-                                    <input class="form-control form-control-sm" id="custPhone" type="text"
-                                        placeholder="e.g 081234567890">
+                                    <label for="custPhone">No Telepon</label>
+                                    <input class="form-control form-control-sm" id="custPhone" type="text" name="custPhone" placeholder="e.g 081234567890">
                                 </div>
                                 <hr>
                                 <div class="form-group">
                                     <label for="custRef">Sales/Referral</label>
-                                    <input class="form-control form-control-sm" id="custRef" type="text">
+                                    <input class="form-control form-control-sm" id="custRef" type="text" name="custRef">
                                 </div>
                                 <div class="form-group">
                                     <label for="custPassword">Password</label>
-                                    <input class="form-control form-control-sm" id="custPassword" type="text">
+                                    <input class="form-control form-control-sm" id="custPassword" type="text" name="custPassword">
                                 </div>
                                 <div class="form-group">
                                     <label for="custPasswordConfirm">Konfirmasi password</label>
-                                    <input class="form-control form-control-sm" id="custPasswordConfirm" type="text">
+                                    <input class="form-control form-control-sm" id="custPasswordConfirm" type="text" name="custPasswordConfirm">
                                 </div>
                                 <hr>
                                 <div class="form-group">
                                     <label class="form-check-label" for="checkTerms">Saya dengan ini memberikan
                                         persetujuan kepada PT PROFINDO SEKURITAS INDONESIA untuk meminta konfirmasi atas
                                         data rekening saya tersebut diatas kepada PT Bank Central Asia Tbk.</label>
-                                    <input class="form-check-input" type="checkbox" value="" id="checkTerms">
+                                    <input class="form-check-input" id="checkTerms" type="checkbox" name="checkTerms" value="" required>
                                 </div>
                             </form>
                         </div>
@@ -155,7 +151,7 @@
             event.preventDefault();
             var form = $('#openingAccountForm');
             var rdn_service;
-            switch (form[0].elements["tipeRDN"].value) {
+            switch (form.find('input[name="tipeRDN"]').val()) {
                 case "BBCA":
                     rdn_service = '/bca'
                     break;
@@ -175,9 +171,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
                 },
-                data: form.serialize(),
+                dataType: 'application/json',
+                data: JSON.stringify(form.serializeArray()),
                 success : function(response){
-                    console.log(response)
+                    console.log(response)                        
                 },
                 error : function(response){
                     console.log(response)
