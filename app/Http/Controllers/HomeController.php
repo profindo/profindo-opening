@@ -8,6 +8,6 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index() {
-        return view('home', ['content'=> OpeningAccountController::index()]);
+        return view('opening.start');
     }
 }

@@ -10,8 +10,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="otp">Masukan kode OTP yang telah dikirimkan lewat e-mail</label>
-                        <input class="form-control form-control-sm" type="text">
+                        <label for="otp">Link verifikasi telah dikirim via e-mail</label>
                     </div>
                 </form>
             </div>
@@ -22,3 +21,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function sendOTP(){
+        $('#confirmationModal').modal('toggle')
+        $('#confirmationModal').modal({
+            backdrop: 'static',
+        })
+    }
+</script>

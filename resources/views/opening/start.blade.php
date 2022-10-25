@@ -1,11 +1,14 @@
+@extends('home')
+
+@section('content')
 <div class="container-fluid d-flex flex-column justify-content-center p-lg-5">
     <div class="d-flex flex-column">
-        <img class="m-auto col-sm-2" src="{{ asset('img/logo.png') }}">
+        <img class="m-auto col-sm-2" id="openingLogo" src="{{ asset('img/logo.png') }}">
         <h3 class="text-center">Profindo Opening Account</h3>
     </div>
     <div class="container col-sm-8">
-
         <div id="carouselForm" class="carousel slide mt-2 mb-4" data-bs-ride="carousel" data-bs-interval="false" data-bs-wrap="false">
+            
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="card">
@@ -54,61 +57,64 @@
                                 <div class="form-group">
                                     <span>Bank reksa dana (RDN)</span>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="tipeRDN" id="tipeRDN1"
-                                            value="BBCA" checked>
+                                        <input class="form-check-input" type="radio" name="tipeRDN" id="tipeRDN1" value="1" checked>
                                         <label class="form-check-label card-text" for="tipeRDN1">
                                             Bank BCA
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="tipeRDN" id="tipeRDN2"
-                                            value="CIMB">
+                                        <input class="form-check-input" type="radio" name="tipeRDN" id="tipeRDN2" value="2">
                                         <label class="form-check-label card-text" for="tipeRDN2">
                                             Bank CIMB Niaga
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="tipeRDN" id="tipeRDN3"
-                                            value="BSIM">
+                                        <input class="form-check-input" type="radio" name="tipeRDN" id="tipeRDN3" value="3">
                                         <label class="form-check-label card-text" for="tipeRDN3">
                                             Bank Sinarmas
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="custBankName">Nama pemilik rekening (Pribadi)</label>
-                                    <input class="form-control form-control-sm" id="custBankName" type="text" name="custBankName" placeholder="e.g John Doe">
+                                    <label for="cust_bankname">Nama pemilik rekening (Pribadi)</label>
+                                    <input class="form-control form-control-sm" id="cust_bankname" type="text" name="cust_bankname" placeholder="e.g John Doe" autocomplete="on" value={{ (old('cust_bankname')) }}>
+                                    <span class="text-danger" id="cust_bankname_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="custBankNo">Nomor rekening (Pribadi)</label>
-                                    <input class="form-control form-control-sm" id="custBankNo" type="text"
-                                        placeholder="e.g 05123456789">
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <label for="custName">Nama sesuai identitas KTP</label>
-                                    <input class="form-control form-control-sm" id="custName" name="custName" type="text" placeholder="e.g John Doe">
-                                </div>
-                                <div class="form-group">
-                                    <label for="custEmail">Email</label>
-                                    <input class="form-control form-control-sm" id="custEmail" type="text" name="custEmail" placeholder="e.g john@example.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="custPhone">No Telepon</label>
-                                    <input class="form-control form-control-sm" id="custPhone" type="text" name="custPhone" placeholder="e.g 081234567890">
+                                    <label for="cust_bankno">Nomor rekening (Pribadi)</label>
+                                    <input class="form-control form-control-sm" id="cust_bankno" type="text" name="cust_bankno" placeholder="e.g 05123456789" autocomplete="on">
+                                    <span class="text-danger" id="cust_bankno_error"></span>
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                                    <label for="custRef">Sales/Referral</label>
-                                    <input class="form-control form-control-sm" id="custRef" type="text" name="custRef">
+                                    <label for="cust_name">Nama sesuai identitas KTP</label>
+                                    <input class="form-control form-control-sm" id="cust_name" name="cust_name" type="text" placeholder="e.g John Doe" autocomplete="on">
+                                    <span class="text-danger" id="cust_name_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="custPassword">Password</label>
-                                    <input class="form-control form-control-sm" id="custPassword" type="text" name="custPassword">
+                                    <label for="cust_email">Email</label>
+                                    <input class="form-control form-control-sm" id="cust_email" type="text" name="cust_email" placeholder="e.g john@example.com" autocomplete="on">
+                                    <span class="text-danger" id="cust_email_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="custPasswordConfirm">Konfirmasi password</label>
-                                    <input class="form-control form-control-sm" id="custPasswordConfirm" type="text" name="custPasswordConfirm">
+                                    <label for="cust_phone">No Telepon</label>
+                                    <input class="form-control form-control-sm" id="cust_phone" type="text" name="cust_phone" placeholder="e.g 081234567890" autocomplete="on">
+                                    <span class="text-danger" id="cust_phone_error"></span>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="cust_referral">Sales/Referral</label>
+                                    <input class="form-control form-control-sm" id="cust_referral" type="text" name="cust_referral">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cust_password">Password</label>
+                                    <input class="form-control form-control-sm" id="cust_password" type="password" name="cust_password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cust_passconfirm">Konfirmasi password</label>
+                                    <input class="form-control form-control-sm" id="cust_passconfirm" type="password" name="cust_passconfirm">
+                                    <span class="text-danger" id="cust_password_error"></span>
+                                    <span class="text-danger" id="cust_passconfirm_error"></span>
                                 </div>
                                 <hr>
                                 <div class="form-group">
@@ -121,21 +127,42 @@
                         </div>
                     </div>
                 </div>
+                @yield('form')
             </div>
             <div class="d-flex flex-column flex-lg-row justify-content-center">
-                <button class="btn btn-primary col-lg-5 m-1" id="prevBtn" href="#carouselForm" data-bs-slide="prev">Kembali</button>
-                <button class="btn btn-primary col-lg-5 m-1" id="nextBtn" href="#carouselForm" data-bs-slide="next">Selanjutnya</button>
+                <button class="btn btn-primary col-lg-5 m-1" id="prevBtn" href="#carouselForm" data-bs-slide="prev"><span>Kembali</span></button>
+                <button class="btn btn-primary col-lg-5 m-1" id="nextBtn" href="#carouselForm" data-bs-slide="next"><span>Selanjutnya</span></button>
             </div>
         </div>
     </div>
 </div>
+@endsection
 
+@section('footer')
+<div id="carouselFormIndicators" class="container" data-bs-ride="carousel">
+    <ul id="carousel_indicators" class="d-flex flex-row list-unstyled text-center">
+        <li id="carousel_indicator_1" class="container col-3" data-bs-target="#carouselForm" data-bs-slide-to="0">
+            <div class="w-100 item active">Persiapan</div>
+        </li>
+        <li id="carousel_indicator_2" class="container col-3" data-bs-target="#carouselForm" data-bs-slide-to="1">
+            <div class="w-100 item">FAQ</div>
+        </li>
+        <li id="carousel_indicator_3" class="container col-3" data-bs-target="#carouselForm" data-bs-slide-to="2">
+            <div class="w-100 item">Register</div>
+        </li>
+    </ul>
+</div>
+@endsection
+
+@section('scripts')
 <script>
     $(document).ready(function() {
-        $('#carouselForm').on('slid.bs.carousel', function () {
-            var currentSlide = $('div.active').index();
+        var carousel = $('#carouselForm');
+
+        carousel.on('slide.bs.carousel', function (e) {
+            var slideTo = e.to;
             nextButton = $('#nextBtn');
-            if(currentSlide >= 2) {
+            if(slideTo >= 2) {
                 nextButton.attr('type', 'submit');
                 nextButton.attr('form', 'openingAccountForm');
                 nextButton.removeAttr('href');
@@ -145,22 +172,30 @@
                 nextButton.removeAttr('form');
                 nextButton.attr('href', '#carouselForm');
             }
+            $('#carousel_indicators li div').removeClass('active');
+            $('#carousel_indicators li div')[slideTo].classList.add('active');
         });
 
         $("#openingAccountForm").submit(function (event) {
             event.preventDefault();
+            document.getElementById('nextBtn').innerHTML = "<i class='fas fa-circle-notch fa-spin'></i>"
             var form = $('#openingAccountForm');
+            var form_data = form.serializeArray()
+                        .reduce(function (prev, data) {
+                            prev[data.name] = data.value;
+                            return prev;
+                        });
             var rdn_service;
             switch (form.find('input[name="tipeRDN"]').val()) {
-                case "BBCA":
+                case "1":
                     rdn_service = '/bca'
                     break;
 
-                case "CIMB":
+                case "2":
                     rdn_service = '/cimb'
                     break;
 
-                case "BSIM":
+                case "3":
                     rdb_service = '/sinarmas'
                     break;            
             }
@@ -172,15 +207,38 @@
                     'Content-Type': 'application/json',
                 },
                 dataType: 'application/json',
-                data: JSON.stringify(form.serializeArray()),
-                success : function(response){
-                    console.log(response)                        
+                data: JSON.stringify(form_data),
+                statusCode: {
+                    200: function(response) {
+                        console.log(response);
+                        $.each(form_data, function(key, val) {
+                            $('#' + key + '_error').attr('hidden', 'true');
+                        });
+                        sendOTP();
+                    },
+                    422: function(response) {
+                        console.log("ERROR : ", response)
+                        var error = JSON.parse(response.responseText)['errors'];
+                        $('#openingLogo')[0].scrollIntoView();
+                        $.each(form_data, function(key, val) {
+                            if(!(error[key])) {
+                                $('#' + key + '_error').attr('hidden', 'true');
+                            }
+                            else {
+                                $('#' + key + '_error').text(error[key][0]);
+                                $('#' + key + '_error').removeAttr('hidden');
+                            }
+                        });
+                    }
                 },
-                error : function(response){
-                    console.log(response)
+                complete: function(response) {
+                    document.getElementById('nextBtn').innerHTML = "<span>Selanjutnya</span>"
                 }
             });
         });
     });
 </script>
+@endsection
+@section('modals')
 @include('opening.components.confirmation_modal')
+@endsection

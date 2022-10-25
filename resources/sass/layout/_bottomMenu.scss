@@ -46,21 +46,9 @@
             right: 0;
         }
         &.active{
-            position: relative;
-            &:after{
-                content: '';
-                height: 2px;
-                border-radius:  0 0 10px 10px;
-                display: block;
-                background: $colorPrimary;
-                position: absolute;
-                left: 0;
-                top: 0;
-                right: 0;
-            }
-            > a{
-                color: $colorPrimary !important;
-            }
+            border-top: 2px solid $colorPrimary;
+            height: 50%;
+            transition: height 0.5s;
         }
     }
     &.iconed{

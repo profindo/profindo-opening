@@ -1,7 +1,7 @@
 <div class="appHeader">
     <div class="left">
         <a href="#appSidebar" class="icon" data-bs-toggle="offcanvas">
-            <i class="icon ion-ios-menu"></i>
+            <i class="fa-solid fa-bars"></i>
         </a>
     </div>
     <div class="pageTitle">
