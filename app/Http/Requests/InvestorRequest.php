@@ -24,12 +24,12 @@ class InvestorRequest extends FormRequest
     public function rules()
     {
         return [
-            'cust_bankname'     => 'required|max:35',
-            'cust_bankno'       => 'required',
+            'cust_bank_name'     => 'required|max:35',
+            'cust_bank_no'       => 'required',
             'cust_name'         => 'required',
-            'cust_email'        => 'required',
+            'cust_email'        => 'required|email:rfc,dns',
             'cust_phone'        => 'required',
-            'cust_password'     =>  'required',
+            'cust_password'     => 'required',
             'cust_passconfirm'  => 'same:cust_password',
         ];
     }
@@ -37,8 +37,8 @@ class InvestorRequest extends FormRequest
     public function attributes()
     {
         return [
-            'cust_bankname'     => 'Nama Buku Tabungan',
-            'cust_bankno'       => 'Nomor Rekening',
+            'cust_bank_name'     => 'Nama Buku Tabungan',
+            'cust_bank_no'       => 'Nomor Rekening',
             'cust_name'         => 'Nama KTP',
             'cust_email'        => 'Email',
             'cust_phone'        => 'No Telepon',
@@ -56,7 +56,7 @@ class InvestorRequest extends FormRequest
     {
         return [
             'required'          => ':attribute harus diisi.',
-            'cust_bankname.max' => ':attribute harus dibawah 35 karakter.',
+            'cust_bank_name.max' => ':attribute harus dibawah 35 karakter.',
             'required_without'  => 'Salah satu harus diisi.',
             'same'              => ':attribute tidak sesuai.',
         ];

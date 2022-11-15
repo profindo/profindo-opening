@@ -64,3 +64,34 @@ toggleSidebar.forEach(function(el){
     })
 })
 ///////////////////////////////////////////////////////////////////////////
+
+function dropdownSelector() {
+    var datalists = $('datalist')
+    $.each($('.dropdown-selector'), function (key, val) {
+        var datalist = $('#' + $(this).attr('list'));
+        var next_datalist = $(datalists[$(datalists).index(datalist) + 1])
+
+        if(!datalist.data('route')) return;
+        $(this).on('change', function (e) {
+            var option = datalist.find('[value="' + this.value + '"]');
+            $.ajax({
+                type: 'GET',
+                url: datalist.data('route') + '/' + option.data('id'),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'application/json',
+                statusCode: {
+                    200: function (response) {
+                        var objects = JSON.parse(response.responseText);
+                        next_datalist.html('');
+                        $.each(objects, function (key, val) {
+                            next_datalist.append('<option value="' + val[next_datalist.data('identifier')+'_name'] +'" data-id="' + val[next_datalist.data('identifier')+'_id'] + '" >');
+                        });
+                    }
+                },
+            });
+        });
+    });
+}

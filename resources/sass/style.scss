@@ -38,8 +38,6 @@
 
 // Grid
 @import 'ui/grid';
-// Others
-@import 'ui/others';
 // Forms
 @import 'ui/forms';
 // Button
@@ -52,3 +50,9 @@
 @import 'ui/card';
 // Blocks
 @import 'ui/blocks';
+// Progress Bar
+@import 'ui/progress';
+
+.jcrop-keymgr {
+    opacity: 0;
+}

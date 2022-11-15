@@ -2,13 +2,6 @@
 $sidebarSize: 250px;
 // Change sidebar width right here and compile the sass
 
-
-.modal-backdrop{
-  z-index: 9999;
-  &.show{
-    opacity: .5;
-  }
-}
 .offcanvas-start{
   border-right: 0;
 }

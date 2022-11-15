@@ -8,15 +8,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="email_verification" method="POST" action="{{ route('verification.verify') }}">
+                    @csrf
                     <div class="form-group">
-                        <label for="otp">Link verifikasi telah dikirim via e-mail</label>
+                        <label for="otp">Token verifikasi telah dikirim via e-mail</label>
+                        <input class="form-control" id="otp_token" type="text" name="otp_token" placeholder>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" form="email_verification" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
@@ -29,4 +31,5 @@
             backdrop: 'static',
         })
     }
+
 </script>

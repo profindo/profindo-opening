@@ -1,7 +1,6 @@
 .appBottomMenu{
     min-height: 56px;
     position: fixed;
-    z-index: 9999;
     bottom: 0;
     left: 0;
     right: 0;
@@ -47,8 +46,6 @@
         }
         &.active{
             border-top: 2px solid $colorPrimary;
-            height: 50%;
-            transition: height 0.5s;
         }
     }
     &.iconed{

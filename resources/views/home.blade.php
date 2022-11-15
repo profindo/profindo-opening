@@ -11,17 +11,24 @@
     <title>Profindo Sekuritas Indonesia</title>
     
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('img/logo-png.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('img/logo-png.png') }}">
-    
-    <!-- Bootstrap-->
-    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/logo.png') }}">
+
     <!-- Main Js File -->
     <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    
+    <!--jquery UI-->
+    <link rel="stylesheet" href="{{ asset('jquery UI/jquery-ui.min.css') }}">
+    <script src="{{ asset('jquery UI/jquery-ui.min.js') }}"></script>
+
+    <!-- Bootstrap-->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
+    @yield('modals')
     <!-- Page loading -->
     @include('layout.loading')
     <!-- * Page loading -->
@@ -95,14 +102,7 @@
     <!-- Sidebar Menu -->
     @include('layout.sidebar')
     <!-- * Sidebar Menu -->
-
-    <!-- Components -->
-    {{--@foreach ($content->components as $component)
-        {!! $component !!}
-    @endforeach --}}
 </body>
-
-@yield('modals')
 @yield('scripts')
 
 </html>

@@ -1,12 +1,12 @@
 .form-control {
   box-shadow: none !important;
   color: $colorHeading !important;
-  background: $colorLine;
   height: 50px;
   font-size: 18px;
   padding: 10px 16px;
-  border-radius: 6px;
   border: 0;
+  border-bottom: 1px solid $colorLine;
+  border-radius: 0 !important;
   &:focus {
     background: $colorLine;
   }

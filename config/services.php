@@ -35,8 +35,17 @@ return [
         'api_secret' => base64_decode(env('BCA_API_SECRET')),
         'client_secret' => base64_decode(env('BCA_CLIENT_SECRET')),
         'url' => [
-            'oauth_token'     => env('BCA_OAUTH_URL'),
-            'validate_account' => env('BCA_VALIDATE_ACCOUNT_URL'),
+            'oauth_token'     => '/api/oauth/token',
+            'validate_account' => '/banking/general/corporates/'.env('BCA_CORPORATE_ID').'/accounts/%s/validation',
+        ],
+    ],
+    'cimb' => [
+        'key' => env('CIMB_API_KEY'),
+        'api_secret' => env('CIMB_API_SECRET'),
+        'url' => [
+            'rdn' => '/V2.1/EFormCorpAcctOpening/InvestorSA',
+            'etb_checking' => '/V2.0/CIFListingInquiry/byAccountDOB',
+            'eform_doc_support' => '/V1.0/SupportDocAddCorp/',
         ],
     ],
 ];

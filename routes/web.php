@@ -29,23 +29,14 @@ Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () {
     Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
 });
 
-Route::controller(OpeningAccountController::class)->group(function () {
-    Route::get('/register', 'register');
+Route::post('/validate', [OpeningAccountController::class, 'validateUser']);
+
+Route::group(['prefix'=>'api', 'middleware'=>['api']], function () {
+    Route::post('/bca', [BCAController::class, 'applyHeaders'])->middleware('oauth2_bca');
 });
 
-Route::group(['prefix'=>'bca', 'middleware'=>['web']], function () {
-    Route::post('/validate', [BCAController::class, 'validateUser']);
-});
-
-Route::group(['prefix'=>'sinarmas', 'middleware'=>['web']], function () {
-    Route::post('/validate', [SinarmasController::class, 'validateUser']);
-});
-
-Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/form');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/mail/verify', [OpeningAccountController::class, 'verifyEmail'])->name('verification.verify');
 
 Route::get('/form', function () {
     return view('opening.personal_info');
-})->name('form.personal_info');
+})->middleware(['auth'])->name('form.personal_info');
