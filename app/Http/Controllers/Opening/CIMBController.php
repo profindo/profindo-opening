@@ -48,13 +48,7 @@ class CIMBController extends Controller
             ]
         ];
         $response = $this->applyHeaders($this->client, 'POST', $params);
-        $response = $response->post(config('services.cimb.url.etb_checking'), [
-            'config' => [
-                'curl' => [
-                    'CURLOPT_INTERFACE' => '202.137.26.172',
-                ],
-            ],
-        ])->json();
+        $response = $response->post(config('services.cimb.url.etb_checking'))->json();
         
         if($response['statusCode'] != '200') {
             info($response);

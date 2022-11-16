@@ -52,7 +52,7 @@ class OpeningAccountController extends Controller
             $result = $handler->validateAccount($request);
             if($result != 'Success')
             {
-                $validate->errors()->add('cust_bankno', $result);
+                $validate->errors()->add('cust_bank_no', $result);
             }
         });
 
@@ -61,6 +61,7 @@ class OpeningAccountController extends Controller
             return response()->json(['message'=>'The given data was invalid.', 'errors' => $validate->errors()], 422);
         }
         else{
+            $this->sendVerificationEmail($request);
             return response()->json(['status' => 'Success'], 201);
         }
     }
@@ -82,18 +83,23 @@ class OpeningAccountController extends Controller
 
     public function sendVerificationEmail(Request $request)
     {
-        $user = new Investor();
+        $user = new User();
+        $investor = new Investor();
 
-        $user->bank_name = $request->post('cust_bankname');
-        $user->bank_no = $request->post('cust_bankno');
         $user->name = $request->post('cust_name');
-        $user->phone = $request->post('cust_phone');
         $user->email = $request->post('cust_email');
         $user->password = Hash::make($request->post('cust_password'));
 
-        $user->referral = $request->post('cust_referral');
+        $investor->name = $user->name;
+        $investor->bank_name = $request->post('cust_bank_name');
+        $investor->bank_no = $request->post('cust_bank_no');
+        $investor->bank_code = $request->post('cust_bank_code');
+        $investor->phone = $request->post('cust_phone');
+        $investor->referral = $request->post('cust_referral');
 
-        if($user->save()) { 
+        if($investor->save()) {
+            $user->investor_id = $investor;
+            $user->save();
             session(['user_id'=> $user->id]);
             $token = strtoupper(Str::random(6));
             Token::create([
@@ -113,12 +119,12 @@ class OpeningAccountController extends Controller
     public function verifyEmail(Request $request)
     {
         $user = Investor::find(session('user_id'));
-        if($user->is_email_verified) {
+        if($user->email_verified_at) {
             $message = "You are already verified";
         }
         else if($request->input('otp_token') == $user->token->token) {
             Auth::login($user);
-            $user->is_email_verified = 1;
+            $user->is_email_verified = date('Y-m-d H:i:s');
             $user->save();
             $message = "Success";
         }

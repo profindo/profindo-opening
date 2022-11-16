@@ -15,6 +15,13 @@ class SinarmasController extends Controller
 
     private function getOAuthToken()
     {
-
+        $response = Http::withHeaders([
+            'Host' => env('SINARMAS_URL'),
+            'Authorization' => 'Basic '.base64_encode(config('services.bca.id').':'.config('services.bca.client_secret')),
+        ])->withBody(
+            'grant_type=client_credentials',
+            'application/x-www-form-urlencoded'
+        )->post(env('BCA_URL', 'https://devapi.klikbca.com:9443').config('services.bca.url.oauth_token'));
+        return $response['access_token'];
     }
 }

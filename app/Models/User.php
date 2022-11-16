@@ -12,6 +12,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $table = "users";
 
+    protected $fillable = [
+        'name',
+        'email',
+        'email_verified_at',
+        'password',
+        'investor_id'
+    ];
+
     function investor()
     {
         return $this->hasOne(Investor::class, 'investor_id');

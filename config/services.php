@@ -48,4 +48,12 @@ return [
             'eform_doc_support' => '/V1.0/SupportDocAddCorp/',
         ],
     ],
+    'sinarmas' => [
+        'key' => env('SINARMAS_API_KEY'),
+        'api_secret' => env('SINARMAS_API_SECRET'),
+        'client_secret' => env('SINARMAS_CLIENT_SECRET'),
+        'url' => [
+            'oauth' => '/b2bapi/oauth/v1.0/getToken',
+        ],
+    ]
 ];
