@@ -25,6 +25,28 @@
 </div>
 
 <script>
+    $("#email_verification").submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('verification.verify') }}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Content-Type': 'application/json',
+            },
+            dataType: 'application/json',
+            data: '{"otp_token":"' + $('#otp_token').val() + '"}',
+            statusCode: {
+                200: function (response) {
+                    console.log("Success");
+                    location.reload();
+                },
+                422: function (response) {
+                    console.log("Fail");
+                },
+            }
+        })
+    });
     function sendOTP(){
         $('#confirmationModal').modal('toggle')
         $('#confirmationModal').modal({

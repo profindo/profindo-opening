@@ -19,8 +19,16 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('investor_id')->references('id')->on('investors');
+            $table->integer('investor_id')->references('id')->on('investors')->nullable();
             $table->rememberToken();
+
+            $table->string('bank_name');
+            $table->string('bank_no');
+            $table->string('bank_code');
+            $table->date('birth_date');
+            $table->string('phone');
+            $table->string('referral');
+
             $table->timestamps();
         });
     }

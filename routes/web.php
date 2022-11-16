@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OpeningAccountController;
-use App\Http\Controllers\Opening\BCAController;
-use App\Http\Controllers\Opening\SinarmasController;
+use App\Http\Controllers;
+
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/verify', [OpeningAccountController::class, 'verifyEmail'])->name('verification.notice');
+Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/verify', [Controllers\OpeningAccountController::class, 'verifyEmail'])->name('verification.notice');
 Route::get('/app', function () {return view('layout.app');});
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
 
 Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () { 
     Route::get('ketentuan-tabungan', fn () => view('surat.ketentuan-tabungan'));
@@ -29,13 +32,23 @@ Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () {
     Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
 });
 
-Route::post('/validate', [OpeningAccountController::class, 'validateUser']);
+Route::post('/validate', [Controllers\OpeningAccountController::class, 'validateUser']);
 
 Route::group(['prefix'=>'api', 'middleware'=>['api']], function () {
-    Route::post('/bca', [BCAController::class, 'applyHeaders'])->middleware('oauth2_bca');
+    Route::post('/bca', [Controllers\Opening\BCAController::class, 'applyHeaders'])->middleware('oauth2_bca');
 });
 
-Route::post('/mail/verify', [OpeningAccountController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/mail/verify', [Controllers\OpeningAccountController::class, 'verifyEmail'])->name('verification.verify');
+
+Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth']], function () {
+    Route::get('index');
+    Route::get('view');
+    Route::get('create');
+    Route::post('store', [Controllers\InvestorController::class, 'store'])->name('investor.store');
+    Route::get('edit', [Controllers\InvestorController::class, 'edit'])->name('investor.edit');
+    Route::post('update', [Controllers\InvestorController::class, 'update'])->name('investor.update');
+    Route::post('delete');
+});
 
 Route::get('/form', function () {
     return view('opening.personal_info');

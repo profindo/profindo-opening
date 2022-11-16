@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-lg-3 col form-group mx-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="cust_gender" id="cust_gender1" value="1" checked>
+                                    <input class="form-check-input" type="radio" name="cust_gender" id="cust_gender1" value="M" checked>
                                     <label class="form-check-label card-text" for="cust_gender1">
                                         Laki-laki
                                     </label>
@@ -51,11 +51,11 @@
                         </div>
                         <div class="d-flex flex-lg-row flex-column">
                             <div class="col form-group form-floating me-lg-1">
-                                <select class="form-control" id=cust_country name="cust_country">
+                                <select class="form-control" id=cust_nationality name="cust_nationality">
                                     <option value="1">Indonesia</option>
                                     <option value="2">Warga Negara Asing</option>
                                 </select>
-                                <label for="cust_country">Status Warga Negara</label>
+                                <label for="cust_nationality">Status Warga Negara</label>
                             </div>
                             <div class="col form-group form-floating ms-lg-1">
                                 <select class="form-control" id=cust_relationship_status name="cust_relationship_status">
@@ -137,8 +137,8 @@
                         <div id="cust_family" class="col form-group">
                             <label for="cust_family">Keluarga Nasabah</label>
                             <div class="form-floating">
-                                <input id="cust_maiden_name" class="form-control" type="text" value="" placeholder="e.g Maria Susanti">
-                                <label for="cust_maiden_name">Nama Gadis Ibu Kandung</label>
+                                <input id="cust_mother_name" class="form-control" name="cust_mother_name" type="text" value="" placeholder="e.g Maria Susanti">
+                                <label for="cust_mother_name">Nama Gadis Ibu Kandung</label>
                             </div>
                         </div>
                         <div id="cust_inheritor" class="col d-flex flex-column form-group">
@@ -149,8 +149,8 @@
                             </div>
                             <div class="col d-flex flex-row">
                                 <div class="col form-floating me-1">
-                                    <input id="cust_inheritor_telp" class="form-control" type="text" name="cust_inheritor_telp" value="" placeholder="No. Telepon">
-                                    <label for="cust_inheritor_telp">No. Telepon</label>
+                                    <input id="cust_inheritor_phone" class="form-control" type="text" name="cust_inheritor_phone" value="" placeholder="No. Telepon">
+                                    <label for="cust_inheritor_phone">No. Telepon</label>
                                 </div>
                                 <div class="col form-floating ms-1">
                                     <select class="form-control" id="cust_inheritor_relationship" class="form-control" name="cust_inheritor_relationship">
@@ -220,18 +220,19 @@
                             <label for="cust_occupation">Pekerjaan Nasabah</label>
                             <div class="col d-flex flex-row">
                                 <div class="col me-1 form-floating">
-                                    <select id="cust_occupation_job" class="select-others col form-control me-1" name="cust_occupation_job">
+                                    <select id="cust_occupation_profession" class="select-others col form-control me-1" name="cust_occupation_profession">
                                         <option value="1">Karyawan Swasta</option>
                                         <option value="2">Wiraswasta</option>
                                         <option value="3">Pegawai Negeri</option>
                                         <option value="4">TNI/Polri</option>
-                                        <option value="5">Karyawan BUMN</option>
+                                        <option value="5">Pelajar</option>
                                         <option value="6">Ibu Rumah Tangga</option>
-                                        <option value="7">Pensiun</option>
-                                        <option value="8">Lainnya</option>
+                                        <option value="7">Guru</option>
+                                        <option value="8">Pensiun</option>
+                                        <option value="9">Lainnya</option>
                                     </select>
-                                    <input id="cust_occupation_job_other" class="form-control" name="cust_occupation_job_other" type="text" placeholder="Lainnya">
-                                    <label for="cust_occupation_job_other">Profesi</label>
+                                    <input id="cust_occupation_profession_other" class="form-control" name="cust_occupation_profession_other" type="text" placeholder="Lainnya">
+                                    <label for="cust_occupation_profession_other">Profesi</label>
                                 </div>
                                 <div class="col ms-1 form-floating">
                                     <select id="cust_occupation_position" class="select-others col form-control ms-1" name="cust_occupation_position">
@@ -251,22 +252,27 @@
                             <div class="col d-flex flex-row">
                                 <div class="col me-1 form-floating">
                                     <select id="cust_occupation_income_range" class="form-control" name="cust_occupation_income_range">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option value="1">< Rp.10 juta</option>
+                                        <option value="2">Rp. 10 juta s/d Rp. 50 juta</option>
+                                        <option value="3">Rp. 50 juta s/d Rp. 100 juta</option>
+                                        <option value="4">Rp. 100 juta s/d Rp. 500 juta</option>
+                                        <option value="5">Rp. 500 juta s/d Rp. 1 Milyar</option>
+                                        <option value="6">> Rp 1 Milyar</option>
                                     </select>
                                     <label for="cust_occupation_income_range">Penghasilan per Tahun</label>
                                 </div>
                                 <div class="col ms-1 form-floating">
                                     <select id="cust_occupation_income_origin" class="select-others form-control" name="cust_occupation_income_origin">
-                                        <option value="1">Gaji</option>
+                                        <option value="1">Penghasilan/Gaji</option>
                                         <option value="2">Hasil Usaha</option>
-                                        <option value="3">Orangtua</option>
-                                        <option value="4">Pasangan</option>
-                                        <option value="5">Deposito / Tabungan</option>
-                                        <option value="6">Pinjaman</option>
-                                        <option value="7">Dana Pensiun</option>
-                                        <option value="8">Lainnya</option>
+                                        <option value="3">Bunga simpanan</option>
+                                        <option value="4">Warisan</option>
+                                        <option value="5">Dari orang tua/anak</option>
+                                        <option value="6">Hibah</option>
+                                        <option value="7">Dari suami/istri</option>
+                                        <option value="8">Undian</option>
+                                        <option value="9">Hasil Investasi</option>
+                                        <option value="10">Lainnya</option>
                                     </select>
                                     <input id="cust_occupation_income_origin_other" class="form-control" name="cust_reference_other" type="text" placeholder="Lainnya">
                                     <label for="cust_occupation_income_origin">Sumber Penghasilan</label>
@@ -277,21 +283,21 @@
                             <label for="cust_company">Perusahaan Nasabah</label>
                             <div class="col d-flex flex-lg-row flex-column">
                                 <div class="col me-lg-1 form-floating">
-                                    <input id="cust_occupation_name" class="form-control" type="text" value="" placeholder="Nama perusahaan">
+                                    <input id="cust_occupation_name" class="form-control" name="cust_occupation_name" type="text" value="" placeholder="Nama perusahaan">
                                     <label for="cust_occupation_name">Nama Perusahaan</label>
                                 </div>
                                 <div class="col ms-lg-1 form-floating">
-                                    <input id="cust_occupation_industry" class="form-control" type="text" value="" placeholder="Bidang perusahaan">
+                                    <input id="cust_occupation_industry" class="form-control" name="cust_occupation_industry" type="text" value="" placeholder="Bidang perusahaan">
                                     <label for="cust_occupation_industry">Bidang Usaha</label>
                                 </div>
                             </div>
                             <div class="col d-flex flex-row">
                                 <div class="col me-1 form-floating">
-                                    <input id="cust_occupation_telp" class="form-control" type="text" value="" placeholder="0812484219824">
-                                    <label for="cust_occupation_telp">No. Telepon Kantor</label>
+                                    <input id="cust_occupation_phone" class="form-control" name="cust_occupation_phone" type="text" value="" placeholder="0812484219824">
+                                    <label for="cust_occupation_phone">No. Telepon Kantor</label>
                                 </div>
                                 <div class="col ms-1 form-floating">
-                                    <input id="cust_occupation_fax" class="form-control" type="text" value="" placeholder="081284219824">
+                                    <input id="cust_occupation_fax" class="form-control" name="cust_occupation_fax" type="text" value="" placeholder="081284219824">
                                     <label for="cust_occupation_fax">No. Fax Kantor</label>
                                 </div>
                             </div>
@@ -415,12 +421,12 @@
                                     <label for="cust_bank_no">No Rekening</label>
                                 </div>
                                 <div class="col form-floating">
-                                    <select id="cust_bank_type" class="form-control" name="cust_bank_type" value="" placeholder="Tipe Bank">
+                                    <select id="cust_bank_code" class="form-control" name="cust_bank_code" value="" placeholder="Tipe Bank">
                                         <option value="1">BCA</option>
                                         <option value="2">CIMB Niaga</option>
                                         <option value="3">Sinarmas</option>
                                     </select>
-                                    <label for="cust_bank_type">Tipe Bank</label>
+                                    <label for="cust_bank_code">Tipe Bank</label>
                                 </div>
                             </div>
                         </div>
@@ -480,11 +486,11 @@
 
         $('#home_ktp_address_same').on('change', function (e) {
             if(!$(this).is(':checked')) {
-                $('#cust_address_home').show();
+                $('#cust_home_address').show();
                 $('#cust_other_address').show();
                 $('#cust_other_address_buttons').show();
             } else {
-                $('#cust_address_home').hide();
+                $('#cust_home_address').hide();
                 $('#cust_other_address').hide();
                 $('#cust_other_address_buttons').hide();
             }
@@ -505,7 +511,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: '/validate',
+                url: '/user/update',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
@@ -514,13 +520,7 @@
                 data: JSON.stringify(form_data),
                 statusCode: {
                     200: function(response) {
-                        console.log("Logged in", response)
-                        location.reload();                        
-                    },
-                    201: function(response) {
-                        console.log("Created", response)
-                        
-                        sendOTP();
+                        carousel.carousel('next');
                     },
                     422: function(response) {
                         console.log("ERROR : ", response)

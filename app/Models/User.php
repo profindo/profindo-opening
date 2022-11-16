@@ -24,4 +24,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Investor::class, 'investor_id');
     }
+
+    function token()
+    {
+        return $this->hasOne(Token::class, 'user_id')->latestOfMany();
+    }
 }

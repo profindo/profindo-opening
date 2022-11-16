@@ -181,7 +181,6 @@
             document.getElementById('nextBtn').innerHTML = "<i class='fas fa-circle-notch fa-spin'></i>"
             var form = $('#openingAccountForm');
             var form_data = form.serializeArray().reduce(function(prev, data) {
-                console.log(prev, data)
                 prev[data.name] = data.value;
                 return prev;
             }, {});
@@ -200,7 +199,7 @@
                 statusCode: {
                     200: function(response) {
                         console.log("Logged in", response)
-                        location.reload();                        
+                        location.reload();
                     },
                     201: function(response) {
                         console.log("Created", response)

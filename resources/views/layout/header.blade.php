@@ -11,4 +11,12 @@
         <img src="{{ asset('img/logo.png') }}" alt="Bitter" class="image">
         @endif
     </div>
+    <div class="right">
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+    </div>
 </div>

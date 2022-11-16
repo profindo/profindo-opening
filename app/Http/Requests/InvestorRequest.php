@@ -23,27 +23,79 @@ class InvestorRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'cust_bank_name'     => 'required|max:35',
-            'cust_bank_no'       => 'required',
-            'cust_name'         => 'required',
-            'cust_email'        => 'required|email:rfc,dns',
-            'cust_phone'        => 'required',
-            'cust_password'     => 'required',
-            'cust_passconfirm'  => 'same:cust_password',
-        ];
+        switch($this->input('step')) {
+            case 0:
+                $rules = [
+                    "cust_name"                 => 'required',
+                    "cust_phone"                => 'required',
+                    "cust_email"                => 'required',
+                    "cust_gender"               => 'required',
+                    "cust_nationality"              => 'required',
+                    "cust_relationship_status"  => 'required',
+                    "cust_birthdate"            => 'required',
+                    "cust_birthplace"           => 'required',
+                    "cust_nik"                  => 'required',
+                    "cust_nik_expire"           => 'required',
+                    "cust_npwp"                 => 'required',
+                ];
+                break;
+            case 1:
+                $rules = [
+                    "cust_address_ktp_jalan"    => 'required',
+                    "cust_address_ktp_rtrw"     => 'required',
+                    "cust_address_ktp_provinsi" => 'required',
+                    "cust_address_ktp_kota"     => 'required',
+                    "cust_address_ktp_kecamatan"=> 'required',
+                    "cust_address_ktp_kelurahan"=> 'required',
+                    "cust_address_ktp_kodepos"  => 'required',
+                    "cust_address_home_status"  => 'required',
+                ];
+                break;
+            case 2:
+                $rules = [
+                    "cust_mother_name"           => 'required',
+                    "cust_inheritor_name"        => 'required',
+                    "cust_inheritor_telp"        => 'required',
+                    "cust_inheritor_relationship"=> 'required',
+                ];
+                break;
+            case 3:
+                $rules = [
+                    "cust_occupation_profession"    => 'required',
+                    "cust_occupation_position"      => 'required',
+                    "cust_occupation_income_range"  => 'required',
+                    "cust_occupation_income_origin" => 'required',
+                    "cust_occupation_name"          => 'required',
+                    "cust_occupation_industry"      => 'required',
+                    "cust_occupation_phone"         => 'required',
+                    "cust_occupation_fax"           => 'required',
+                ];
+                break;
+            case 4:
+                $rules = [
+                    "cust_media_ktp"                => 'required',
+                    "cust_media_npwp"               => 'required',
+                    "cust_media_signature"          => 'required',
+                    "cust_media_selfie"             => 'required',
+                    "cust_acquintance"              => 'required',
+                    "cust_other"                    => 'required',
+                ];
+                break;
+            case 5:
+                $rules = [
+                    "cust_bank_name"     => 'required',
+                    "cust_bank_no"       => 'required',
+                    "bank_code"     => 'required',
+                ];
+                break;
+        }
+        return $rules;
     }
 
     public function attributes()
     {
         return [
-            'cust_bank_name'     => 'Nama Buku Tabungan',
-            'cust_bank_no'       => 'Nomor Rekening',
-            'cust_name'         => 'Nama KTP',
-            'cust_email'        => 'Email',
-            'cust_phone'        => 'No Telepon',
-            'cust_password'     => 'Password',
-            'cust_passconfirm'  => 'Konfirmasi Password'
+            
         ];
     }
 
@@ -56,9 +108,6 @@ class InvestorRequest extends FormRequest
     {
         return [
             'required'          => ':attribute harus diisi.',
-            'cust_bank_name.max' => ':attribute harus dibawah 35 karakter.',
-            'required_without'  => 'Salah satu harus diisi.',
-            'same'              => ':attribute tidak sesuai.',
         ];
     }
 }
