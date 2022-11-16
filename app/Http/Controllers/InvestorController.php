@@ -53,7 +53,7 @@ class InvestorController extends Controller
                         break;
                 }
                 $investor->birth_date = ($request->input('cust_birthdate'));
-                $investor->birth_place = Models\Province::find($request->input('cust_birthplace'))->prov_name;
+                $investor->birth_place = Models\City::find($request->input('cust_birthplace'))->city_name;
                 $investor->nik_no = $request->input('cust_nik');
                 if($request->input('cust_nik_no_expire')) {
                     $investor->nik_expire = "-";

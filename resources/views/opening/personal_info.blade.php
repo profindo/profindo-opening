@@ -436,7 +436,7 @@
             </div>
             <div class="d-flex flex-column flex-lg-row justify-content-center">
                 <button class="btn btn-primary col-lg-5 m-1" id="prevBtn" href="#carouselForm" data-bs-slide="prev"><span>Kembali</span></button>
-                <button class="btn btn-primary col-lg-5 m-1" id="nextBtn" type="submit" href="#carouselForm" data-bs-slide="next"><span>Selanjutnya</span></button>
+                <button class="btn btn-primary col-lg-5 m-1" id="nextBtn" type="submit"><span>Selanjutnya</span></button>
             </div>
         </div>
     </div>
