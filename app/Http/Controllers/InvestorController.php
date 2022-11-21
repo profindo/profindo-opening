@@ -64,14 +64,14 @@ class InvestorController extends Controller
                 $investor->npwp = $request->input('cust_npwp');
                 break;
             case 1:
-                $investor->address_ktp_road = $request->input('cust_address_ktp_road');
-                $investor->address_ktp_rtrw = $request->input('cust_address_ktp_rtrw');
-                $investor->address_ktp_provinsi = $request->input('cust_address_ktp_provinsi');
-                $investor->address_ktp_kota = $request->input('cust_address_ktp_kota');
-                $investor->address_ktp_kecamatan = $request->input('cust_address_ktp_kecamatan');
-                $investor->address_ktp_kelurahan = $request->input('cust_address_ktp_kelurahan');
-                $investor->address_ktp_kodepos = $request->input('cust_address_ktp_kodepos');
-                if($request->input('home_ktp_address_same')) {
+                $investor->address_ktp_road         = $request->input('cust_address_ktp_road');
+                $investor->address_ktp_rtrw         = $request->input('cust_address_ktp_rtrw');
+                $investor->address_ktp_provinsi     = $request->input('cust_address_ktp_provinsi');
+                $investor->address_ktp_kota         = $request->input('cust_address_ktp_kota');
+                $investor->address_ktp_kecamatan    = $request->input('cust_address_ktp_kecamatan');
+                $investor->address_ktp_kelurahan    = $request->input('cust_address_ktp_kelurahan');
+                $investor->address_ktp_kodepos      = $request->input('cust_address_ktp_kodepos');
+                if(!$request->input('home_ktp_address_same')) {
                     //Validate
                     $investor->address_home_road = $request->input('cust_address_home_road');
                     $investor->address_home_rtrw = $request->input('cust_address_home_rtrw');
@@ -80,6 +80,14 @@ class InvestorController extends Controller
                     $investor->address_home_kecamatan = $request->input('cust_address_home_kecamatan');
                     $investor->address_home_kelurahan = $request->input('cust_address_home_kelurahan');
                     $investor->address_home_kodepos = $request->input('cust_address_home_kodepos');
+                } else {
+                    $investor->address_home_road        = $request->input('cust_address_ktp_road');
+                    $investor->address_home_rtrw        = $request->input('cust_address_ktp_rtrw');
+                    $investor->address_home_provinsi    = $request->input('cust_address_ktp_provinsi');
+                    $investor->address_home_kota        = $request->input('cust_address_ktp_kota');
+                    $investor->address_home_kecamatan   = $request->input('cust_address_ktp_kecamatan');
+                    $investor->address_home_kelurahan   = $request->input('cust_address_ktp_kelurahan');
+                    $investor->address_home_kodepos     = $request->input('cust_address_ktp_kodepos');
                 }
                 $investor->address_home_status = $request->input('cust_address_home_status');
                 break;

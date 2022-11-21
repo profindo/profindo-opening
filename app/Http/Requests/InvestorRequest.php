@@ -41,7 +41,7 @@ class InvestorRequest extends FormRequest
                 break;
             case 1:
                 $rules = [
-                    "cust_address_ktp_jalan"    => 'required',
+                    "cust_address_ktp_road"    => 'required',
                     "cust_address_ktp_rtrw"     => 'required',
                     "cust_address_ktp_provinsi" => 'required',
                     "cust_address_ktp_kota"     => 'required',
@@ -49,6 +49,13 @@ class InvestorRequest extends FormRequest
                     "cust_address_ktp_kelurahan"=> 'required',
                     "cust_address_ktp_kodepos"  => 'required',
                     "cust_address_home_status"  => 'required',
+                    "cust_address_home_road"     => 'required_without:home_ktp_address_same',
+                    "cust_address_home_rtrw"     => 'required_without:home_ktp_address_same',
+                    "cust_address_home_provinsi" => 'required_without:home_ktp_address_same',
+                    "cust_address_home_kota"     => 'required_without:home_ktp_address_same',
+                    "cust_address_home_kecamatan"=> 'required_without:home_ktp_address_same',
+                    "cust_address_home_kelurahan"=> 'required_without:home_ktp_address_same',
+                    "cust_address_home_kodepos"  => 'required_without:home_ktp_address_same',
                 ];
                 break;
             case 2:
