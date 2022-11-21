@@ -24,25 +24,25 @@
                             <span class="text-danger" id="cust_email_error"></span>
                         </div>
                         <div class="form-floating mb-2">
-                            <input class="form-control form-control-sm" id="cust_phone" type="text" name="cust_phone" value="{{ Auth::user()->phone }}" placeholder="081234567890">
+                            <input class="form-control form-control-sm" id="cust_phone" type="text" name="cust_phone" value="{{ $investor->phone }}" placeholder="081234567890">
                             <label class="form-control-label" for="cust_phone">No Telepon</label>
                             <span class="text-danger" id="cust_phone_error"></span>
                         </div>
                         <div class="d-flex flex-lg-row flex-column">
                             <div class="col form-group form-floating">
-                                <input class="form-control form-control-sm" id="cust_name" name="cust_name" type="text" value="{{ Auth::user()->name }}" placeholder="John Doe">
+                                <input class="form-control form-control-sm" id="cust_name" name="cust_name" type="text" value="{{ $investor->name }}" placeholder="John Doe">
                                 <label for="cust_name">Nama sesuai identitas KTP</label>
                                 <span class="text-danger" id="cust_name_error"></span>
                             </div>
                             <div class="col-lg-3 col form-group mx-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="cust_gender" id="cust_gender1" value="M" checked>
+                                    <input class="form-check-input" type="radio" name="cust_gender" id="cust_gender1" value="M" {{ $investor->gender=="M" ? 'checked' : '' }}>
                                     <label class="form-check-label card-text" for="cust_gender1">
                                         Laki-laki
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="cust_gender" id="cust_gender2" value="2">
+                                    <input class="form-check-input" type="radio" name="cust_gender" id="cust_gender2" value="F" {{ $investor->gender=="F" ? 'checked' : '' }}>
                                     <label class="form-check-label card-text" for="cust_gender2">
                                         Perempuan
                                     </label>
@@ -51,53 +51,54 @@
                         </div>
                         <div class="d-flex flex-lg-row flex-column">
                             <div class="col form-group form-floating me-lg-1">
-                                <select class="form-control" id=cust_nationality name="cust_nationality">
+                                <select class="form-control" id=cust_nationality name="cust_nationality" value="{{ $investor->nationality }}">
                                     <option value="1">Indonesia</option>
                                     <option value="2">Warga Negara Asing</option>
                                 </select>
                                 <label for="cust_nationality">Status Warga Negara</label>
                             </div>
                             <div class="col form-group form-floating ms-lg-1">
-                                <select class="form-control" id=cust_relationship_status name="cust_relationship_status">
+                                <select class="form-control" id=cust_relationship_status name="cust_relationship_status" value="{{ $investor->relationship_status }}">
                                     <option value="1">Belum Menikah</option>
                                     <option value="2">Sudah Menikah</option>
                                     <option value="3">Duda</option>
                                     <option value="4">Janda</option>
                                 </select>
-                                <label for="cust_relationship_status">Status Warga Negara</label>
+                                <label for="cust_relationship_status">Status Hubungan</label>
                             </div>
                         </div>
                         <div id="cust_birth" class="d-flex flex-lg-row flex-column form-group">
                             <div class="col form-floating">
-                                <select class="form-control" id=cust_birthplace>
+                                <input class="form-control" list="cust_birthplace" type="text" name="cust_birthplace" value="{{ $investor->birth_place }}" placeholder="Kota">
+                                <datalist id="cust_birthplace">
                                     @foreach(App\Models\City::all()->sortBy('city_name') as $city)
-                                    <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                                    <option value="{{ $city->city_name }}"></option>
                                     @endforeach
-                                </select>
+                                </datalist>
                                 <label for="cust_birthplace">Tempat / Tanggal Lahir</label>
-                                <span class="text-danger" id="cust_name_error"></span>
                             </div>
                             <div class="col form-group form-floating ms-lg-1">
-                                <input class="form-control datepicker" id="cust_birthdate" type="date" name="cust_birthdate">
+                                <input class="form-control datepicker" id="cust_birthdate" type="date" name="cust_birthdate" value="{{ $investor->birth_date }}">
                             </div>
                         </div>
                         <div class="d-flex flex-lg-row flex-column">
                             <div class="col form-floating me-lg-1">
-                                <input class="form-control form-control-sm" id="cust_nik" type="text" name="cust_nik" value="{{ Auth::user()->nik }}" placeholder="NIK">
+                                <input class="form-control form-control-sm" id="cust_nik" type="text" name="cust_nik" value="{{ $investor->nik_no }}" placeholder="NIK">
                                 <label for="cust_nik">NIK</label>
+                                {{ $investor->nik_no }}
                                 <div class="d-flex flex-row form-group mt-1 align-items-center">
-                                    <input class="form-control col" id="cust_nik_expire" type="date" name="cust_nik_expire">
+                                    <input class="form-control col" id="cust_nik_expire" type="date" name="cust_nik_expire" value="{{ $investor->nik_expire ? $investor->nik_expire : '' }}">
                                     <div class="col form-group ms-2 form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="cust_nik_no_expire" name="cust_nik_no_expire">
+                                        <input class="form-check-input" type="checkbox" id="cust_nik_no_expire" name="cust_nik_no_expire" {{ $investor->nik_expire ? "" : "checked" }}>
                                         <label class="form-check-label" for="cust_nik_no_expire">Seumur Hidup</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col d-flex flex-column align-content-center form-floating ms-lg-1">
-                                <input class="form-control form-control-sm" id="cust_npwp" type="text" name="cust_npwp" value="{{ Auth::user()->npwp }}" placeholder="NPWP">
+                                <input class="form-control form-control-sm" id="cust_npwp" type="text" name="cust_npwp" value="{{ $investor->npwp }}" placeholder="NPWP">
                                 <label for="cust_npwp">NPWP</label>
                                 <div class="col form-group ms-2 form-check form-check-inline mt-1" style="padding: 10px 16px;">
-                                    <input class="form-check-input" type="checkbox" id="cust_no_npwp" name="cust_no_npwp">
+                                    <input class="form-check-input" type="checkbox" id="cust_no_npwp" name="cust_no_npwp" {{  ($investor->npwp || (Auth::user()->form_step == 1)) ? "" : "checked"}}>
                                     <label class="form-check-label" for="cust_no_npwp">Tidak memiliki NPWP</label>
                                 </div>
                             </div>
@@ -436,7 +437,7 @@
             </div>
             <div class="d-flex flex-column flex-lg-row justify-content-center">
                 <button class="btn btn-primary col-lg-5 m-1" id="prevBtn" href="#carouselForm" data-bs-slide="prev"><span>Kembali</span></button>
-                <button class="btn btn-primary col-lg-5 m-1" id="nextBtn" type="submit"><span>Selanjutnya</span></button>
+                <button class="btn btn-primary col-lg-5 m-1" id="nextBtn" type="submit" form="personalInfoForm"><span>Selanjutnya</span></button>
             </div>
         </div>
     </div>
@@ -446,22 +447,22 @@
 @section('footer')
 <div class="container-fluid">
     <ul id="carousel_indicators" class="d-flex flex-row list-unstyled text-center">
-        <li class="container col" data-bs-target="#carouselForm" data-bs-slide-to="0">
+        <li class="container col">
             <div class="w-100 item active">Data Pribadi</div>
         </li>
-        <li class="container col" data-bs-target="#carouselForm" data-bs-slide-to="1">
+        <li class="container col">
             <div class="w-100 item">Alamat Nasabah</div>
         </li>
-        <li class="container col" data-bs-target="#carouselForm" data-bs-slide-to="2">
+        <li class="container col">
             <div class="w-100 item">Data Keluarga dan Ahli Waris</div>
         </li>
-        <li class="container col" data-bs-target="#carouselForm" data-bs-slide-to="3">
+        <li class="container col">
             <div class="w-100 item">Data Pekerjaan atau Perusahaan</div>
         </li>
-        <li class="container col" data-bs-target="#carouselForm" data-bs-slide-to="4">
+        <li class="container col">
             <div class="w-100 item">Informasi Tambahan</div>
         </li>
-        <li class="container col" data-bs-target="#carouselForm" data-bs-slide-to="5">
+        <li class="container col">
             <div class="w-100 item">Data Rekening Pribadi</div>
         </li>
     </ul>
@@ -473,6 +474,18 @@
     $(document).ready(function() {
         dropdownSelector();
         othersSelectInput();
+        var total_width = $('.progress').width();
+        var user_progress = {{ Auth::user()->form_step }};
+        $('.progress-bar').css("width", (user_progress/$('.carousel-item').length)*total_width);
+
+        $($('#carousel_indicators li div')[user_progress]).attr('active');
+        $('#carousel_indicators li').each(function (i, element) {
+            if((i+1) <= user_progress) {
+                $(element).attr('data-bs-target', '#carouselForm');
+                $(element).attr('data-bs-slide-to', i);
+                console.log(element)
+            }
+        });
 
         var carousel = $('#carouselForm');
         var carousel_indicator = $('#carousel_indicators li div');
@@ -480,8 +493,6 @@
             if((e.to === -1) && (e.from === -1)) return false;
             $(carousel_indicator[e.from]).removeClass('active')
             $(carousel_indicator[e.to]).addClass('active')
-            var total_width = $('.progress').width()
-            $('.progress-bar').css("width", ((e.to+1)/($('.carousel-item').length))*total_width)
         });
 
         $('#home_ktp_address_same').on('change', function (e) {
@@ -500,15 +511,11 @@
             event.preventDefault();
             document.getElementById('nextBtn').innerHTML = "<i class='fas fa-circle-notch fa-spin'></i>"
             var form = $('#personalInfoForm');
-            var form_data = form.serializeArray()
-                        .reduce(function (prev, data) {
-                            prev[data.name] = data.value;
-                            return prev;
-                        });
-            form_data['step'] = $('.carousel-item .active').index()
-            $.each(form_data, function(key, val) {
-                $('#' + key + '_error').attr('hidden', 'true');
-            });
+            var form_data = form.serializeArray().reduce(function(prev, data) {
+                prev[data.name] = data.value;
+                return prev;
+            }, {});
+            form_data['step'] = $('.carousel-item.active').index()
             $.ajax({
                 type: 'POST',
                 url: '/user/update',
@@ -520,12 +527,16 @@
                 data: JSON.stringify(form_data),
                 statusCode: {
                     200: function(response) {
+                        user_progress = form_data['step'] > user_progress ? form_data['step'] : user_progress;
                         carousel.carousel('next');
+                        $($('#carousel_indicators li')[user_progress]).attr('data-bs-target', '#carouselForm');
+                        $($('#carousel_indicators li')[user_progress]).attr('data-bs-slide-to', user_progress);
+                        $('.progress-bar').css("width", ((e.to+1)/($('.carousel-item').length))*total_width)
                     },
                     422: function(response) {
                         console.log("ERROR : ", response)
                         var error = JSON.parse(response.responseText)['errors'];
-                        $('#openingLogo')[0].scrollIntoView();
+                        $('.appHeader')[0].scrollIntoView();
                         $.each(form_data, function(key, val) {
                             if(!(error[key])) {
                                 $('#' + key + '_error').attr('hidden', 'true');

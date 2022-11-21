@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     function investor()
     {
-        return $this->hasOne(Investor::class, 'investor_id');
+        return $this->hasOne(Investor::class, 'id', 'investor_id');
     }
 
     function token()

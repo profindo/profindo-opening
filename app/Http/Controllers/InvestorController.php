@@ -31,32 +31,32 @@ class InvestorController extends Controller
 
     public function update(InvestorRequest $request) {
         $investor = Auth::user()->investor;
+        info($request->input());
         switch($request->input('step')) {
             case 0:
                 $investor->name = $request->input('cust_name');
                 $investor->phone = $request->input('cust_phone');
-                $investor->email = $request->input('cust_email');
                 $investor->gender = $request->input('cust_gender');
                 $investor->nationality = $request->input('cust_nationality');
                 switch($request->input('cust_relationship_status')) {
                     case 1:
-                        $investor->relationship_status = "Single";
+                        $investor->relationship_status = 1;//"Single";
                         break;
                     case 2:
-                        $investor->relationship_status = "Married";
+                        $investor->relationship_status = 2;//"Married";
                         break;
                     case 3:
-                        $investor->relationship_status = "Divorced";
+                        $investor->relationship_status = 3;//"Divorced";
                         break;
                     case 4:
-                        $investor->relationship_status = "Widowed";
+                        $investor->relationship_status = 4;//"Widowed";
                         break;
                 }
-                $investor->birth_date = ($request->input('cust_birthdate'));
-                $investor->birth_place = Models\City::find($request->input('cust_birthplace'))->city_name;
+                $investor->birth_date = $request->input('cust_birthdate');
+                $investor->birth_place = $request->input('cust_birthplace');
                 $investor->nik_no = $request->input('cust_nik');
                 if($request->input('cust_nik_no_expire')) {
-                    $investor->nik_expire = "-";
+                    $investor->nik_expire = null;
                 }
                 else {
                     $investor->nik_expire = $request->input('cust_nik_expire');
@@ -152,6 +152,7 @@ class InvestorController extends Controller
             case 5:
                 break;
         }
+        $investor->save();
     }
 
     public function delete() {

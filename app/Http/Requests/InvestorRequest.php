@@ -35,8 +35,8 @@ class InvestorRequest extends FormRequest
                     "cust_birthdate"            => 'required',
                     "cust_birthplace"           => 'required',
                     "cust_nik"                  => 'required',
-                    "cust_nik_expire"           => 'required',
-                    "cust_npwp"                 => 'required',
+                    "cust_nik_expire"           => 'required_without:cust_nik_no_expire',
+                    "cust_npwp"                 => 'required_without:cust_no_npwp',
                 ];
                 break;
             case 1:

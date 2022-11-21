@@ -51,5 +51,5 @@ Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth']], function () {
 });
 
 Route::get('/form', function () {
-    return view('opening.personal_info');
+    return view('opening.personal_info')->with('investor', Auth::user()->investor);
 })->middleware(['auth'])->name('form.personal_info');
