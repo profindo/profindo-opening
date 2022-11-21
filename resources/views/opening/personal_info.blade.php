@@ -85,7 +85,6 @@
                             <div class="col form-floating me-lg-1">
                                 <input class="form-control form-control-sm" id="cust_nik" type="text" name="cust_nik" value="{{ $investor->nik_no }}" placeholder="NIK">
                                 <label for="cust_nik">NIK</label>
-                                {{ $investor->nik_no }}
                                 <div class="d-flex flex-row form-group mt-1 align-items-center">
                                     <input class="form-control col" id="cust_nik_expire" type="date" name="cust_nik_expire" value="{{ $investor->nik_expire ? $investor->nik_expire : '' }}">
                                     <div class="col form-group ms-2 form-check form-check-inline">
