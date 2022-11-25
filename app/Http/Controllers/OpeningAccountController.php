@@ -141,6 +141,15 @@ class OpeningAccountController extends Controller
             return response()->json(["status" => 'success', "message" => "Success"], 200);
     }
 
+    public function generateRDN(Investor $investor)
+    {
+        $handler = $this->getHandler($investor->bank_code);
+        $result = $handler->generateRDN($investor);
+        if($result) {
+            return $result;
+        }
+    }
+
     public function userForm()
     {
         return view('opening.form');

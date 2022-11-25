@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class InvestorRequest extends FormRequest
 {
@@ -23,47 +25,36 @@ class InvestorRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [];
+        $investor = Auth::user()->investor;
         switch($this->input('step')) {
             case 0:
                 $rules = [
-                    "cust_name"                 => 'required',
-                    "cust_phone"                => 'required',
-                    "cust_email"                => 'required',
-                    "cust_gender"               => 'required',
+                    "cust_name"                     => 'required',
+                    "cust_phone"                    => 'required',
+                    "cust_email"                    => 'required',
+                    "cust_gender"                   => 'required',
                     "cust_nationality"              => 'required',
-                    "cust_relationship_status"  => 'required',
-                    "cust_birthdate"            => 'required',
-                    "cust_birthplace"           => 'required',
-                    "cust_nik"                  => 'required',
-                    "cust_nik_expire"           => 'required_without:cust_nik_no_expire',
-                    "cust_npwp"                 => 'required_without:cust_no_npwp',
+                    "cust_relationship_status"      => 'required',
+                    "cust_birthdate"                => 'required',
+                    "cust_birthplace"               => 'required',
+                    "cust_nik"                      => 'required',
+                    "cust_nik_expire"               => 'required_without:cust_nik_no_expire',
+                    "cust_npwp"                     => 'required_without:cust_no_npwp',
                 ];
                 break;
             case 1:
                 $rules = [
-                    "cust_address_ktp_road"    => 'required',
-                    "cust_address_ktp_rtrw"     => 'required',
-                    "cust_address_ktp_provinsi" => 'required',
-                    "cust_address_ktp_kota"     => 'required',
-                    "cust_address_ktp_kecamatan"=> 'required',
-                    "cust_address_ktp_kelurahan"=> 'required',
-                    "cust_address_ktp_kodepos"  => 'required',
-                    "cust_address_home_status"  => 'required',
-                    "cust_address_home_road"     => 'required_without:home_ktp_address_same',
-                    "cust_address_home_rtrw"     => 'required_without:home_ktp_address_same',
-                    "cust_address_home_provinsi" => 'required_without:home_ktp_address_same',
-                    "cust_address_home_kota"     => 'required_without:home_ktp_address_same',
-                    "cust_address_home_kecamatan"=> 'required_without:home_ktp_address_same',
-                    "cust_address_home_kelurahan"=> 'required_without:home_ktp_address_same',
-                    "cust_address_home_kodepos"  => 'required_without:home_ktp_address_same',
+                    "cust_ktp_address.*"              => 'required',
+                    "cust_home_address_status"      => 'required',
                 ];
+                if(!$this->input('home_ktp_address_same')) $rules["cust_home_address"] = 'required';
                 break;
             case 2:
                 $rules = [
-                    "cust_mother_name"           => 'required',
-                    "cust_inheritor_name"        => 'required',
-                    "cust_inheritor_telp"        => 'required',
-                    "cust_inheritor_relationship"=> 'required',
+                    "cust_mother_name"              => 'required',
+                    "cust_inheritor_name"           => 'required',
+                    "cust_inheritor_relationship"   => 'required',
                 ];
                 break;
             case 3:
@@ -75,25 +66,19 @@ class InvestorRequest extends FormRequest
                     "cust_occupation_name"          => 'required',
                     "cust_occupation_industry"      => 'required',
                     "cust_occupation_phone"         => 'required',
-                    "cust_occupation_fax"           => 'required',
                 ];
                 break;
             case 4:
                 $rules = [
-                    "cust_media_ktp"                => 'required',
-                    "cust_media_npwp"               => 'required',
-                    "cust_media_signature"          => 'required',
-                    "cust_media_selfie"             => 'required',
                     "cust_acquintance"              => 'required',
-                    "cust_other"                    => 'required',
                 ];
+                if(!$investor->media_ktp) $rules["cust_media_ktp"] = 'required';
+                if(!$investor->media_npwp) $rules["cust_media_npwp"] = 'required';
+                if(!$investor->media_signature) $rules["cust_media_signature"] = 'required';
+                if(!$investor->media_selfie) $rules["cust_media_selfie"] = 'required';
                 break;
             case 5:
-                $rules = [
-                    "cust_bank_name"     => 'required',
-                    "cust_bank_no"       => 'required',
-                    "bank_code"     => 'required',
-                ];
+                $rules = [];
                 break;
         }
         return $rules;
@@ -102,7 +87,20 @@ class InvestorRequest extends FormRequest
     public function attributes()
     {
         return [
-            
+            "cust_name" => "Nama",
+            "cust_phone" => "No. Telp",
+            "cust_email" => "E-mail",
+            'cust_npwp' => "NPWP",
+            'cust_niik' => "NIK",
+            "cust_birthdate" => "Tanggal Lahir",
+            "cust_birthplace" => "Tempat Lahir",
+            "cust_ktp_address" => "Alamat KTP",
+            "cust_home_address" => "Alamat Rumah",
+            "cust_mother_name" => "Nama Ibu",
+            "cust_inheritor_name" => "Nama Pewaris",
+            "cust_occupation_name" => "Nama Perusahaan",
+            "cust_occupation_industry" => "Bidang Perusahaan",
+            "cust_occupation_phone" => "No. Telp Perusahaan",
         ];
     }
 
@@ -115,6 +113,8 @@ class InvestorRequest extends FormRequest
     {
         return [
             'required'          => ':attribute harus diisi.',
+            'required_without'  => ':attribute harus diisi.',
+            'min'               => ':attribute harus diisi penuh.',
         ];
     }
 }

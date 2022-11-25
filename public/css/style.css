@@ -21378,6 +21378,10 @@ a:active, a:focus {
   height: 100px;
 }
 
+.preview-container {
+  overflow: hidden;
+}
+
 .appHeader {
   height: 56px;
   display: flex;

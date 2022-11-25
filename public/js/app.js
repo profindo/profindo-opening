@@ -1,3 +1,13 @@
+$(document).ready(function () {
+    dropdownSelector();
+    othersSelectInput();
+});
+
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+           !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+  }
 
 ///////////////////////////////////////////////////////////////////////////
 // Fix for # href
@@ -70,18 +80,22 @@ function dropdownSelector() {
     $.each($('.dropdown-selector'), function (key, val) {
         var datalist = $('#' + $(this).attr('list'));
         var next_datalist = $(datalists[$(datalists).index(datalist) + 1])
-
+        
         if(!datalist.data('route')) return;
         $(this).on('change', function (e) {
             var option = datalist.find('[value="' + this.value + '"]');
+            if(!option.data('id')) return false;
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: datalist.data('route') + '/' + option.data('id'),
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
                 },
                 dataType: 'application/json',
+                data: JSON.stringify({
+                    '_token' : $('meta[name="csrf-token"]').attr('content'),
+                }),
                 statusCode: {
                     200: function (response) {
                         var objects = JSON.parse(response.responseText);
@@ -93,5 +107,40 @@ function dropdownSelector() {
                 },
             });
         });
+    });
+}
+
+function othersSelectInput(event) {
+    $.each($('.select-others'), function (key, val) {
+        var select = $(this);
+        var others_option = $(this).children().last();
+        var others_input  = $(this).next('input');
+
+        others_input.hide();
+
+        others_input.focusout(function (e) {
+            if(others_input.val()) return false;
+            select.show();
+            others_input.hide();
+        })
+
+        select.on('change', function (e) {
+            if($("option:selected", this).val() == others_option.val()) {
+                select.hide();
+                others_input.show();
+                others_input.focus();
+            }
+        })
+
+        if(select.attr('value')) {
+            console.log(select, select.attr('value'));
+            if(isNumeric(select.attr('value'))) {
+                $('option[value=' + select.attr('value') + ']').attr('selected', true);
+            } else {
+                others_option.attr('selected', true);
+                select.hide()
+                others_input.show()
+            }
+        }
     });
 }

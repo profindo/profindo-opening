@@ -29,35 +29,35 @@ class Investor extends Model
         "nik_expire",
         "npwp",
         
-        "address_ktp_jalan",
-        "address_ktp_rtrw",
-        "address_ktp_provinsi",
-        "address_ktp_kota",
-        "address_ktp_kecamatan",
-        "address_ktp_kelurahan",
-        "address_ktp_kodepos",
-        "address_home_jalan",
-        "address_home_rtrw",
-        "address_home_provinsi",
-        "address_home_kota",
-        "address_home_kecamatan",
-        "address_home_kelurahan",
-        "address_home_kodepos",
+        "address_ktp_road",
+        "address_ktp_unit",
+        "address_ktp_province",
+        "address_ktp_city",
+        "address_ktp_district",
+        "address_ktp_subdistrict",
+        "address_ktp_postal",
+        "address_home_road",
+        "address_home_unit",
+        "address_home_province",
+        "address_home_city",
+        "address_home_district",
+        "address_home_subdistrict",
+        "address_home_postal",
         "address_home_status",
-        "address_inheritor_jalan",
-        "address_inheritor_rtrw",
-        "address_inheritor_provinsi",
-        "address_inheritor_kota",
-        "address_inheritor_kecamatan",
-        "address_inheritor_kelurahan",
-        "address_inheritor_kodepos",
-        "address_company_jalan",
-        "address_company_rtrw",
-        "address_company_provinsi",
-        "address_company_kota",
-        "address_company_kecamatan",
-        "address_company_kelurahan",
-        "address_company_kodepos",
+        "address_inheritor_road",
+        "address_inheritor_unit",
+        "address_inheritor_province",
+        "address_inheritor_city",
+        "address_inheritor_district",
+        "address_inheritor_subdistrict",
+        "address_inheritor_postal",
+        "address_company_road",
+        "address_company_unit",
+        "address_company_province",
+        "address_company_city",
+        "address_company_district",
+        "address_company_subdistrict",
+        "address_company_postal",
 
         "mother_name",
         "inheritor_name",
@@ -86,4 +86,24 @@ class Investor extends Model
         "bank_no",
         "bank_code",
     ];
+
+    public function addressKTP()
+    {
+
+    }
+
+    public function addressHome()
+    {
+
+    }
+
+    public function addressCompany()
+    {
+
+    }
+
+    public function addressInheritor()
+    {
+        
+    }
 }

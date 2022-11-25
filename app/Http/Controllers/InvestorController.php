@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InvestorRequest;
 use App\Models;
+use App\Models\Investor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class InvestorController extends Controller
 {
@@ -30,13 +32,14 @@ class InvestorController extends Controller
     }
 
     public function update(InvestorRequest $request) {
-        $investor = Auth::user()->investor;
-        info($request->input());
+        $user = \App\Models\User::find(Auth::user()->id);
+        $investor = $user->investor;
         switch($request->input('step')) {
             case 0:
                 $investor->name = $request->input('cust_name');
                 $investor->phone = $request->input('cust_phone');
                 $investor->gender = $request->input('cust_gender');
+                $user->email = $request->input('cust_email');
                 $investor->nationality = $request->input('cust_nationality');
                 switch($request->input('cust_relationship_status')) {
                     case 1:
@@ -64,30 +67,13 @@ class InvestorController extends Controller
                 $investor->npwp = $request->input('cust_npwp');
                 break;
             case 1:
-                $investor->address_ktp_road         = $request->input('cust_address_ktp_road');
-                $investor->address_ktp_rtrw         = $request->input('cust_address_ktp_rtrw');
-                $investor->address_ktp_provinsi     = $request->input('cust_address_ktp_provinsi');
-                $investor->address_ktp_kota         = $request->input('cust_address_ktp_kota');
-                $investor->address_ktp_kecamatan    = $request->input('cust_address_ktp_kecamatan');
-                $investor->address_ktp_kelurahan    = $request->input('cust_address_ktp_kelurahan');
-                $investor->address_ktp_kodepos      = $request->input('cust_address_ktp_kodepos');
-                if(!$request->input('home_ktp_address_same')) {
-                    //Validate
-                    $investor->address_home_road = $request->input('cust_address_home_road');
-                    $investor->address_home_rtrw = $request->input('cust_address_home_rtrw');
-                    $investor->address_home_provinsi = $request->input('cust_address_home_provinsi');
-                    $investor->address_home_kota = $request->input('cust_address_home_kota');
-                    $investor->address_home_kecamatan = $request->input('cust_address_home_kecamatan');
-                    $investor->address_home_kelurahan = $request->input('cust_address_home_kelurahan');
-                    $investor->address_home_kodepos = $request->input('cust_address_home_kodepos');
+                foreach($request->input('cust_ktp_address') as $key => $val) {
+                    $investor->update(['address_ktp_'.$key => $val]);
+                    if($request->input('home_ktp_address_same')) {
+                        $investor->update(['address_home_'.$key => $val]);
                 } else {
-                    $investor->address_home_road        = $request->input('cust_address_ktp_road');
-                    $investor->address_home_rtrw        = $request->input('cust_address_ktp_rtrw');
-                    $investor->address_home_provinsi    = $request->input('cust_address_ktp_provinsi');
-                    $investor->address_home_kota        = $request->input('cust_address_ktp_kota');
-                    $investor->address_home_kecamatan   = $request->input('cust_address_ktp_kecamatan');
-                    $investor->address_home_kelurahan   = $request->input('cust_address_ktp_kelurahan');
-                    $investor->address_home_kodepos     = $request->input('cust_address_ktp_kodepos');
+                        $investor->update(['address_home_'.$key => $request->input("cust_home_address")[$key]]);
+                    }
                 }
                 $investor->address_home_status = $request->input('cust_address_home_status');
                 break;
@@ -95,75 +81,80 @@ class InvestorController extends Controller
                 $investor->mother_name = $request->input('cust_mother_name');
                 $investor->inheritor_name = $request->input('cust_inheritor_name');
                 $investor->inheritor_phone = $request->input('cust_inheritor_phone');
-                switch($request->input('cust_inheritor_relationship')) {
-                    case 1:
-                        $investor->inheritor_relationship = "Keluarga";
-                        break;
-                    case 2:
-                        $investor->inheritor_relationship = "Pasangan";
-                        break;
-                    case 3:
-                        $investor->inheritor_relationship = "Sepupu";
-                        break;
+                $investor->inheritor_relationship = $request->input('cust_inheritor_relationship');
+                if($request->input('cust_inheritor_address')) {
+                    foreach($request->input('cust_inheritor_address') as $key => $val) {
+                        $investor->update(['address_inheritor'.$key => $val]);
+                    }
                 }
                 break;
             case 3:
-                switch($request->input('cust_occupation_profession')) {
-                    case 1:
-                        $investor->occupation_profession = "Private Employee (Karyawan Swasta)";
-                        break;
-                    case 2:
-                        $investor->occupation_profession = "Entrepreneur (Pengusaha)";
-                        break;
-                    case 3:
-                        $investor->occupation_profession = "Civil Servant (Pegawai Negri)";
-                        break;
-                    case 4:
-                        $investor->occupation_profession = "TNI/Police (TNI/Polisi)";
-                        break;
-                    case 5:
-                        $investor->occupation_profession = "Student (Pelajar)";
-                        break;
-                    case 6:
-                        $investor->occupation_profession = "Housewife (Ibu Rumah Tangga)";
-                        break;
-                    case 7:
-                        $investor->occupation_profession = "Teacher (Guru)";
-                        break;
-                    case 7:
-                        $investor->occupation_profession = "Retirement (Pensiunan)";
-                        break;
-                    case 9:
-                        $investor->occupation_profession = $request->input("cust_occupation_profession_other");
-                        break;
-                }
-                $investor->occupation_position = $request->input('cust_occupation_position');
+                info($request->input());
+                $investor->occupation_profession = $request->filled('cust_occupation_profession_origin_other') ?
+                    $request->input('cust_occupation_profession_origin_other') : 
+                    $request->input('cust_occupation_profession_origin');
+                $investor->occupation_position = $request->filled('cust_occupation_position_other') ?
+                    $request->input('cust_occupation_position_other') : 
+                    $request->input('cust_occupation_position');
                 $investor->occupation_income_range = $request->input('cust_occupation_income_range');
-                $investor->occupation_income_origin = $request->input('cust_occupation_income_origin');
-                if($request->input('cust_occupation_income_origin') == '8') $investor->occupation_income_origin = $request->input('cust_occupation_income_origin_other');
+                $investor->occupation_income_origin = $request->filled('cust_occupation_income_origin_other') ? 
+                    $request->input('cust_occupation_income_origin_other') :
+                    $request->input('cust_occupation_income_origin');
                 $investor->company_name = $request->input('cust_occupation_name');
                 $investor->company_industry = $request->input('cust_occupation_industry');
                 $investor->company_phone = $request->input('cust_occupation_phone');
                 $investor->company_fax = $request->input('cust_occupation_fax');
+
+                if($request->input('cust_company_address')) {
+                    foreach($request->input('cust_company_address') as $key => $val) {
+                        $investor->update(['address_company'.$key => $val]);
+                    }
+                }
                 break;
             case 4:
-                $investor->media_ktp = $request->input('cust_media_ktp');
-                $investor->media_npwp = $request->input('cust_media_npwp');
-                $investor->media_signature = $request->input('cust_media_signature');
-                $investor->media_selfie = $request->input('cust_media_selfie');
+                $investor->media_ktp = !$request->file('cust_media_ktp') ? $investor->media_ktp : $this->saveFile($request->file('cust_media_ktp'), 'KTP');
+                $investor->media_npwp = !$request->file('cust_media_npwp') ?$investor->media_npwp : $this->saveFile($request->file('cust_media_npwp'), 'NPWP');
+                $investor->media_signature = !$request->file('cust_media_signature') ? $investor->media_signature : $this->saveFile($request->file('cust_media_signature'), 'SIGN');
+                $investor->media_selfie = !$request->file('cust_media_selfie') ? $investor->media_selfie : $this->saveFile($request->file('cust_media_selfie'), 'SELFIE');
+
                 $investor->referral = $request->input('cust_referral');
                 $investor->where_do_you_know = $request->input('cust_reference');
                 $investor->reason = $request->input('cust_reason');
                 $investor->is_occupation_related = $request->input('cust_acquintance');
-                $investor->other_securities_company = $request->input('cust_other');
+                $investor->other_securities_company = $request->input('cust_other_text');
                 break;
             case 5:
+                $this->generateRDN($investor->bank_code);
                 break;
         }
-        $investor->save();
+        if((int) $request->input('step') + 1 >= $user->form_step) {
+            //Indicates that the user is on the NEXT step
+            $user->form_step = (int) $request->input('step') + 2;
+        }
+
+        $user->save();
+        if($investor->save()) {
+            return response()->json(['message' => 'Success', 'data' => ['step' => $user->form_step],'status' => '200'], 200);
+        } else {
+            return response()->json(['message' => 'Error!','status' => '500', 500]);
+        }
     }
 
     public function delete() {
         return false;
+    }
+
+    public function saveFile($file, $file_type)
+    {
+        $investor = \App\Models\User::find(Auth::user()->id)->investor;
+        $file_name = $investor->nik_no.'_'.$file_type.'.'.$file->extension();
+        Storage::disk('uploads')->put(''.$investor->nik_no.'/'.$file_name, file_get_contents($file));
+
+        return $investor->nik_no.'/'.$file_name;
+    }
+
+    public function generateRDN(Investor $investor)
+    {
+        $handler = \App\Http\Controllers\OpeningAccountController::generateRDN($investor);
     }
 }

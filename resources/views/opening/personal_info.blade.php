@@ -14,7 +14,8 @@
             </div>
             @endsection
             <div class="carousel-inner">
-                <form id="personalInfoForm">
+                <form id="personalInfoForm" enctype="multipart/form-data">
+                @csrf
                 <div class="carousel-item active">
                     <h3 class="text-center">Informasi Nasabah Perorangan</h3>
                     <div class="container-fluid">
@@ -47,6 +48,7 @@
                                         Perempuan
                                     </label>
                                 </div>
+                                <span class="text-danger" id="cust_gender_error"></span>
                             </div>
                         </div>
                         <div class="d-flex flex-lg-row flex-column">
@@ -56,6 +58,7 @@
                                     <option value="2">Warga Negara Asing</option>
                                 </select>
                                 <label for="cust_nationality">Status Warga Negara</label>
+                                <span class="text-danger" id="cust_nationality_error"></span>
                             </div>
                             <div class="col form-group form-floating ms-lg-1">
                                 <select class="form-control" id=cust_relationship_status name="cust_relationship_status" value="{{ $investor->relationship_status }}">
@@ -65,6 +68,7 @@
                                     <option value="4">Janda</option>
                                 </select>
                                 <label for="cust_relationship_status">Status Hubungan</label>
+                                <span class="text-danger" id="cust_relationship_status_error"></span>
                             </div>
                         </div>
                         <div id="cust_birth" class="d-flex flex-lg-row flex-column form-group">
@@ -76,9 +80,11 @@
                                     @endforeach
                                 </datalist>
                                 <label for="cust_birthplace">Tempat / Tanggal Lahir</label>
+                                <span class="text-danger" id="cust_birthplace_error"></span>
                             </div>
                             <div class="col form-group form-floating ms-lg-1">
                                 <input class="form-control datepicker" id="cust_birthdate" type="date" name="cust_birthdate" value="{{ $investor->birth_date }}">
+                                <span class="text-danger" id="cust_birthdate_error"></span>
                             </div>
                         </div>
                         <div class="d-flex flex-lg-row flex-column">
@@ -91,15 +97,17 @@
                                         <input class="form-check-input" type="checkbox" id="cust_nik_no_expire" name="cust_nik_no_expire" {{ $investor->nik_expire ? "" : "checked" }}>
                                         <label class="form-check-label" for="cust_nik_no_expire">Seumur Hidup</label>
                                     </div>
-                                </div>
+                                <span class="text-danger" id="cust_nik_error"></span>
+                            </div>
                             </div>
                             <div class="col d-flex flex-column align-content-center form-floating ms-lg-1">
                                 <input class="form-control form-control-sm" id="cust_npwp" type="text" name="cust_npwp" value="{{ $investor->npwp }}" placeholder="NPWP">
                                 <label for="cust_npwp">NPWP</label>
                                 <div class="col form-group ms-2 form-check form-check-inline mt-1" style="padding: 10px 16px;">
-                                    <input class="form-check-input" type="checkbox" id="cust_no_npwp" name="cust_no_npwp" {{  ($investor->npwp || (Auth::user()->form_step == 1)) ? "" : "checked"}}>
+                                    <input class="form-check-input" type="checkbox" id="cust_no_npwp" name="cust_no_npwp" {{ ($investor->npwp || (Auth::user()->form_step == 1)) ? "" : "checked"}}>
                                     <label class="form-check-label" for="cust_no_npwp">Tidak memiliki NPWP</label>
                                 </div>
+                                <span class="text-danger" id="cust_npwp_error"></span>
                             </div>
                         </div>
                     </div>
@@ -107,22 +115,22 @@
                 <div class="carousel-item">
                     <h3 class="text-center">Alamat Nasabah</h3>
                     <div class="container-fluid">
-                        @include('components.address-picker', ['name' => 'sesuai KTP', 'field_name' => "cust_address"])
+                        @include('components.address-picker', ['name' => 'sesuai KTP', 'field_name' => "cust_ktp_address", 'column_name' => 'address_ktp'])
                         <div class="col form-group">
-                            <label for="cust_address_home_status">Status rumah tinggal</label>
-                            <select class="form-control select-others" id="cust_address_home_status" name="cust_address_home_status">
+                            <label for="cust_home_address_status">Status rumah tinggal</label>
+                            <select class="form-control select-others" id="cust_home_address_status" name="cust_home_address_status" value="{{ $investor->address_home_status }}">
                                 <option value="1">Milik Keluarga</option>
                                 <option value="2">Milik Sendiri</option>
                                 <option value="3">Sewa/Kontrak</option>
                                 <option value="4">Lainnya</option>
                             </select>
-                            <input id="cust_address_home_status_other" class="form-control" name="cust_reference_other" type="text" placeholder="Lainnya">
+                            <input id="cust_home_address_status_other" class="form-control" name="cust_reference_other" type="text" placeholder="Lainnya">
                         </div>
                         <div class="form-group">
-                            <input id="home_ktp_address_same" class="form-check-input" type="checkbox">
-                            <label  class="form-check-label" for="home_ktp_address_same">Alamat rumah sama dengan KTP</label>
+                            <input id="home_ktp_address_same" class="form-check-input" name="home_ktp_address_same" type="checkbox">
+                            <label class="form-check-label" for="home_ktp_address_same">Alamat rumah sama dengan KTP</label>
                         </div>
-                        @include('components.address-picker', ['name' => 'Rumah', 'field_name' => "cust_home_address"])
+                        @include('components.address-picker', ['name' => 'Rumah', 'field_name' => "cust_home_address", 'column_name' => 'address_home'])
                         <ul id="cust_other_address" class="list-unstyled">
                         </ul>
                         <div id="cust_other_address_buttons" class="form-group">
@@ -137,80 +145,35 @@
                         <div id="cust_family" class="col form-group">
                             <label for="cust_family">Keluarga Nasabah</label>
                             <div class="form-floating">
-                                <input id="cust_mother_name" class="form-control" name="cust_mother_name" type="text" value="" placeholder="e.g Maria Susanti">
+                                <input id="cust_mother_name" class="form-control" name="cust_mother_name" type="text" value="{{ $investor->mother_name }}" placeholder="e.g Maria Susanti">
                                 <label for="cust_mother_name">Nama Gadis Ibu Kandung</label>
                             </div>
+                            <span class="text-danger" id="cust_mother_name_error"></span>
                         </div>
                         <div id="cust_inheritor" class="col d-flex flex-column form-group">
                             <label for="cust_inheritor">Ahli waris</label>
                             <div class="form-floating">
-                                <input id="cust_inheritor_name" class="col form-control mb-1" type="text" name="cust_inheritor_name" value="" placeholder="Nama ">
+                                <input id="cust_inheritor_name" class="col form-control mb-1" type="text" name="cust_inheritor_name" value="{{ $investor->inheritor_name }}" placeholder="Nama ">
                                 <label for="cust_inheritor_name">Nama</label>
+                                <span class="text-danger" id="cust_inheritor_name_error"></span>
                             </div>
                             <div class="col d-flex flex-row">
                                 <div class="col form-floating me-1">
-                                    <input id="cust_inheritor_phone" class="form-control" type="text" name="cust_inheritor_phone" value="" placeholder="No. Telepon">
+                                    <input id="cust_inheritor_phone" class="form-control" type="text" name="cust_inheritor_phone" value="{{ $investor->inheritor_phone }}" placeholder="No. Telepon">
                                     <label for="cust_inheritor_phone">No. Telepon</label>
                                 </div>
                                 <div class="col form-floating ms-1">
-                                    <select class="form-control" id="cust_inheritor_relationship" class="form-control" name="cust_inheritor_relationship">
+                                    <select class="form-control" id="cust_inheritor_relationship" class="form-control" name="cust_inheritor_relationship" value="{{ $investor->inheritor_relationship }}">
                                         <option value="1">Keluarga</option>
                                         <option value="2">Pasangan</option>
                                         <option value="3">Sepupu</option>
                                     </select>
                                     <label for="cust_inheritor_relationship">Status Hubungan</label>
+                                    <span class="text-danger" id="cust_inheritor_relationship_error"></span>
                                 </div>
                             </div>
                         </div>
-                        <div id="cust_inheritor_address" class="form-group row">
-                            <label for="cust_inheritor_address">Alamat Rumah</label>
-                            <div class="d-flex flex-column">
-                                <div class="d-flex flex-lg-row flex-column">
-                                    <div class="col-lg-6 col me-lg-1 form-floating">
-                                        <input class="form-control" id="cust_inheritor_address_road" type="text" name="cust_inheritor_address_road[]" value="{{ Auth::user()->address_ktp_road }}" placeholder="Jl. HR Rasuna Said">
-                                        <label for="cust_inheritor_address_road">Jalan</label>
-                                    </div>
-                                    <div class="col d-flex flex-row form-group ms-lg-1 mt-lg-0 mt-1">
-                                        <div class="form-floating">
-                                            <input class="col form-control me-1" id="cust_inheritor_address_unit" type="text" name="cust_inheritor_address_unit[]" value="{{ Auth::user()->address_ktp_unit }}" placeholder="RT/RW">
-                                            <label for="cust_inheritor_address_unit">RT/RW</label>
-                                        </div>
-                                        <div class='form-floating'>
-                                            <input class="col form-control ms-1" id="cust_inheritor_address_postal" type="text" name="cust_inheritor_address_postal[]" value="{{ Auth::user()->address_ktp_unit }}" placeholder="Kode Pos">
-                                            <label for="cust_inheritor_address_postal">Kode Pos</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row form-floating">
-                                    <div class="form-floating">
-                                        <input class="col form-control me-2 dropdown-selector" list="cust_inheritor_address_prov" name="cust_inheritor_address_prov" placeholder="Provinsi">
-                                        <label for="cust_inheritor_address_prov">Provinsi</label>
-                                        <datalist id="cust_inheritor_address_prov" data-route="{{ route('api.province.list', '') }}">
-                                        @foreach(App\Models\Province::all()->sortBy('prov_name') as $prov)
-                                            <option value="{{ $prov->prov_name }}" data-id="{{ $prov->prov_id }}">
-                                        @endforeach
-                                        </datalist>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input class="col form-control dropdown-selector" list="cust_inheritor_address_city" name="cust_inheritor_address_city" placeholder="Kota">
-                                        <label for="cust_inheritor_address_city">Kota</label>
-                                        <datalist id="cust_inheritor_address_city" data-route="{{ route('api.city.list', '') }}" data-identifier="city">
-                                        </datalist>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input class="col form-control dropdown-selector ms-2" list="cust_inheritor_address_district" name="cust_inheritor_address_district" placeholder="Kecamatan">
-                                        <label for="cust_inheritor_address_district">Kecamatan</label>
-                                        <datalist id="cust_inheritor_address_district" data-route="{{ route('api.district.list', '') }}" data-identifier="dis">
-                                        </datalist>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input class="col form-control dropdown-selector ms-2" list="cust_inheritor_address_subdistrict" name="cust_inheritor_address_subdistrict" placeholder="Kelurahan">
-                                        <label for="cust_inheritor_address_subdistrict">Kelurahan</label>
-                                        <datalist id="cust_inheritor_address_subdistrict" data-identifier="subdis">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @include('components.address-picker', ['name' => "ahli waris", 'field_name' => 'cust_inheritor_address', 'column_name' => 'address_inheritor'])
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -220,7 +183,7 @@
                             <label for="cust_occupation">Pekerjaan Nasabah</label>
                             <div class="col d-flex flex-row">
                                 <div class="col me-1 form-floating">
-                                    <select id="cust_occupation_profession" class="select-others col form-control me-1" name="cust_occupation_profession">
+                                    <select id="cust_occupation_profession" class="select-others col form-control me-1" name="cust_occupation_profession" value="{{ $investor->occupation_profession }}">
                                         <option value="1">Karyawan Swasta</option>
                                         <option value="2">Wiraswasta</option>
                                         <option value="3">Pegawai Negeri</option>
@@ -235,7 +198,7 @@
                                     <label for="cust_occupation_profession_other">Profesi</label>
                                 </div>
                                 <div class="col ms-1 form-floating">
-                                    <select id="cust_occupation_position" class="select-others col form-control ms-1" name="cust_occupation_position">
+                                    <select id="cust_occupation_position" class="select-others col form-control ms-1" name="cust_occupation_position" value="{{ $investor->occupation_position }}">
                                         <option value="1">Pemilik (Owner)</option>
                                         <option value="2">Manajer</option>
                                         <option value="3">Komisaris</option>
@@ -245,7 +208,7 @@
                                         <option value="7">Ibu Rumah Tangga (Housewife)</option>
                                         <option value="8">Lainnya</option>
                                     </select>
-                                    <input id="cust_occupation_position_other" class="form-control" name="cust_occupation_position_other" type="text" placeholder="Lainnya">
+                                    <input id="cust_occupation_position_other" class="form-control" name="cust_occupation_position_other" type="text" placeholder="Lainnya" value="{{ is_int($investor->occupation_position) ? "" : $investor->occupation_position }}">
                                     <label for="cust_occupation_position">Posisi</label>
                                 </div>
                             </div>
@@ -262,7 +225,7 @@
                                     <label for="cust_occupation_income_range">Penghasilan per Tahun</label>
                                 </div>
                                 <div class="col ms-1 form-floating">
-                                    <select id="cust_occupation_income_origin" class="select-others form-control" name="cust_occupation_income_origin">
+                                    <select id="cust_occupation_income_origin" class="select-others form-control" name="cust_occupation_income_origin" value="{{ $investor->occupation_income_origin }}">
                                         <option value="1">Penghasilan/Gaji</option>
                                         <option value="2">Hasil Usaha</option>
                                         <option value="3">Bunga simpanan</option>
@@ -274,7 +237,7 @@
                                         <option value="9">Hasil Investasi</option>
                                         <option value="10">Lainnya</option>
                                     </select>
-                                    <input id="cust_occupation_income_origin_other" class="form-control" name="cust_reference_other" type="text" placeholder="Lainnya">
+                                    <input id="cust_occupation_income_origin_other" class="form-control" name="cust_occupation_income_origin_other" type="text" value="{{ is_int($investor->occupation_income_origin) ? "" : $investor->occupation_income_origin }}" placeholder="Lainnya">
                                     <label for="cust_occupation_income_origin">Sumber Penghasilan</label>
                                 </div>
                             </div>
@@ -283,26 +246,29 @@
                             <label for="cust_company">Perusahaan Nasabah</label>
                             <div class="col d-flex flex-lg-row flex-column">
                                 <div class="col me-lg-1 form-floating">
-                                    <input id="cust_occupation_name" class="form-control" name="cust_occupation_name" type="text" value="" placeholder="Nama perusahaan">
+                                    <input id="cust_occupation_name" class="form-control" name="cust_occupation_name" type="text" value="{{ $investor->company_name }}" placeholder="Nama perusahaan">
                                     <label for="cust_occupation_name">Nama Perusahaan</label>
+                                    <span class="text-danger" id="cust_occupation_name_error"></span>
                                 </div>
                                 <div class="col ms-lg-1 form-floating">
-                                    <input id="cust_occupation_industry" class="form-control" name="cust_occupation_industry" type="text" value="" placeholder="Bidang perusahaan">
+                                    <input id="cust_occupation_industry" class="form-control" name="cust_occupation_industry" type="text" value="{{ $investor->company_industry }}" placeholder="Bidang perusahaan">
                                     <label for="cust_occupation_industry">Bidang Usaha</label>
+                                    <span class="text-danger" id="cust_occupation_industry_error"></span>
                                 </div>
                             </div>
                             <div class="col d-flex flex-row">
                                 <div class="col me-1 form-floating">
-                                    <input id="cust_occupation_phone" class="form-control" name="cust_occupation_phone" type="text" value="" placeholder="0812484219824">
+                                    <input id="cust_occupation_phone" class="form-control" name="cust_occupation_phone" type="text" value="{{ $investor->company_phone }}" placeholder="0812484219824">
                                     <label for="cust_occupation_phone">No. Telepon Kantor</label>
+                                    <span class="text-danger" id="cust_occupation_phone_error"></span>
                                 </div>
                                 <div class="col ms-1 form-floating">
-                                    <input id="cust_occupation_fax" class="form-control" name="cust_occupation_fax" type="text" value="" placeholder="081284219824">
+                                    <input id="cust_occupation_fax" class="form-control" name="cust_occupation_fax" type="text" value="{{ $investor->company_fax }}" placeholder="081284219824">
                                     <label for="cust_occupation_fax">No. Fax Kantor</label>
                                 </div>
                             </div>
                         </div>
-                        @include('components.address-picker', ['name' => 'Perusahaan', 'field_name' => "cust_company_address"])
+                        @include('components.address-picker', ['name' => 'Perusahaan', 'field_name' => "cust_company_address", 'column_name' => "address_company"])
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -312,15 +278,15 @@
                             <label for="cust_media">Upload Media</label>
                             <div class="col d-flex flex-lg-row flex-column">
                                 <div class="col form-group">
-                                    <div class="d-flex justify-content-center mx-5 mb-2">
-                                        <img id="cust_media_ktp_preview" class="col img-fluid me-1" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg">
+                                    <div class="preview-container mx-5 mb-2">
+                                        <img id="cust_media_ktp_preview" class="col img-fluid me-1" src="{{ $investor->media_ktp ? Storage::disk('uploads')->url($investor->media_ktp) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
                                     </div>
                                     <input id="cust_media_ktp" class="form-control" name="cust_media_ktp" type="file" accept="image/*">
                                     <label for="cust_media_ktp">e-KTP
                                 </div>
                                 <div class="col form-group">
-                                    <div class="d-flex justify-content-center mx-5 mb-2">
-                                        <img id="cust_media_npwp_preview" class="col img-fluid me-1" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg">
+                                    <div class="preview-container mx-5 mb-2">
+                                        <img id="cust_media_npwp_preview" class="col img-fluid me-1" src="{{ $investor->media_npwp ?  Storage::disk('uploads')->url($investor->media_npwp) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
                                     </div>
                                     <input id="cust_media_npwp" class="form-control" name="cust_media_npwp" type="file" accept="image/*">
                                     <label for="cust_media_npwp">NPWP
@@ -328,15 +294,15 @@
                             </div>
                             <div class="col d-flex flex-lg-row flex-column">
                                 <div class="col form-group">
-                                    <div class="d-flex justify-content-center mx-5 mb-2">
-                                        <img id="cust_media_signature_preview" class="col img-fluid me-1" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg">
+                                    <div class="preview-container mx-5 mb-2">
+                                        <img id="cust_media_signature_preview" class="col img-fluid me-1" src="{{ $investor->media_signature ?  Storage::disk('uploads')->url($investor->media_signature) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
                                     </div>
                                     <input id="cust_media_signature" class="form-control" name="cust_media_signature" type="file" accept="image/*">
                                     <label for="cust_media_signature">Tanda Tangan
                                 </div>
                                 <div class="col form-group">
-                                    <div class="d-flex justify-content-center mx-5 mb-2">
-                                        <img id="cust_media_selfie_preview" class="col img-fluid me-1" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg">
+                                    <div class="preview-container mx-5 mb-2">
+                                        <img id="cust_media_selfie_preview" class="col img-fluid me-1" src="{{ $investor->media_selfie ?  Storage::disk('uploads')->url($investor->media_selfie) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
                                     </div>
                                     <input id="cust_media_selfie" class="form-control" name="cust_media_selfie" type="file" accept="image/*">
                                     <label for="cust_media_selfie">Selfie memegang e-KTP
@@ -376,11 +342,11 @@
                             </label>
                             <div id="cust_acquintance" class="d-flex flex-column">
                                 <div class="form-check">
-                                    <input id="cust_acquintance1" class="form-check-input" name="cust_acquintance" type="radio" value="0" checked>
+                                    <input id="cust_acquintance1" class="form-check-input" name="cust_acquintance" type="radio" value="0" {{ $investor->is_occupation_related ? '' : 'checked' }}>
                                     <label for="cust_acquintance1" class="form-check-label">Tidak</label>
                                 </div>
                                 <div class="form-check">
-                                    <input id="cust_acquintance2" class="form-check-input" name="cust_acquintance" type="radio" value="1">
+                                    <input id="cust_acquintance2" class="form-check-input" name="cust_acquintance" type="radio" value="1"  {{ $investor->is_occupation_related ? 'checked' : '' }}>
                                     <label for="cust_acquintance2" class="form-check-label">Ya</label>
                                 </div>
                             </div>
@@ -392,15 +358,15 @@
                             </label>
                             <div id="cust_other" class="d-flex flex-column">
                                 <div class="form-check">
-                                    <input id="cust_other1" class="form-check-input" name="cust_other" type="radio" value="0" checked>
+                                    <input id="cust_other1" class="form-check-input" name="cust_other" type="radio" value="0" {{ $investor->other_securities_company ? '' : 'checked' }}>
                                     <label for="cust_other1" class="form-check-label">Tidak</label>
                                 </div>
                                 <div class="form-check">
-                                    <input id="cust_other2" class="form-check-input" name="cust_other" type="radio" value="1">
+                                    <input id="cust_other2" class="form-check-input" name="cust_other" type="radio" value="1" {{ $investor->other_securities_company ? 'checked' : '' }}>
                                     <label for="cust_other2" class="form-check-label">Ya</label>
                                 </div>
                                 <div class="form-check">
-                                    <input id="cust_other_text" class="form-control" name="cust_other_text" placeholder="PT Profindo Sekuritas Indonesia">
+                                    <input id="cust_other_text" class="form-control" name="cust_other_text" placeholder="PT Profindo Sekuritas Indonesia" value="{{ $investor->other_securities_company }}" style="{{ $investor->other_securities_company ? '' : 'display: none;'}}">
                                 </div>
                             </div>
                         </div>
@@ -408,26 +374,33 @@
                 </div>
                 <div class="carousel-item">
                     <h3 class="text-center">Data Rekening Pribadi</h3>
-                    <div class="d-flex flex-column container">
+                    <div class="d-flex flex-column container-fluid">
                         <div id="cust_bank" class="col d-flex flex-column form-group">
                             <label for="cust_bank">Rekening Nasabah</label>
                             <div class="col form-floating">
-                                <input id="cust_bank_name" class="form-control" name="cust_bank_name" value="" placeholder="Nama sesuai Buku Tabungan">
+                                <input id="cust_bank_name" class="form-control" name="cust_bank_name" type="text" value="{{ $investor->bank_name }}" placeholder="Nama sesuai Buku Tabungan" disabled>
                                 <label for="cust_bank_name">Nama Pemilik Rekening</label>
                             </div>
                             <div class="col d-flex flex-row">
                                 <div class="col form-floating">
-                                    <input id="cust_bank_no" class="form-control" name="cust_bank_no" value="" placeholder="No Rekening">
+                                    <input id="cust_bank_no" class="form-control" name="cust_bank_no" type="text" value="{{ $investor->bank_no }}" placeholder="No Rekening" disabled>
                                     <label for="cust_bank_no">No Rekening</label>
                                 </div>
                                 <div class="col form-floating">
-                                    <select id="cust_bank_code" class="form-control" name="cust_bank_code" value="" placeholder="Tipe Bank">
-                                        <option value="1">BCA</option>
-                                        <option value="2">CIMB Niaga</option>
-                                        <option value="3">Sinarmas</option>
+                                    <select id="cust_bank_code" class="form-control" name="cust_bank_code" type="text" value="{{ $investor->bank_code }}" placeholder="Tipe Bank" disabled>
+                                        <option value="BBCA">BCA</option>
+                                        <option value="CIMB">CIMB Niaga</option>
+                                        <option value="BSIM">Sinarmas</option>
                                     </select>
                                     <label for="cust_bank_code">Tipe Bank</label>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="cust_rdn" class="col d-flex flex-column form-group">
+                            <label for="cust_rdn">Rekening Reksadana</label>
+                            <div class="col form-floating">
+                                <input id="cust_rdn_no" class="form-control" name="cust_rdn_no" value="{{ $investor->bank_rdn_no }}" placeholder="No Rekening Reksadana">
+                                <label for="cust_rdn_no">No Rekening Reksadana</label>
                             </div>
                         </div>
                     </div>
@@ -453,16 +426,16 @@
             <div class="w-100 item">Alamat Nasabah</div>
         </li>
         <li class="container col">
-            <div class="w-100 item">Data Keluarga dan Ahli Waris</div>
+            <div class="w-100 item">Keluarga dan Ahli Waris</div>
         </li>
         <li class="container col">
-            <div class="w-100 item">Data Pekerjaan atau Perusahaan</div>
+            <div class="w-100 item">Pekerjaan atau Perusahaan</div>
         </li>
         <li class="container col">
             <div class="w-100 item">Informasi Tambahan</div>
         </li>
         <li class="container col">
-            <div class="w-100 item">Data Rekening Pribadi</div>
+            <div class="w-100 item">Rekening Pribadi</div>
         </li>
     </ul>
 </div>
@@ -471,18 +444,14 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        dropdownSelector();
-        othersSelectInput();
         var total_width = $('.progress').width();
-        var user_progress = {{ Auth::user()->form_step }};
-        $('.progress-bar').css("width", (user_progress/$('.carousel-item').length)*total_width);
+        var user_progress = "{{ Auth::user()->form_step }}";
+        
 
-        $($('#carousel_indicators li div')[user_progress]).attr('active');
         $('#carousel_indicators li').each(function (i, element) {
             if((i+1) <= user_progress) {
                 $(element).attr('data-bs-target', '#carouselForm');
                 $(element).attr('data-bs-slide-to', i);
-                console.log(element)
             }
         });
 
@@ -510,27 +479,26 @@
             event.preventDefault();
             document.getElementById('nextBtn').innerHTML = "<i class='fas fa-circle-notch fa-spin'></i>"
             var form = $('#personalInfoForm');
-            var form_data = form.serializeArray().reduce(function(prev, data) {
-                prev[data.name] = data.value;
-                return prev;
-            }, {});
-            form_data['step'] = $('.carousel-item.active').index()
+            var form_data = new FormData(this);
+            form_data.append('step', $('.carousel-item.active').index()-1)
+            console.log([...form_data.values()]);
             $.ajax({
                 type: 'POST',
                 url: '/user/update',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Content-Type': 'application/json',
                 },
-                dataType: 'application/json',
-                data: JSON.stringify(form_data),
+                data: form_data,
+                processData: false,
+                contentType: false,
                 statusCode: {
                     200: function(response) {
-                        user_progress = form_data['step'] > user_progress ? form_data['step'] : user_progress;
-                        carousel.carousel('next');
+                        console.log(response)
+                        user_progress = form_data['step'] > response['data']['step'] ? form_data['step'] : user_progress;
                         $($('#carousel_indicators li')[user_progress]).attr('data-bs-target', '#carouselForm');
                         $($('#carousel_indicators li')[user_progress]).attr('data-bs-slide-to', user_progress);
-                        $('.progress-bar').css("width", ((e.to+1)/($('.carousel-item').length))*total_width)
+                        $('.progress-bar').css("width", ((user_progress)/($('.carousel-item').length))*total_width)
+                        carousel.carousel('next');
                     },
                     422: function(response) {
                         console.log("ERROR : ", response)
@@ -541,6 +509,7 @@
                                 $('#' + key + '_error').attr('hidden', 'true');
                             }
                             else {
+                                console.log(key, val);
                                 $('#' + key + '_error').text(error[key][0]);
                                 $('#' + key + '_error').removeAttr('hidden');
                             }
@@ -553,13 +522,23 @@
             });
         });
 
-        $('#cust_media_ktp').on('change', function (event) {
+        $('input[type=file]').on('change', function (event) {
             cropImage(this)
-            
         });
+
+        $('#cust_other').on('change', function (event) {
+            if($(this).find(":checked").val() == 1) {
+                $('#cust_other_text').show();
+            } else {
+                $('#cust_other_text').hide();
+            }
+        })
+
+        $('.progress-bar').css("width", (user_progress/$('.carousel-item').length)*total_width);
+        carousel.carousel(Number(user_progress)-1);
     });
 
-    function addAddress(event) {
+    /**function addAddress(event) {
         var other_address_list = $('#cust_other_address');
         if(other_address_list.children().length < 1) {
             other_address_list.append($('#cust_address_home').clone());
@@ -569,31 +548,7 @@
 
     function removeAddress(event) {
         $('#cust_other_address').children().last().remove();
-    };
-
-    function othersSelectInput(event) {
-        $.each($('.select-others'), function (key, val) {
-            var select = $(this);
-            var others_option = $(this).children().last();
-            var others_input  = $(this).next('input');
-
-            others_input.hide();
-
-            others_input.focusout(function (e) {
-                if(others_input.val()) return false;
-                select.show();
-                others_input.hide();
-            })
-
-            $(this).on('change', function (e) {
-                if($("option:selected", this).val() == others_option.val()) {
-                    select.hide();
-                    others_input.show();
-                    others_input.focus();
-                }
-            })
-        });
-    }
+    };**/
 </script>
 @endsection
 

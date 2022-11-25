@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Opening;
 
 use App\Http\Controllers\Controller;
+use App\Models\Investor;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
@@ -55,5 +56,10 @@ class CIMBController extends Controller
             return $response['statusDesc'];
         }
         return 'Success';
+    }
+
+    public function generateRDN(Investor $investor)
+    {
+        
     }
 }

@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
-use App\Models\City;
-use App\Models\District;
-use App\Models\Province;
+use App\Models;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,14 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'v1', 'middleware'=>['api', 'web']], function() {
-    Route::get('/province/{prov}', function (Province $prov) {
-        return $prov->city;
-    })->name('api.province.list');
-    Route::get('/city/{city}', function (City $city) {
-        return $city->district;
-    })->name('api.city.list');
-    Route::get('/district/{dis}', function (District $dis) {
-        return $dis->subdistrict;
-    })->name('api.district.list');
+Route::group(['prefix'=>'v1', 'middleware'=>['api']], function() {
+    Route::post('/province/{prov}', function(Models\Province $prov){ return $prov->city;})->name('api.province.list');
+    Route::post('/city/{city}', function(Models\City $city){ return $city->district;})->name('api.city.list');
+    Route::post('/district/{dis}', function(Models\District $dis){ return $dis->subdistrict;})->name('api.district.list');
 });

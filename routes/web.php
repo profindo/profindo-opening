@@ -40,7 +40,7 @@ Route::group(['prefix'=>'api', 'middleware'=>['api']], function () {
 
 Route::post('/mail/verify', [Controllers\OpeningAccountController::class, 'verifyEmail'])->name('verification.verify');
 
-Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth']], function () {
+Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth', 'ajax']], function () {
     Route::get('index');
     Route::get('view');
     Route::get('create');

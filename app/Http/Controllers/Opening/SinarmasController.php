@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Opening;
 
 use App\Http\Controllers\Controller;
+use App\Models\Investor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -23,5 +24,10 @@ class SinarmasController extends Controller
             'application/x-www-form-urlencoded'
         )->post(env('BCA_URL', 'https://devapi.klikbca.com:9443').config('services.bca.url.oauth_token'));
         return $response['access_token'];
+    }
+
+    public function generateRDN(Investor $investor)
+    {
+        
     }
 }

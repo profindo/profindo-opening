@@ -29,19 +29,19 @@
 <script src="{{ asset('js/jquery.Jcrop.min.js') }}"></script>
 <script src="{{ asset('js/jquery-rotate.js') }}"></script>
 <script>
+    var jcrop_api;
+    var image_preview;
     $(document).ready(function () {
         $('#image_cropper').modal({
             backdrop: 'static',
         });
 
         $(window).on('resize', function () {
-            if($('#cropper').data('Jcrop').getOptions().boxWidth != $('.modal-body').width()) {
-                $('#cropper').data('Jcrop').destroy();
+            if(jcrop_api.getOptions().boxWidth != $('.modal-body').width()) {
+                jcrop_api.destroy();
                 $('#cropper').removeAttr('style');
-                $('#cropper').Jcrop({
-                    boxWidth: $('.modal-body').width(),
-                    rotate: 0,
-                });
+                initiateCropper();
+                
             }
         })
     });
@@ -51,7 +51,7 @@
         $img.attr('data-angle', parseInt($img.attr('data-angle')) + 90);
         if($img.attr('data-angle') == 360) $img.attr('data-angle', 0);
 
-        $('#cropper').data('Jcrop').setOptions({
+        jcrop_api.setOptions({
             rotate: $img.attr('data-angle')
         })
         $('.jcrop-holder').rotate(parseInt($img.attr('data-angle')));
@@ -62,35 +62,64 @@
         $img.attr('data-angle', parseInt($img.attr('data-angle')) - 90);
         if($img.attr('data-angle') == -90) $img.attr('data-angle', 270);
 
-        $('#cropper').data('Jcrop').setOptions({
+        jcrop_api.setOptions({
             rotate: $img.attr('data-angle')
         })
         $('.jcrop-holder').rotate(parseInt($img.attr('data-angle')));
     }
 
     function cropImage(event) {
+        
         $('#cropper').attr('src', URL.createObjectURL(event.files[0]));
         $('#cropper').data('target', $(event).attr('name'))
         $('#cropper').removeAttr('style');
         $('#image_cropper').modal('toggle');
+    }
 
-        $('#image_cropper').on('shown.bs.modal', function () {
-            $('#cropper').Jcrop({
-                boxWidth: $('.modal-body').width(),
-                setSelect: [0, $('#cropper').width(), $('#cropper').height(), 0],
-                rotate: 0,
-            });
+    function submitImage() {
+        cropper = $('#cropper');
+        image_preview.attr('src', cropper.attr('src'));
 
-            $('.jcrop-holder').data('angle', 0);
+        var [boundx, boundy] = jcrop_api.getBounds();
+        var c = jcrop_api.getOptions();
+
+        /**image_preview.css({
+            width: Math.round(c.rx * boundx) + 'px',
+            height: Math.round(c.ry * boundy) + 'px',
+            marginLeft: '-' + Math.round(c.rx * c.x) + 'px',
+            marginTop: '-' + Math.round(c.ry * c.y) + 'px'
+        });**/
+    }
+
+    function saveCoords(c) {
+        if (jcrop_api && parseInt(c.w) > 0) {
+            jcrop_api.setOptions({
+                rx: image_preview.parent().width() / c.w,
+                ry: image_preview.parent().height() / c.h,
+                x : c.x,
+                y : c.y,
+            })
+        }
+    }
+
+    function initiateCropper() {
+        $('#cropper').Jcrop({
+            boxWidth: $('.modal-body').width(),
+            setSelect: [0, $('#cropper').width(), $('#cropper').height(), 0],
+            rotate: 0,
+            aspectRatio: 3/2,
+            onSelect: saveCoords
+        }, function() {
+            jcrop_api = this;
+            image_preview = $('#' + $('#cropper').data('target') + '_preview');
         });
     }
 
-    function submitImage(event) {
-        $image_preview = $($('#cropper').data('target') + '_preview');
-        console.log($('#cropper').data('Jcrop'))
-    }
-
     $('#image_cropper').on('hidden.bs.modal', function (e) {
-        $('#cropper').data('Jcrop').destroy();
+        jcrop_api.destroy();
+    });
+    $('#image_cropper').on('shown.bs.modal', function () {
+        initiateCropper();
+        $('.jcrop-holder').data('angle', 0);
     });
 </script>
