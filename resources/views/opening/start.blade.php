@@ -189,7 +189,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: '/validate',
+                url: '{{ route("validate") }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',

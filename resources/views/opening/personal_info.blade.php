@@ -484,7 +484,7 @@
             console.log([...form_data.values()]);
             $.ajax({
                 type: 'POST',
-                url: '/user/update',
+                url: '{{ route("investor.update") }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },

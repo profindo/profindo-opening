@@ -32,7 +32,7 @@ Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () {
     Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
 });
 
-Route::post('/validate', [Controllers\OpeningAccountController::class, 'validateUser']);
+Route::post('/validate', [Controllers\OpeningAccountController::class, 'validateUser'])->name('validate');
 
 Route::group(['prefix'=>'api', 'middleware'=>['api']], function () {
     Route::post('/bca', [Controllers\Opening\BCAController::class, 'applyHeaders'])->middleware('oauth2_bca');
