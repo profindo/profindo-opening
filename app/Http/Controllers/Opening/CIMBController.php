@@ -18,9 +18,9 @@ class CIMBController extends Controller
     {
         $body = json_encode($body);
         $req_body = base64_encode(md5(trim(preg_match('!!u', $body) ? $body : utf8_encode($body))));
-        $req_time = strval(date('Y-m-d\TH:i:s.420P', time()));
+        $req_time = strval(date('Y-m-d\TH:i:s+0700', time()));
         $hmacsignature = base64_encode(hash_hmac('sha256', $req_time.':'.config('services.cimb.key').':'.$req_method.':'.strval($req_body), true));
-        info($req_time, $req_method, $req_body, $hmacsignature);
+        info([$req_time, $req_method, $req_body, $hmacsignature]);
         $request->withHeaders([
             'CIMB-APIKey'       => config('services.cimb.key'),
             'CIMB-Signature'    => $hmacsignature,
@@ -50,7 +50,7 @@ class CIMBController extends Controller
             ]
         ];
         $response = $this->applyHeaders($this->client, 'POST', $params);
-        $response = $response->post(config('services.cimb.url.etb_checking'))->json();
+        $response = $response->post(config('services.cimb.url.etb_checking'), $params)->json();
         
         if($response['statusCode'] != '200') {
             info($response);
