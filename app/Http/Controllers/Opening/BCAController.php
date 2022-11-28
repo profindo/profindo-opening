@@ -24,12 +24,17 @@ class BCAController extends Controller
             'grant_type=client_credentials',
             'application/x-www-form-urlencoded'
         )->post(env('BCA_URL', 'https://devapi.klikbca.com:9443').config('services.bca.url.oauth_token'));
+<<<<<<< Updated upstream
         try {
             return $response['access_token'];
         } catch(Exception $e) {
             error_log($e);
             info($e);
         }
+=======
+        info($response);
+        return $response['access_token'];
+>>>>>>> Stashed changes
     }
 
     public function applyHeaders(PendingRequest $request, String $req_method, String $relative_url, $body = '')
