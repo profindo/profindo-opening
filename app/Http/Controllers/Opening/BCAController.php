@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Opening;
 
 use App\Http\Controllers\Controller;
 use App\Models\Investor;
+use Exception;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
@@ -23,7 +24,12 @@ class BCAController extends Controller
             'grant_type=client_credentials',
             'application/x-www-form-urlencoded'
         )->post(env('BCA_URL', 'https://devapi.klikbca.com:9443').config('services.bca.url.oauth_token'));
-        return $response['access_token'];
+        try {
+            return $response['access_token'];
+        } catch(Exception $e) {
+            error_log($e);
+            info($e);
+        }
     }
 
     public function applyHeaders(PendingRequest $request, String $req_method, String $relative_url, $body = '')
