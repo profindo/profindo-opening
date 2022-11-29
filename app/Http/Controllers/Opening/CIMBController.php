@@ -20,6 +20,7 @@ class CIMBController extends Controller
         $req_body = base64_encode(md5(trim(preg_match('!!u', $body) ? $body : utf8_encode($body))));
         $req_time = strval(date('Y-m-d\TH:i:s+0700', time()));
         $hmacsignature = base64_encode(hash_hmac('sha256', $req_time.':'.config('services.cimb.key').':'.$req_method.':'.strval($req_body), config('services.cimb.api_secret'), true));
+        info([$body, $req_body]);
         $request->withHeaders([
             'CIMB-APIKey'       => config('services.cimb.key'),
             'CIMB-Signature'    => base64_encode(config('service.cimb.key').':'.$hmacsignature),
