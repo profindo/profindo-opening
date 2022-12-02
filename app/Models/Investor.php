@@ -21,6 +21,7 @@ class Investor extends Model
         "phone",
         "email",
         "gender",
+        "religion",
         "nationality",
         "relationship_status",
         "birth_date",

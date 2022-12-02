@@ -111,18 +111,9 @@ function dropdownSelector() {
 }
 
 function othersSelectInput(event) {
-    $.each($('.select-others'), function (key, val) {
+    $.each($('select'), function (key, val) {
         var select = $(this);
-        var others_option = $(this).children().last();
-        var others_input  = $(this).next('input');
-
-        others_input.hide();
-
-        others_input.focusout(function (e) {
-            if(others_input.val()) return false;
-            select.show();
-            others_input.hide();
-        })
+        
 
         select.on('change', function (e) {
             if($("option:selected", this).val() == others_option.val()) {
@@ -132,12 +123,25 @@ function othersSelectInput(event) {
             }
         })
 
-        if(select.attr('value')) {
-            console.log(select, select.attr('value'));
-            if(isNumeric(select.attr('value'))) {
-                $('option[value=' + select.attr('value') + ']').attr('selected', true);
-            } else {
-                others_option.attr('selected', true);
+        if(select.attr('value') && isNumeric(select.attr('value'))) {
+                $('option[value=' + select.attr('value') + ']', this).attr('selected', 'true');
+                
+        }
+
+        if(select.hasClass('select-others')) {
+            var others_option = $(this).children().last();
+            var others_input  = $(this).next('input');
+
+            others_input.hide();
+
+            others_input.focusout(function (e) {
+                if(others_input.val()) return false;
+                select.show();
+                others_input.hide();
+            })
+
+            if(select.attr('value') && !isNumeric(select.attr('value'))) {
+                others_option.attr('selected', 'true');
                 select.hide()
                 others_input.show()
             }

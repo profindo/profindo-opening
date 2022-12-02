@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index() {
         if(Auth::user()) {
-            return redirect()->route('form.personal_info');
+            return redirect()->route('form.default');
         }
         return view('opening.start');
     }

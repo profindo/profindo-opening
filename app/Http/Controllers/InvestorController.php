@@ -40,28 +40,12 @@ class InvestorController extends Controller
                 $investor->phone = $request->input('cust_phone');
                 $investor->gender = $request->input('cust_gender');
                 $user->email = $request->input('cust_email');
+                $investor->religion = $request->input('cust_religion');
                 $investor->nationality = $request->input('cust_nationality');
-                switch($request->input('cust_relationship_status')) {
-                    case 1:
-                        $investor->relationship_status = 1;//"Single";
-                        break;
-                    case 2:
-                        $investor->relationship_status = 2;//"Married";
-                        break;
-                    case 3:
-                        $investor->relationship_status = 3;//"Divorced";
-                        break;
-                    case 4:
-                        $investor->relationship_status = 4;//"Widowed";
-                        break;
-                }
                 $investor->birth_date = $request->input('cust_birthdate');
                 $investor->birth_place = $request->input('cust_birthplace');
                 $investor->nik_no = $request->input('cust_nik');
-                if($request->input('cust_nik_no_expire')) {
-                    $investor->nik_expire = null;
-                }
-                else {
+                if(!$request->input('cust_nik_no_expire')) {
                     $investor->nik_expire = $request->input('cust_nik_expire');
                 }
                 $investor->npwp = $request->input('cust_npwp');
@@ -87,12 +71,23 @@ class InvestorController extends Controller
                         $investor->update(['address_inheritor'.$key => $val]);
                     }
                 }
+                $investor->partner_name = $request->input('cust_partner_name');
+                $investor->partner_phone = $request->input('cust_partner_phone');
+                $investor->partner_relationship = $request->input('cust_partner_relationship');
+                if($request->input('cust_partner_address')) {
+                    foreach($request->input('cust_partner_address') as $key => $val) {
+                        $investor->update(['address_partner'.$key => $val]);
+                    }
+                }
+                $investor->partner_profession = $request->input('cust_partner_profession');
+                $investor->partner_position = $request->input('cust_partnter_position');
+                $investor->partner_company_name = $request->input('cust_partner_company_name');
+                $investor->partner_company_address = $request->input('cust_partner_company_address');
                 break;
             case 3:
-                info($request->input());
-                $investor->occupation_profession = $request->filled('cust_occupation_profession_origin_other') ?
-                    $request->input('cust_occupation_profession_origin_other') : 
-                    $request->input('cust_occupation_profession_origin');
+                $investor->occupation_profession = $request->filled('cust_occupation_profession_other') ?
+                    $request->input('cust_occupation_profession_other') : 
+                    $request->input('cust_occupation_profession');
                 $investor->occupation_position = $request->filled('cust_occupation_position_other') ?
                     $request->input('cust_occupation_position_other') : 
                     $request->input('cust_occupation_position');
@@ -155,6 +150,5 @@ class InvestorController extends Controller
 
     public function generateRDN(Investor $investor)
     {
-        $handler = \App\Http\Controllers\OpeningAccountController::generateRDN($investor);
     }
 }
