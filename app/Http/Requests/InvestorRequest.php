@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class InvestorRequest extends FormRequest
 {
@@ -35,6 +37,7 @@ class InvestorRequest extends FormRequest
                     "cust_email"                    => 'required',
                     "cust_gender"                   => 'required',
                     "cust_religion"                 => 'required',
+                    "cust_education"                => 'required',
                     "cust_nationality"              => 'required',
                     "cust_relationship_status"      => 'required',
                     "cust_birthdate"                => 'required',
@@ -46,10 +49,12 @@ class InvestorRequest extends FormRequest
                 break;
             case 1:
                 $rules = [
-                    "cust_ktp_address.*"              => 'required',
+                    "cust_ktp_address.*"            => 'required',
+                    "cust_ktp_address.unit"         => 'regex:/(\d{1,3}\/\d{1,3})/u',
+                    "cust_ktp_address.postal"       => 'required|numeric', 
                     "cust_home_address_status"      => 'required',
                 ];
-                if(!$this->input('home_ktp_address_same')) $rules["cust_home_address"] = 'required';
+                if(!$this->input('home_ktp_address_same')) $rules["cust_home_address.*"] = 'required';
                 break;
             case 2:
                 $rules = [
@@ -73,10 +78,10 @@ class InvestorRequest extends FormRequest
                 $rules = [
                     "cust_acquintance"              => 'required',
                 ];
-                if(!$investor->media_ktp) $rules["cust_media_ktp"] = 'required';
-                if(!$investor->media_npwp) $rules["cust_media_npwp"] = 'required';
-                if(!$investor->media_signature) $rules["cust_media_signature"] = 'required';
-                if(!$investor->media_selfie) $rules["cust_media_selfie"] = 'required';
+                if(!$investor->media_ktp) $rules["cust_media_ktp"] = 'required|image';
+                if(!$investor->media_npwp) $rules["cust_media_npwp"] = 'required|image';
+                if(!$investor->media_signature) $rules["cust_media_signature"] = 'required|image';
+                if(!$investor->media_selfie) $rules["cust_media_selfie"] = 'required|image';
                 break;
             case 5:
                 $rules = [];
@@ -103,6 +108,9 @@ class InvestorRequest extends FormRequest
             "cust_occupation_name" => "Nama Perusahaan",
             "cust_occupation_industry" => "Bidang Perusahaan",
             "cust_occupation_phone" => "No. Telp Perusahaan",
+
+            "cust_ktp_address.postal" => "Kode Pos",
+            "cust_ktp_address.unit" => "RT/RW",
         ];
     }
 
@@ -117,6 +125,23 @@ class InvestorRequest extends FormRequest
             'required'          => ':attribute harus diisi.',
             'required_without'  => ':attribute harus diisi.',
             'min'               => ':attribute harus diisi penuh.',
+            'numeric'           => ':attribute harus berupa angka.',
+            'regex'             => ':attribute salah format.',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->toArray();
+        foreach($errors as $key => $val) {
+            if(str_contains($key, '.')) {
+                $errors[preg_replace('/(\w+)(\.\w+)/u', "$1", $key)] = $val;
+                info($errors);
+                unset($errors[$key]);
+            }
+        }
+
+        throw (new ValidationException($validator))
+                    ->redirectTo($this->getRedirectUrl())->withMessages($errors);
     }
 }

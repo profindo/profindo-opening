@@ -67,6 +67,18 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
+        ], 
+        'milleniumlink' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' => env('MILLENIUM_LINK_HOST'),
+            'port' => env('MILLENIUM_LINK_PORT'),
+            'database' => env('MILLENIUM_LINK_DATABASE'),
+            'username' => env('MILLENIUM_LINK_USERNAME'),
+            'password' => env('MILLENIUM_LINK_PASSWORD'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
         ],
     ],
 

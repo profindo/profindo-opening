@@ -43,10 +43,11 @@ return [
         ],
 
         'uploads' => [
-            'driver' => 'local',
-            'root' => storage_path('app/uploads'),
-            'url' => '/uploads',
-            'visibility' => 'private',
+            'driver' => 'sftp',
+            'host' => env('OA_SFTP_HOST'),
+            'username' => env('OA_SFTP_USER'),
+            'password' => env('OA_SFTP_PASS'),
+            'root' => env('OA_SFTP_ROOT'),
         ],
 
         's3' => [

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerCIF extends Model
 {
     use HasFactory;
+
+    protected $connection = 'milleniumlink';
 }

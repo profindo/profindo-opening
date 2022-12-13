@@ -14,7 +14,7 @@
                     <option value="7">Pensiun</option>
                     <option value="8">TNI Polri</option>
                     <option value="9">Wiraswasta</option>
-                    <option value="10">Lainnya</option>
+                    <option value="0">Lainnya</option>
                 </select>
                 <input id="cust_occupation_profession_other" class="form-control" name="cust_occupation_profession_other" type="text" placeholder="Lainnya">
                 <label for="cust_occupation_profession_other">Profesi</label>
@@ -28,7 +28,7 @@
                     <option value="5">Direktur (Director)</option>
                     <option value="6">Pegawai (staff)</option>
                     <option value="7">Ibu Rumah Tangga (Housewife)</option>
-                    <option value="8">Lainnya</option>
+                    <option value="0">Lainnya</option>
                 </select>
                 <input id="cust_occupation_position_other" class="form-control" name="cust_occupation_position_other" type="text" placeholder="Lainnya" value="{{ is_numeric($investor->occupation_position) ? "" : $investor->occupation_position }}">
                 <label for="cust_occupation_position">Posisi</label>
@@ -57,7 +57,7 @@
                     <option value="7">Dari suami/istri</option>
                     <option value="8">Undian</option>
                     <option value="9">Hasil Investasi</option>
-                    <option value="10">Lainnya</option>
+                    <option value="0">Lainnya</option>
                 </select>
                 <input id="cust_occupation_income_origin_other" class="form-control" name="cust_occupation_income_origin_other" type="text" value="{{ is_numeric($investor->occupation_income_origin) ? "" : $investor->occupation_income_origin }}" placeholder="Lainnya">
                 <label for="cust_occupation_income_origin">Sumber Penghasilan</label>

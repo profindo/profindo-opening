@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('investors', function(Blueprint $table) {
-            $table->string('religion', 40);
+            $table->string('religion', 40)->nullable();
+            $table->string('education', 40)->nullable();
             $table->string('partner_name', 40)->nullable();
             $table->string('partner_phone', 10)->nullable();
             $table->string('partner_relationship')->nullable();
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->text('partner_company_name')->nullable();
             $table->text('partner_company_address')->nullable();
 
+            $table->integer('customer_temp_id')->nullable();
         });
     }
 
@@ -44,9 +46,10 @@ return new class extends Migration
     {
         Schema::table('investors', function(Blueprint $table) {
             $table->dropColumn([
-                'religion', 'partner_name', 'partner_phone', 'partner_relationship',
+                'religion', 'education', 'partner_name', 'partner_phone', 'partner_relationship',
                 'address_partner_road', 'address_partner_unit', 'address_partner_subdistrict', 'address_partner_district', 'address_partner_city', 'address_partner_province', 'address_partner_postal',
                 'partner_profession', 'partner_position', 'partner_company_name', 'partner_company_address',
+                'customer_temp_id',
             ]);
         });
     }

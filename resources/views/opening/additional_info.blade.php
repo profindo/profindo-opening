@@ -5,14 +5,14 @@
         <div class="col d-flex flex-lg-row flex-column">
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_ktp_preview" class="col img-fluid me-1" src="{{ $investor->media_ktp ? Storage::disk('uploads')->url($investor->media_ktp) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
+                    <img id="cust_media_ktp_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_ktp) ? $investor->ktpAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_ktp" class="form-control" name="cust_media_ktp" type="file" accept="image/*">
                 <label for="cust_media_ktp">e-KTP
             </div>
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_npwp_preview" class="col img-fluid me-1" src="{{ $investor->media_npwp ?  Storage::disk('uploads')->url($investor->media_npwp) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
+                    <img id="cust_media_npwp_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_npwp) ?  $investor->npwpAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_npwp" class="form-control" name="cust_media_npwp" type="file" accept="image/*">
                 <label for="cust_media_npwp">NPWP
@@ -21,14 +21,14 @@
         <div class="col d-flex flex-lg-row flex-column">
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_signature_preview" class="col img-fluid me-1" src="{{ $investor->media_signature ?  Storage::disk('uploads')->url($investor->media_signature) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
+                    <img id="cust_media_signature_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_signature) ?  $investor->signatureAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_signature" class="form-control" name="cust_media_signature" type="file" accept="image/*">
                 <label for="cust_media_signature">Tanda Tangan
             </div>
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_selfie_preview" class="col img-fluid me-1" src="{{ $investor->media_selfie ?  Storage::disk('uploads')->url($investor->media_selfie) : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' }}">
+                    <img id="cust_media_selfie_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_selfie) ?  $investor->selfieAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_selfie" class="form-control" name="cust_media_selfie" type="file" accept="image/*">
                 <label for="cust_media_selfie">Selfie memegang e-KTP
@@ -42,9 +42,16 @@
     <div class="col form-group">
         <label for="cust_reference">Darimana anda mengenal PT Profindo Sekuritas Indonesia?</label>
         <select id="cust_reference" class="select-others form-control" name="cust_reference">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">Lainnya</option>
+            <option value="1">Brosur/Spanduk/Banner</option>
+            <option value="2">Cabang Profindo Sekuritas</option>
+            <option value="3">Internet (Google Search, Iklan Bersponsor, Iklan Bergambar dan Iklan Video)</option>
+            <option value="4">Komunitas</option>
+            <option value="5">Nasabah Profindo Sekuritas</option>
+            <option value="6">Pameran/Event</option>
+            <option value="7">Sales/Marketing</option>
+            <option value="8">Social Media</option>
+            <option value="9">SPM</option>
+            <option value="0">Lainnya</option>
         </select>
         <input id="cust_reference_other" class="form-control" name="cust_reference_other" type="text" placeholder="Lainnya">
     </div>
@@ -57,7 +64,7 @@
             <option value="4">Pertumbuhan Cepat</option>
             <option value="5">Price Appreciation</option>
             <option value="6">Spekulasi</option>
-            <option value="7">Lainnya</option>
+            <option value="0">Lainnya</option>
         </select>
         <input id="cust_reason_other" class="form-control" name="cust_reason_other" type="text" placeholder="Lainnya">
     </div>

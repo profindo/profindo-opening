@@ -32,18 +32,34 @@
             <span class="text-danger" id="cust_gender_error"></span>
         </div>
     </div>
-    <div class="form-floating mb-2">
-        <select class="form-control select-others" id="cust_religion" name="cust_religion" value="{{ $investor->religion }}">
-            <option value="1">Islam</option>
-            <option value="2">Kristen</option>
-            <option value="3">Katolik</option>
-            <option value="4">Hindu</option>
-            <option value="5">Buddha</option>
-            <option value="6">Lainnya</option>
-        </select>
-        <input id="cust_religion_other" class="form-control" name="cust_religion_other" type="text" placeholder="Lainnya" value="{{ is_numeric($investor->religion) ? "" : $investor->religion }}">
-        <label for="cust_religion">Agama</label>
-        <span class="text-danger" id="cust_religion_error"></span>
+    <div class="d-flex flex-rowmb-2">
+        <div class="col form-floating ">
+            <select class="form-control select-others" id="cust_religion" name="cust_religion" value="{{ $investor->religion }}">
+                <option value="1">Islam</option>
+                <option value="2">Kristen</option>
+                <option value="3">Katolik</option>
+                <option value="4">Hindu</option>
+                <option value="5">Buddha</option>
+                <option value="0">Lainnya</option>
+            </select>
+            <input id="cust_religion_other" class="form-control" name="cust_religion_other" type="text" placeholder="Lainnya" value="{{ is_numeric($investor->religion) ? "" : $investor->religion }}">
+            <label for="cust_religion">Agama</label>
+            <span class="text-danger" id="cust_religion_error"></span>
+        </div>
+        <div class="col form-floating ">
+            <select class="form-control" id="cust_education" name="cust_education" value="{{ $investor->religion }}">
+                <option value="1">SD</option>
+                <option value="2">SMP/SLTP</option>
+                <option value="3">SMA/SMU/SMK</option>
+                <option value="4">Sarjana (S1)</option>
+                <option value="5">Pasca Sarjana (S2)</option>
+                <option value="6">Diploma</option>
+                <option value="0">Lainnya</option>
+            </select>
+            <input id="cust_education_other" class="form-control" name="cust_education_other" type="text" placeholder="Lainnya" value="{{ is_numeric($investor->education) ? "" : $investor->education }}">
+            <label for="cust_education">Pendidikan Terakhir</label>
+            <span class="text-danger" id="cust_education_error"></span>
+        </div>
     </div>
     <div class="d-flex flex-lg-row flex-column">
         <div class="col form-group form-floating me-lg-1">

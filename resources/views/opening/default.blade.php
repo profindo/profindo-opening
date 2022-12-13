@@ -109,8 +109,11 @@
             document.getElementById('nextBtn').innerHTML = "<i class='fas fa-circle-notch fa-spin'></i>"
             var form = $('#personalInfoForm');
             var form_data = new FormData(this);
-            form_data.append('step', $('.carousel-item.active').index()-1)
-            console.log([...form_data.values()]);
+            form_data.append('step', $('.carousel-item.active').index()-1);
+            form_array = form.serializeArray().reduce(function (prev, data) {
+                if(!/\w+\[\w+\]/.test(data.name)) prev[data.name] = data.value;
+                return prev;
+            }, {});
             $.ajax({
                 type: 'POST',
                 url: '{{ route("investor.update") }}',
@@ -120,9 +123,13 @@
                 data: form_data,
                 processData: false,
                 contentType: false,
+                beforeSend: function() {
+                    $.each(form_array, function(key, val) {
+                        $('#' + key + '_error').attr('hidden', 'true');
+                    })
+                },
                 statusCode: {
                     200: function(response) {
-                        console.log(response)
                         user_progress = form_data['step'] > response['data']['step'] ? form_data['step'] : user_progress;
                         $($('#carousel_indicators li')[user_progress]).attr('data-bs-target', '#carouselForm');
                         $($('#carousel_indicators li')[user_progress]).attr('data-bs-slide-to', user_progress);
@@ -130,14 +137,10 @@
                         carousel.carousel('next');
                     },
                     422: function(response) {
-                        console.log("ERROR : ", response)
                         var error = JSON.parse(response.responseText)['errors'];
                         $('.appHeader')[0].scrollIntoView();
-                        $.each(form_data, function(key, val) {
-                            if(!(error[key])) {
-                                $('#' + key + '_error').attr('hidden', 'true');
-                            }
-                            else {
+                        $.each(form_array, function(key, val) {
+                            if(error[key]) {
                                 console.log(key, val);
                                 $('#' + key + '_error').text(error[key][0]);
                                 $('#' + key + '_error').removeAttr('hidden');

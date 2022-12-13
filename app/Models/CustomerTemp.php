@@ -9,5 +9,8 @@ class CustomerTemp extends Model
 {
     use HasFactory;
 
-    protected $connection = 'MilleniumLink';
+    protected $connection = 'milleniumlink';
+    protected $table = 'CustomerTemp';
+
+    public $timestamps = false;
 }

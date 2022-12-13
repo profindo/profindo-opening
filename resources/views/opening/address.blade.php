@@ -8,7 +8,7 @@
             <option value="2">Milik Pribadi</option>
             <option value="3">Sewa/Kontrak</option>
             <option value="4">Kos</option>
-            <option value="5">Lainnya</option>
+            <option value="0">Lainnya</option>
         </select>
         <input id="cust_home_address_status_other" class="form-control" name="cust_reference_other" type="text" placeholder="Lainnya">
     </div>

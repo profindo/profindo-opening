@@ -22,9 +22,17 @@
             </div>
             <div class="col form-floating ms-1">
                 <select class="form-control" id="cust_inheritor_relationship" class="form-control" name="cust_inheritor_relationship" value="{{ $investor->inheritor_relationship }}">
-                    <option value="1">Keluarga</option>
-                    <option value="2">Pasangan</option>
-                    <option value="3">Sepupu</option>
+                    <option value="1">Anak Kandung</option>
+                    <option value="2">Adik Kandung</option>
+                    <option value="3">Kakak Kandung</option>
+                    <option value="4">Ayah</option>
+                    <option value="5">Ibu</option>
+                    <option value="6">Istri</option>
+                    <option value="7">Suami</option>
+                    <option value="8">Keponakan</option>
+                    <option value="9">Orangtua Wali</option>
+                    <option value="10">Saudara Lainnya</option>
+                    <option value="11">Sepupu</option>
                 </select>
                 <label for="cust_inheritor_relationship">Status Hubungan</label>
                 <span class="text-danger" id="cust_inheritor_relationship_error"></span>
@@ -69,7 +77,7 @@
                 <option value="7">Pensiun</option>
                 <option value="8">TNI Polri</option>
                 <option value="9">Wiraswasta</option>
-                <option value="10">Lainnya</option>
+                <option value="0">Lainnya</option>
             </select>
             <input id="cust_partner_profession_other" class="form-control" name="cust_partner_profession_other" type="text" placeholder="Lainnya">
             <label for="cust_partner_profession_other">Profesi</label>
@@ -84,7 +92,7 @@
                     <option value="5">Direktur (Director)</option>
                     <option value="6">Pegawai (staff)</option>
                     <option value="7">Ibu Rumah Tangga (Housewife)</option>
-                    <option value="8">Lainnya</option>
+                    <option value="0">Lainnya</option>
                 </select>
                 <input id="cust_partner_position_other" class="form-control" name="cust_partner_position_other" type="text" placeholder="Lainnya" value="{{ $investor->partner_occupation_position }}">
                 <label for="cust_partner_position">Posisi</label>

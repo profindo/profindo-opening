@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class Investor extends Model
 {
@@ -52,6 +54,13 @@ class Investor extends Model
         "address_inheritor_district",
         "address_inheritor_subdistrict",
         "address_inheritor_postal",
+        "address_partner_road",
+        "address_partner_unit",
+        "address_partner_province",
+        "address_partner_city",
+        "address_partner_district",
+        "address_partner_subdistrict",
+        "address_partner_postal",
         "address_company_road",
         "address_company_unit",
         "address_company_province",
@@ -106,5 +115,30 @@ class Investor extends Model
     public function addressInheritor()
     {
         
+    }
+
+    public function ktpAsImage()
+    {
+        return "data:image/jpg;base64, ".base64_encode(Storage::disk('uploads')->get($this->media_ktp));
+    }
+
+    public function npwpAsImage()
+    {
+        return "data:image/jpg;base64, ".base64_encode(Storage::disk('uploads')->get($this->media_npwp));
+    }
+
+    public function signatureAsImage()
+    {
+        return "data:image/jpg;base64, ".base64_encode(Storage::disk('uploads')->get($this->media_signature));
+    }
+
+    public function selfieAsImage()
+    {
+        return "data:image/jpg;base64, ".base64_encode(Storage::disk('uploads')->get($this->media_selfie));
+    }
+
+    public function asImage($attribute)
+    {
+        return Storage::disk('uploads')->get($attribute);
     }
 }
