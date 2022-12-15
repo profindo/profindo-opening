@@ -23,7 +23,7 @@ class OpeningAccountController extends Controller
 
     public static function index()
     {
-        return view('opening.start', ['components', [view('opening.components.confirmation_modal'),]]);
+        return view('start', ['components', [view('opening.components.confirmation_modal'),]]);
     }
 
     public function validateUser(UserRequest $request)
@@ -126,6 +126,7 @@ class OpeningAccountController extends Controller
             $user_cif = new Investor(); 
             $user_cif->name = $user->name;
             $user_cif->phone = $user->phone;
+            $user_cif->email = $user->email;
             $user_cif->bank_name = $user->bank_name;
             $user_cif->bank_no = $user->bank_no;
             $user_cif->bank_code = $user->bank_code;
@@ -138,11 +139,6 @@ class OpeningAccountController extends Controller
             Auth::login($user);
 
             return response()->json(["status" => 'success', "message" => "Success"], 200);
-    }
-
-    public function saveInvestor(Investor $investor)
-    {
-        
     }
 
     public function userForm()

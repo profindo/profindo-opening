@@ -5,14 +5,14 @@
         <div class="col d-flex flex-lg-row flex-column">
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_ktp_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_ktp) ? $investor->ktpAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
+                    <img id="cust_media_ktp_preview" class="col img-fluid me-1" src="{!! $investor->media_ktp && Storage::disk('uploads')->exists($investor->media_ktp) ? $investor->ktpAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_ktp" class="form-control" name="cust_media_ktp" type="file" accept="image/*">
                 <label for="cust_media_ktp">e-KTP
             </div>
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_npwp_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_npwp) ?  $investor->npwpAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
+                    <img id="cust_media_npwp_preview" class="col img-fluid me-1" src="{!! $investor->media_ktp && Storage::disk('uploads')->exists($investor->media_npwp) ?  $investor->npwpAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_npwp" class="form-control" name="cust_media_npwp" type="file" accept="image/*">
                 <label for="cust_media_npwp">NPWP
@@ -21,14 +21,14 @@
         <div class="col d-flex flex-lg-row flex-column">
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_signature_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_signature) ?  $investor->signatureAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
+                    <img id="cust_media_signature_preview" class="col img-fluid me-1" src="{!! $investor->media_ktp && Storage::disk('uploads')->exists($investor->media_signature) ?  $investor->signatureAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_signature" class="form-control" name="cust_media_signature" type="file" accept="image/*">
                 <label for="cust_media_signature">Tanda Tangan
             </div>
             <div class="col form-group">
                 <div class="preview-container mx-5 mb-2">
-                    <img id="cust_media_selfie_preview" class="col img-fluid me-1" src="{!! Storage::disk('uploads')->exists($investor->media_selfie) ?  $investor->selfieAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
+                    <img id="cust_media_selfie_preview" class="col img-fluid me-1" src="{!! $investor->media_ktp && Storage::disk('uploads')->exists($investor->media_selfie) ?  $investor->selfieAsImage() : 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg' !!}">
                 </div>
                 <input id="cust_media_selfie" class="form-control" name="cust_media_selfie" type="file" accept="image/*">
                 <label for="cust_media_selfie">Selfie memegang e-KTP

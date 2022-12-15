@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/verify', [Controllers\OpeningAccountController::class, 'verifyEmail'])->name('verification.notice');
 Route::get('/app', function () {return view('layout.app');});
-Route::post('/logout', function () {
+Route::any('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
@@ -53,3 +53,11 @@ Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth', 'ajax']], function
 Route::get('/form', function () {
     return view('opening.default')->with('investor', Auth::user()->investor);
 })->middleware(['auth'])->name('form.default');
+
+//Legacy reasons
+Route::group(['middleware'=>['web']], function () { 
+    Route::get('ketentuan-tabungan', fn () => view('surat.ketentuan-tabungan'));
+    Route::get('pernyataan-nasabah-rdn-bca', fn () => view('surat.pernyataan-nasabah-rdn-bca'));
+    Route::get('perjanjian-pembukaan-rekening', fn () => view('surat.perjanjian-pembukaan-rekning'));
+    Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
+});

@@ -12,6 +12,11 @@
                     </div>
                 </div>
             </div>
+            <div class="right">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#logout_modal">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </div>
             @endsection
             <div class="carousel-inner">
                 <form id="personalInfoForm" enctype="multipart/form-data">

@@ -16,7 +16,7 @@
                     <option value="9">Wiraswasta</option>
                     <option value="0">Lainnya</option>
                 </select>
-                <input id="cust_occupation_profession_other" class="form-control" name="cust_occupation_profession_other" type="text" placeholder="Lainnya">
+                <input id="cust_occupation_profession_other" class="form-control" name="cust_occupation_profession_other" type="text" placeholder="Lainnya" value="{{ $investor->occupation_profession }}">
                 <label for="cust_occupation_profession_other">Profesi</label>
             </div>
             <div class="col ms-1 form-floating">
@@ -48,15 +48,10 @@
             </div>
             <div class="col ms-1 form-floating">
                 <select id="cust_occupation_income_origin" class="select-others form-control" name="cust_occupation_income_origin" value="{{ $investor->occupation_income_origin }}">
-                    <option value="1">Penghasilan/Gaji</option>
-                    <option value="2">Hasil Usaha</option>
-                    <option value="3">Bunga simpanan</option>
-                    <option value="4">Warisan</option>
-                    <option value="5">Dari orang tua/anak</option>
-                    <option value="6">Hibah</option>
-                    <option value="7">Dari suami/istri</option>
-                    <option value="8">Undian</option>
-                    <option value="9">Hasil Investasi</option>
+                    <option value="1">Penghasilan / Gaji</option>
+                    <option value="2">Dari Orang Tua / Anak</option>
+                    <option value="3">Bisnis</option>
+                    <option value="4">Suami / Istri</option>
                     <option value="0">Lainnya</option>
                 </select>
                 <input id="cust_occupation_income_origin_other" class="form-control" name="cust_occupation_income_origin_other" type="text" value="{{ is_numeric($investor->occupation_income_origin) ? "" : $investor->occupation_income_origin }}" placeholder="Lainnya">

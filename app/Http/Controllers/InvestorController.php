@@ -8,6 +8,7 @@ use App\Models\Investor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class InvestorController extends Controller
 {
@@ -87,10 +88,10 @@ class InvestorController extends Controller
                 $investor->partner_company_address = $request->input('cust_partner_company_address');
                 break;
             case 3:
-                $investor->occupation_profession = $request->input('cust_occupation_profession_other') != '0' ? $request->input('cust_occupation_profession') : $request->input('cust_occupation_profession_other');
-                $investor->occupation_position = $request->input('cust_occupation_position_other') != '0' ? $request->input('cust_occupation_position') : $request->input('cust_occupation_position_other');
+                $investor->occupation_profession = $request->input('cust_occupation_profession') != '0' ? $request->input('cust_occupation_profession') : $request->input('cust_occupation_profession_other');
+                $investor->occupation_position = $request->input('cust_occupation_position') != '0' ? $request->input('cust_occupation_position') : $request->input('cust_occupation_position_other');
                 $investor->occupation_income_range = $request->input('cust_occupation_income_range');
-                $investor->occupation_income_origin = $request->filled('cust_occupation_income_origin_other') != '0' ? $request->input('cust_occupation_income_origin') : $request->input('cust_occupation_income_origin_other');
+                $investor->occupation_income_origin = $request->input('cust_occupation_income_origin') != '0' ? $request->input('cust_occupation_income_origin') : $request->input('cust_occupation_income_origin_other');
                 $investor->company_name = $request->input('cust_occupation_name');
                 $investor->company_industry = $request->input('cust_occupation_industry');
                 $investor->company_phone = $request->input('cust_occupation_phone');
@@ -206,6 +207,13 @@ class InvestorController extends Controller
             '6' => '>1 Milyar',
         ];
 
+        $fund_source = [
+            '1' => 'Gaji',
+            '2' => 'Orang Tua / Anak',
+            '3' => 'Bisnis',
+            '4' => 'Suami / Istri',
+        ];
+
         $bank_code = [
             'BBCA' => 'BCA',
             'CIMB' => 'CIMB Niaga',
@@ -243,18 +251,18 @@ class InvestorController extends Controller
             '12' => 'Youtube',
         ];
 
-        $cust_tmp = new Models\CustomerTemp();
-        $cust_cif = new Models\CustomerCIF();
+        $cust_tmp = $investor->customer_temp_id ? Models\CustomerTemp::find($investor->customer_temp_id) : new Models\CustomerTemp();
 
-
+        $cust_tmp->referenceNo = $investor->customer_temp_id ? $cust_tmp->referenceNo : DB::connection('milleniumlink')->table('CustomerTemp')->max('referenceNo') + 1;
         $cust_tmp->action = 'CREATION';
+
         $cust_tmp->investorFirstName = $investor->name;
         $cust_tmp->investorNationality = 'Indonesia';
         $cust_tmp->investorKTPNumber = $investor->nik_no;
         $cust_tmp->investorKTPExpiredDate = $investor->nik_expire;
-        $cust_tmp->investorNPWPNumber = $investor->npwp_no;
+        $cust_tmp->investorNPWPNumber = $investor->npwp;
         $cust_tmp->investorBirthPlace = $investor->birth_place;
-        $cust_tmp->investorBirthDate = date('Y-m-d', $investor->birth_date);
+        $cust_tmp->investorBirthDate = date('d-m-Y', strtotime($investor->birth_date));
 
         $cust_tmp->investorAddress1 = $investor->address_ktp_road;
         $cust_tmp->investorAddress2 = $investor->address_ktp_unit;
@@ -264,7 +272,7 @@ class InvestorController extends Controller
         $cust_tmp->investorPostalCode = $investor->address_ktp_postal;
         $cust_tmp->investorCountry = 'INDONESIA';
         $cust_tmp->investorMobilePhone = $investor->phone;
-        $cust_tmp->investorEmail = $investor->email;
+        $cust_tmp->investorEmail = Auth::user()->email;
 
         $cust_tmp->investorOtherAddress1 = $investor->address_home_road;
         $cust_tmp->investorOtherAddress2 = $investor->address_home_unit;
@@ -281,7 +289,7 @@ class InvestorController extends Controller
         $cust_tmp->investorEducationalBackground = is_numeric($investor->education) ? $education[$investor->education] : 'Lainnya';
         $cust_tmp->investorOccupation = is_numeric($investor->occupation_profession) ? $occupation[$investor->occupation_profession] : 'Lainnya';
         $cust_tmp->investorIncomePerAnnum = $income_range[$investor->occupation_income_range];
-        $cust_tmp->investorFundSource = '';
+        $cust_tmp->investorFundSource = is_numeric($investor->occupation_income_origin) ? $fund_source[$investor->occupation_income_origin] : 'Lainnya';
         $cust_tmp->investorBankAccountName1 = $bank_code[$investor->bank_code];
         $cust_tmp->investorNatureofBusiness = $investor->company_industry;
         $cust_tmp->investorBankAccountNumber1 = $investor->bank_no;
@@ -289,7 +297,7 @@ class InvestorController extends Controller
 
         $cust_tmp->investorInvestmentObjective = $objective[$investor->reason];
         $cust_tmp->investorMothersMaidenName = $investor->mother_name;
-        $cust_tmp->Religion = $religion[$investor->religion];
+        $cust_tmp->Religion = is_numeric($investor->religion) ? $religion[$investor->religion] : 'Lainnya';
         $cust_tmp->CompanyName = $investor->company_name;
         $cust_tmp->CompanyAddress = $investor->address_company_road;
         $cust_tmp->CompanyCity = $investor->address_company_city;
@@ -315,7 +323,17 @@ class InvestorController extends Controller
         $cust_tmp->pasanganProfesi = $investor->partner_profession;
 
         $cust_tmp->hasBca = $investor->bank_code == 'BBCA' ? 1 : 0;
+        $cust_tmp->bcaExistingAccount = $cust_tmp->hasBca ? $investor->bank_no : NULL;
+        if(!$cust_tmp->sreKsei) {
+            $cust_tmp->kseiTime = NULL;
+            $cust_tmp->kseiResult = NULL;
+            $cust_tmp->pdfTime = NULL;
+        }
+        info([$investor->npwp_no, $investor->email]);
 
-        $cust_tmp->save();
+        if($cust_tmp->save()) {
+            $investor->customer_temp_id = $cust_tmp->id;
+            $investor->save();
+        }
     }
 }

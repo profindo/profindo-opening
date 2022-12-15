@@ -32,6 +32,7 @@ goBackButton.forEach(function (el) {
 ///////////////////////////////////////////////////////////////////////////
 // Loader
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("TEST")
     var loader = document.getElementById("loading");
     setTimeout(() => {
         var searchboxOpacity = 1;

@@ -47,7 +47,7 @@
             <span class="text-danger" id="cust_religion_error"></span>
         </div>
         <div class="col form-floating ">
-            <select class="form-control" id="cust_education" name="cust_education" value="{{ $investor->religion }}">
+            <select class="form-control select-others" id="cust_education" name="cust_education" value="{{ $investor->religion }}">
                 <option value="1">SD</option>
                 <option value="2">SMP/SLTP</option>
                 <option value="3">SMA/SMU/SMK</option>

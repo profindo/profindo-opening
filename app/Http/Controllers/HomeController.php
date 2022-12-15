@@ -11,6 +11,6 @@ class HomeController extends Controller
         if(Auth::user()) {
             return redirect()->route('form.default');
         }
-        return view('opening.start');
+        return view('start');
     }
 }
