@@ -34,16 +34,40 @@
                         <span class="card-header card-title">Frequently Asked Questions</span>
                         <div class="container">
                             <ul class="card-body card-columns list-group-flush" style="column-count:2;">
-                                <li class="list-group-item">Pertanyaan 1</li>
-                                <li class="list-group-item">Pertanyaan 2</li>
-                                <li class="list-group-item">Pertanyaan 3</li>
-                                <li class="list-group-item">Pertanyaan 4</li>
-                                <li class="list-group-item">Pertanyaan 5</li>
-                                <li class="list-group-item">Pertanyaan 6</li>
-                                <li class="list-group-item">Pertanyaan 7</li>
-                                <li class="list-group-item">Pertanyaan 8</li>
-                                <li class="list-group-item">Pertanyaan 9</li>
-                                <li class="list-group-item">Pertanyaan 10</li>
+                                <li class="list-group-item">
+                                    <a tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                     title="Berapa lama proses penarikan dana?"
+                                     data-bs-content="T+2 hari bursa sejak Nasabah melakukan penjualan.">
+                                     Berapa lama proses penarikan dana?
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Kenapa ada pemotongan cash di RDN saya sebesar Rp 16.500
+                                </li>
+                                <li class="list-group-item">
+                                    Bagaimana melakukan reset password dan pin?
+                                </li>
+                                <li class="list-group-item">
+                                    Kenapa akun saya di suspend?
+                                </li>
+                                <li class="list-group-item">
+                                    Saya melakukan top up dana, namun belum masuk ke Aplikasi Proclick
+                                </li>
+                                <li class="list-group-item">
+                                    Bagaimana cara melakukan penarikan dana via Aplikasi Proclick?
+                                </li>
+                                <li class="list-group-item">
+                                    Perhitungan Average Price di portofolio saya yang berbeda
+                                </li>
+                                <li class="list-group-item">
+                                    Apa perbedaanya CASH dan CASH ON T+2 dmenu portofolio?
+                                </li>
+                                <li class="list-group-item">
+                                    Bagaimana cara mengetahui SID dan SRE Nasabah, atau informasi Pribadi lainnya?
+                                </li>
+                                <li class="list-group-item">
+                                    Bagaimana cara beli saham via E-IPO
+                                </li>
                                 <li class="list-group-item"> </li>
                                 </ol>
                         </div>
@@ -118,11 +142,14 @@
                                         <span class="text-danger" id="cust_passconfirm_error"></span>
                                     </div>
                                 </div>
-                                <div class="col form-group">
-                                    <label class="form-check-label" for="checkTerms">Saya dengan ini memberikan
-                                        persetujuan kepada PT PROFINDO SEKURITAS INDONESIA untuk meminta konfirmasi atas
-                                        data rekening saya tersebut diatas kepada PT Bank Central Asia Tbk.</label>
-                                    <input class="form-check-input" id="checkTerms" type="checkbox" name="checkTerms" value="" required>
+                                <div class="col d-flex flex-row form-group">
+                                    <input class="form-check-input me-1" id="checkTerms" type="checkbox" name="checkTerms" value="" required>
+                                    <div>
+                                        <label class="form-check-label" for="checkTerms">
+                                            Saya telah membaca dan menyetujui
+                                        </label>
+                                        <a href="/ ketentuan-tabungan">surat-surat persetujuan</a>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -230,5 +257,5 @@
 </script>
 @endsection
 @section('modals')
-@include('opening.components.confirmation_modal')
+@include('modal.confirmation_modal')
 @endsection
