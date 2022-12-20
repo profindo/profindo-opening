@@ -23,7 +23,40 @@ class OpeningAccountController extends Controller
 
     public static function index()
     {
-        return view('start', ['components', [view('opening.components.confirmation_modal'),]]);
+        return view('start')
+        ->with('faqs', [[
+                'q' => 'Berapa lama proses penarikan dana?',
+                'a' => 'T+2 hari bursa sejak Nasabah melakukan penjualan.',
+            ], [
+                'q' => 'Kenapa ada pemotongan cash di RDN saya sebesar Rp 16.500',
+                'a' => 'Ada biaya charge OLT per bulan untuk Nasabah online trading (OLT)',
+            ], [
+                'q' => 'Bagaimana melakukan reset password dan pin?',
+                'a' => 'Nasabah bisa email ke customer service, dengan menyebutkan permasalahan dan nomor Nasabah (user id)',
+            ], [
+                'q' => 'Kenapa akun saya di suspend?',
+                'a' => 'Nasabah bisa telepon ke customer service perihal suspend, agar kami mencari tahu kendalanya'
+            ], [
+                'q' => 'Saya melakukan top up dana, namun belum masuk ke Aplikasi Proclick',
+                'a' => 'Biasanya, 10 menit dana akan otomatis masuk ke Aplikasi, jika belum terlihat di tampilan portofolio. Nasabah bisa email ke customer service dan  melampirkan bukti transfer berhasil.'
+            ], [
+                'q' => 'Bagaimana cara melakukan penarikan dana via Aplikasi Proclick?',
+                'a' => 'Menu customer service – cash withdrawal – masukkan jumlah dana - submit'
+            ], [
+                'q' => 'Perhitungan Average Price di portofolio saya yang berbeda',
+                'a' => 'Average price dihitung pada akhir sesi. Untuk contoh kasus Nasabah harus dilihat dari history pembelian'
+            ], [
+                'q' => 'Apa perbedaanya CASH dan CASH ON T+2 dmenu portofolio?',
+                'a' => 'Cash dana yang ada di RDN, dan bisa di ambil untuk penarikan dana
+                        Kalau CASH ON T+2, dana yang akan masuk ke RDN Nasabah dari hasil penjualan'
+            ], [
+                'q' => 'Bagaimana cara mengetahui SID dan SRE Nasabah, atau informasi Pribadi lainnya?',
+                'a' => 'Nasabah bisa email ke customer service, dengan menyebutkan permintaan kebutuhan serta infokan nama KTP/ nomor Nasabah (user id)'
+            ], [
+                'q' => 'Bagaimana cara beli saham via E-IPO',
+                'a' => 'Pesanan via e-ipo melalui website https://www.e-ipo.co.id/en'
+            ]
+        ]);
     }
 
     public function validateUser(UserRequest $request)

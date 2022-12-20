@@ -33,43 +33,15 @@
                     <div class="card">
                         <span class="card-header card-title">Frequently Asked Questions</span>
                         <div class="container">
-                            <ul class="card-body card-columns list-group-flush" style="column-count:2;">
-                                <li class="list-group-item">
-                                    <a tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                     title="Berapa lama proses penarikan dana?"
-                                     data-bs-content="T+2 hari bursa sejak Nasabah melakukan penjualan.">
-                                     Berapa lama proses penarikan dana?
-                                    </a>
-                                </li>
-                                <li class="list-group-item">
-                                    Kenapa ada pemotongan cash di RDN saya sebesar Rp 16.500
-                                </li>
-                                <li class="list-group-item">
-                                    Bagaimana melakukan reset password dan pin?
-                                </li>
-                                <li class="list-group-item">
-                                    Kenapa akun saya di suspend?
-                                </li>
-                                <li class="list-group-item">
-                                    Saya melakukan top up dana, namun belum masuk ke Aplikasi Proclick
-                                </li>
-                                <li class="list-group-item">
-                                    Bagaimana cara melakukan penarikan dana via Aplikasi Proclick?
-                                </li>
-                                <li class="list-group-item">
-                                    Perhitungan Average Price di portofolio saya yang berbeda
-                                </li>
-                                <li class="list-group-item">
-                                    Apa perbedaanya CASH dan CASH ON T+2 dmenu portofolio?
-                                </li>
-                                <li class="list-group-item">
-                                    Bagaimana cara mengetahui SID dan SRE Nasabah, atau informasi Pribadi lainnya?
-                                </li>
-                                <li class="list-group-item">
-                                    Bagaimana cara beli saham via E-IPO
-                                </li>
-                                <li class="list-group-item"> </li>
-                                </ol>
+                            <ul class="card-body card-columns list-group list-group-flush" style="column-count:2;">
+                                @foreach($faqs as $faq)
+                                    @include('components.faq-cards', [
+                                        'faq_no' => $loop->index,
+                                        'faq_question' => $faq['q'],
+                                        'faq_answer' => $faq['a']
+                                    ])
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
