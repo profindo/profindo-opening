@@ -5,7 +5,7 @@
 <div class="appHeader bg-danger">
     <div class="left">
         <a href="#" class="icon goBack">
-            <i class="icon ion-ios-arrow-back"></i>
+            <i class="fa-solid fa-chevron-left"></i>
         </a>
     </div>
     {{-- <div class="pageTitle">
