@@ -1,7 +1,6 @@
 $(document).ready(function () {
     dropdownSelector();
     othersSelectInput();
-});
 
 function isNumeric(str) {
     if (typeof str != "string") return false // we only process strings!  
@@ -32,7 +31,6 @@ goBackButton.forEach(function (el) {
 ///////////////////////////////////////////////////////////////////////////
 // Loader
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("TEST")
     var loader = document.getElementById("loading");
     setTimeout(() => {
         var searchboxOpacity = 1;
@@ -75,6 +73,7 @@ toggleSidebar.forEach(function(el){
     })
 })
 ///////////////////////////////////////////////////////////////////////////
+});
 
 function dropdownSelector() {
     var datalists = $('datalist')
