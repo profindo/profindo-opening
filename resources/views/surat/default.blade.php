@@ -1,5 +1,22 @@
 @extends('home')
 
+@section('header')
+<!-- App Header -->
+<div class="appHeader bg-danger">
+    <div class="left">
+        <a href="#" class="icon goBack">
+            <i class="icon ion-ios-arrow-back"></i>
+        </a>
+    </div>
+    {{-- <div class="pageTitle">
+        Splash Iconed
+    </div> --}}
+    <div class="right">
+    </div>
+</div>
+<!-- * App Header -->
+@endsection
+
 @section('content')
 @include('surat.'.$surat)
 @endsection
