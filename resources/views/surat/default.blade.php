@@ -27,7 +27,7 @@
         <div class="item">
             <a href="/">
                 <p class="text-white">
-                    <span class="iconify mb-2" data-icon="ion:arrow-back"></span>
+                    <i class="fa-solid fa-arrow-left"></i>
                     <span>Kembali</span>
                 </p>
             </a>
