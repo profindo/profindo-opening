@@ -26,10 +26,10 @@ Route::any('/logout', function () {
 })->name('logout');
 
 Route::group(['prefix'=>'surat', 'middleware'=>['web']], function () { 
-    Route::get('ketentuan-tabungan', fn () => view('surat.ketentuan-tabungan'));
-    Route::get('pernyataan-nasabah-rdn-bca', fn () => view('surat.pernyataan-nasabah-rdn-bca'));
-    Route::get('perjanjian-pembukaan-rekening', fn () => view('surat.perjanjian-pembukaan-rekning'));
-    Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
+    Route::get('ketentuan-tabungan', fn () => view('surat.default')->with('surat', 'ketentuan-tabungan'));
+    Route::get('pernyataan-nasabah-rdn-bca', fn () => view('surat.default')->with('surat', 'pernyataan-nasabah-rdn-bca'));
+    Route::get('perjanjian-pembukaan-rekening', fn () => view('surat.default')->with('surat', 'perjanjian-pembukaan-rekening'));
+    Route::get('surat-pernyataan-kuasa', fn () => view('surat.default')->with('surat', 'surat-pernyataan'));
 });
 
 Route::post('/validate', [Controllers\OpeningAccountController::class, 'validateUser'])->name('validate');
@@ -56,8 +56,8 @@ Route::get('/form', function () {
 
 //Legacy reasons
 Route::group(['middleware'=>['web']], function () { 
-    Route::get('ketentuan-tabungan', fn () => view('surat.ketentuan-tabungan'));
-    Route::get('pernyataan-nasabah-rdn-bca', fn () => view('surat.pernyataan-nasabah-rdn-bca'));
-    Route::get('perjanjian-pembukaan-rekening', fn () => view('surat.perjanjian-pembukaan-rekning'));
-    Route::get('surat-pernyataan-kuasa', fn () => view('surat.surat-pernyataan'));
+    Route::get('ketentuan-tabungan', fn () => view('surat.default')->with('surat', 'ketentuan-tabungan'));
+    Route::get('pernyataan-nasabah-rdn-bca', fn () => view('surat.default')->with('surat', 'pernyataan-nasabah-rdn-bca'));
+    Route::get('perjanjian-pembukaan-rekening', fn () => view('surat.default')->with('surat', 'perjanjian-pembukaan-rekening'));
+    Route::get('surat-pernyataan-kuasa', fn () => view('surat.default')->with('surat', 'surat-pernyataan'));
 });

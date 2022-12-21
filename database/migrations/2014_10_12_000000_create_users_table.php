@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('bank_code');
             $table->date('birth_date');
             $table->string('phone');
-            $table->string('referral');
+            $table->string('referral')->nullable();
 
             $table->timestamps();
         });

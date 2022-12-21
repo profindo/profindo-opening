@@ -30,7 +30,6 @@
 </head>
 
 <body>
-    @include('modal.logout')
     @yield('modals')
     <!-- Page loading -->
     <div id="loading">

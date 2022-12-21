@@ -52,7 +52,7 @@ class CIMBController extends Controller
         $response = $this->applyHeaders($this->client, 'POST', $params);
         $response = $response->post(config('services.cimb.url.etb_checking'), $params)->json();
         
-        if($response['statusCode'] != '200') {
+        if($response['statusCode'] != '0') {
             info($response);
             return $response['statusDesc'];
         }

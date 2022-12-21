@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterUsersAddProgressColumn extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterUsersAddProgressColumn extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table) {
-            $table->integer('form_step')->default(1);
+        Schema::table('investors', function(Blueprint $table) {
+            $table->text('email');
         });
     }
 
@@ -25,8 +25,8 @@ class AlterUsersAddProgressColumn extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table) {
-           $table->dropColumn('form_step'); 
-        });
+        Schema::table('investors', function(Blueprint $table) {
+            $table->dropColumn('email'); 
+         });
     }
-}
+};

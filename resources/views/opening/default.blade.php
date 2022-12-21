@@ -5,7 +5,7 @@
     <div class="container col-sm-8">
         <div id="carouselForm" class="carousel slide mt-2 mb-4" data-bs-ride="carousel" data-bs-interval="false" data-bs-wrap="false">
             @section('header')
-            <div class="w-75 m-auto" data-bs-ride="carousel">
+            <div class="w-75 m-auto">
                 <div class="col progress mb-2">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
                         
@@ -191,4 +191,5 @@
 
 @section('modals')
 @include('modal.image-cropper')
+@include('modal.logout')
 @endsection

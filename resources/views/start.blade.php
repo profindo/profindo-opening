@@ -56,7 +56,7 @@
                                         <select id="cust_bank_code" class="form-control" name="cust_bank_code" value="" placeholder="Tipe Bank" required>
                                             <option value="BBCA">BCA</option>
                                             <option value="CIMB">CIMB Niaga</option>
-                                            <option value="BSIM">Sinarmas</option>
+                                            <option value="BSIM" disabled>Sinarmas</option>
                                         </select>
                                         <label for="cust_bank_code">Tipe Bank</label>
                                     </div>
@@ -100,10 +100,6 @@
                                 <div id="cust_additional_info" class="col form-group d-flex flex-column">
                                     <label for="cust_additional_info">Info Tambahan</label>
                                     <div class="col form-floating">
-                                        <input class="form-control" id="cust_referral" type="text" name="cust_referral" placeholder="Referral">
-                                        <label for="cust_referral">Sales/Referral</label>
-                                    </div>
-                                    <div class="col form-floating">
                                         <input class="form-control" id="cust_password" type="password" name="cust_password" placeholder="Password" required>
                                         <label for="cust_password">Password</label>
                                     </div>
@@ -118,9 +114,9 @@
                                     <input class="form-check-input me-1" id="checkTerms" type="checkbox" name="checkTerms" value="" required>
                                     <div>
                                         <label class="form-check-label" for="checkTerms">
-                                            Saya telah membaca dan menyetujui
+                                            Saya telah membaca dan 
                                         </label>
-                                        <a href="/ ketentuan-tabungan">surat-surat persetujuan</a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#aggreements_modal">surat-surat persetujuan</a>
                                     </div>
                                 </div>
                             </div>
@@ -230,4 +226,5 @@
 @endsection
 @section('modals')
 @include('modal.confirmation_modal')
+@include('modal.aggreements')
 @endsection

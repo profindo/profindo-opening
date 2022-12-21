@@ -67,7 +67,9 @@ class BCAController extends Controller
         ];
         $relative_url = sprintf(config('services.bca.url.validate_account'), $request->input('cust_bank_no')).'?'.http_build_query($params);
         $response = $this->applyHeaders($this->client, 'GET', $relative_url);
+        info($relative_url);
         $response = $response->get($relative_url)->json();
+        info($response);
         
         if($response) {
             info($response);
