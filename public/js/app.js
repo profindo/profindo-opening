@@ -1,6 +1,12 @@
 $(document).ready(function () {
     dropdownSelector();
     othersSelectInput();
+    var goBackButton = $("a.goBack");
+    console.log(goBackButton);
+    goBackButton.click(function () {
+        window.history.go(-1);
+    })
+});
 
 function isNumeric(str) {
     if (typeof str != "string") return false // we only process strings!  
@@ -16,18 +22,6 @@ aWithHref.forEach(function (el) {
         e.preventDefault();
     })
 });
-///////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////
-// Go Back
-var goBackButton = document.querySelectorAll(".goBack");
-goBackButton.forEach(function (el) {
-    el.addEventListener("click", function () {
-        window.history.go(-1);
-    })
-})
-///////////////////////////////////////////////////////////////////////////
-
 ///////////////////////////////////////////////////////////////////////////
 // Loader
 document.addEventListener('DOMContentLoaded', function () {
@@ -73,7 +67,6 @@ toggleSidebar.forEach(function(el){
     })
 })
 ///////////////////////////////////////////////////////////////////////////
-});
 
 function dropdownSelector() {
     var datalists = $('datalist')

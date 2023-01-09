@@ -30,10 +30,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'bca' => [
-        'id' => env('BCA_CLIENT_ID'),
-        'key' => env('BCA_API_KEY'),
-        'api_secret' => base64_decode(env('BCA_API_SECRET')),
-        'client_secret' => base64_decode(env('BCA_CLIENT_SECRET')),
+        'api' => [
+            'key' => env('BCA_API_KEY'),
+            'secret' => base64_decode(env('BCA_API_SECRET')),
+        ],
+        'client' => [
+            'id' => env('BCA_CLIENT_ID'),
+            'secret' => base64_decode(env('BCA_CLIENT_SECRET')),
+        ],
         'url' => [
             'oauth_token'     => '/api/oauth/token',
             'validate_account' => '/banking/general/corporates/'.env('BCA_CORPORATE_ID').'/accounts/%s/validation',
