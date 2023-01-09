@@ -141,7 +141,7 @@ class InvestorController extends Controller
         $investor = \App\Models\User::find(Auth::user()->id)->investor;
         $file_name = $investor->nik_no.'-'.$file_type.'.jpg';
         $file_string = file_get_contents($file);
-        Storage::disk('uploads')->put(''.$investor->nik_no.'/'.$file_name, file_get_contents($file));
+        Storage::disk('uploads')->put($file_name, file_get_contents($file));
 
         return $investor->nik_no.'/'.$file_name;
     }
@@ -328,6 +328,9 @@ class InvestorController extends Controller
             $cust_tmp->kseiTime = NULL;
             $cust_tmp->kseiResult = NULL;
             $cust_tmp->pdfTime = NULL;
+        }
+        if(!$cust_tmp->bcaRdn) {
+            $cust_tmp->bcaSendTime = NULL;
         }
         info([$investor->npwp_no, $investor->email]);
 

@@ -44,6 +44,7 @@
                 
             }
         })
+        
     });
 
     function rotateRight() {
@@ -78,11 +79,12 @@
 
     function submitImage() {
         cropper = $('#cropper');
-        image_preview.attr('src', cropper.attr('src'));
+        console.log("FUCK", image_preview, cropper)
+        image_preview.attr('src', cropper.attr('src')); 
 
-        var [boundx, boundy] = jcrop_api.getBounds();
-        var c = jcrop_api.getOptions();
-
+        //var [boundx, boundy] = jcrop_api.getBounds();
+        //var c = jcrop_api.getOptions();
+        $('#image_cropper').modal('toggle');
         /**image_preview.css({
             width: Math.round(c.rx * boundx) + 'px',
             height: Math.round(c.ry * boundy) + 'px',
@@ -113,13 +115,15 @@
             jcrop_api = this;
             image_preview = $('#' + $('#cropper').data('target') + '_preview');
         });
+        console.log(image_preview)
     }
 
     $('#image_cropper').on('hidden.bs.modal', function (e) {
-        jcrop_api.destroy();
+        //jcrop_api.destroy();
     });
     $('#image_cropper').on('shown.bs.modal', function () {
-        initiateCropper();
+        image_preview = $('#' + $('#cropper').data('target') + '_preview');
+        //initiateCropper();
         $('.jcrop-holder').data('angle', 0);
     });
 </script>
