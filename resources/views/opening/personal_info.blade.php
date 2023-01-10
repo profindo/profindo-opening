@@ -1,19 +1,19 @@
 <h3 class="text-center">Informasi Nasabah Perorangan</h3>
 <div class="container-fluid">
     <div class="form-group form-floating">
-        <input class="form-control form-control-sm" id="cust_email" type="text" name="cust_email" value="{{ Auth::user()->email }}" placeholder="email@test.com">
-        <label for="cust_email">Email</label>
+        <input class="form-control form-control-sm" id="cust_email" type="text" name="cust_email" value="{{ Auth::user()->email }}" placeholder="email@test.com" required>
+        <label for="cust_email">Email*</label>
         <span class="text-danger" id="cust_email_error"></span>
     </div>
     <div class="form-floating mb-2">
-        <input class="form-control form-control-sm" id="cust_phone" type="text" name="cust_phone" value="{{ $investor->phone }}" placeholder="081234567890">
-        <label class="form-control-label" for="cust_phone">No Telepon</label>
+        <input class="form-control form-control-sm" id="cust_phone" type="text" name="cust_phone" value="{{ $investor->phone }}" placeholder="081234567890" required>
+        <label class="form-control-label" for="cust_phone">No Telepon*</label>
         <span class="text-danger" id="cust_phone_error"></span>
     </div>
     <div class="d-flex flex-lg-row flex-column">
         <div class="col form-group form-floating">
-            <input class="form-control form-control-sm" id="cust_name" name="cust_name" type="text" value="{{ $investor->name }}" placeholder="John Doe">
-            <label for="cust_name">Nama sesuai identitas KTP</label>
+            <input class="form-control form-control-sm" id="cust_name" name="cust_name" type="text" value="{{ $investor->name }}" placeholder="John Doe" required>
+            <label for="cust_name">Nama sesuai identitas KTP*</label>
             <span class="text-danger" id="cust_name_error"></span>
         </div>
         <div class="col-lg-3 col form-group mx-1">
@@ -47,7 +47,7 @@
             <span class="text-danger" id="cust_religion_error"></span>
         </div>
         <div class="col form-floating ">
-            <select class="form-control select-others" id="cust_education" name="cust_education" value="{{ $investor->religion }}">
+            <select class="form-control select-others" id="cust_education" name="cust_education" value="{{ $investor->education }}">
                 <option value="1">SD</option>
                 <option value="2">SMP/SLTP</option>
                 <option value="3">SMA/SMU/SMK</option>
@@ -89,7 +89,7 @@
                 <option value="{{ $city->city_name }}"></option>
                 @endforeach
             </datalist>
-            <label for="cust_birthplace">Tempat / Tanggal Lahir</label>
+            <label for="cust_birthplace">Tempat / Tanggal Lahir*</label>
             <span class="text-danger" id="cust_birthplace_error"></span>
         </div>
         <div class="col form-group form-floating ms-lg-1">
@@ -100,7 +100,7 @@
     <div class="d-flex flex-lg-row flex-column">
         <div class="col form-floating me-lg-1">
             <input class="form-control form-control-sm" id="cust_nik" type="text" name="cust_nik" value="{{ $investor->nik_no }}" placeholder="NIK">
-            <label for="cust_nik">NIK</label>
+            <label for="cust_nik">NIK*</label>
             <div class="d-flex flex-row form-group mt-1 align-items-center">
                 <input class="form-control col" id="cust_nik_expire" type="date" name="cust_nik_expire" value="{{ $investor->nik_expire ? $investor->nik_expire : '' }}">
                 <div class="col form-group ms-2 form-check form-check-inline">

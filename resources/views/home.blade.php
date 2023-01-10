@@ -49,6 +49,11 @@
                 @yield('header')
             @else
             <img src="{{ asset('img/logo.png') }}" alt="Bitter" class="image">
+            <div class="right">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#logout_modal">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+            </div>
             @endif
         </div>
     </div>

@@ -80,7 +80,7 @@
                                             <label for="cust_name">Nama sesuai identitas KTP</label>
                                         </div>
                                         <div class="col form-floating">
-                                            <input class="form-control" id="cust_birth_date" type="date" name="cust_birth_date">
+                                            <input class="form-control" id="cust_birth_date" type="date" name="cust_birth_date" required>
                                             <label for="cust_birth_date">Tanggal Lahir</label>
                                         </div>
                                     </div>

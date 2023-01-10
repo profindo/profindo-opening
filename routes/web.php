@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/version', fn () => view('phpinfo'));
 Route::get('/', [Controllers\OpeningAccountController::class, 'index'])->name('home');
 Route::get('/verify', [Controllers\OpeningAccountController::class, 'verifyEmail'])->name('verification.notice');
 Route::get('/app', function () {return view('layout.app');});

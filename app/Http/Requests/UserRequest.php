@@ -27,6 +27,7 @@ class UserRequest extends FormRequest
             'cust_bank_name'     => 'required|max:35',
             'cust_bank_no'       => 'required',
             'cust_name'         => 'required',
+            'cust_birth_date'    => 'required',
             'cust_email'        => 'required|email:rfc,dns',
             'cust_phone'        => 'required',
             'cust_password'     => 'required',
