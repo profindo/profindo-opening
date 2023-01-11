@@ -25,7 +25,7 @@
 <footer>
     <div class="appBottomMenu bg-danger">
         <div class="item">
-            <a href="/">
+            <a href="#" class="icon goBack">
                 <p class="text-white">
                     <i class="fa-solid fa-arrow-left"></i>
                     <span>Kembali</span>
